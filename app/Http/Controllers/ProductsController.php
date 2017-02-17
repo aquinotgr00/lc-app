@@ -121,6 +121,8 @@ class ProductsController extends Controller
     {
         $data = $request->except(['_token']);
 
+        dd($data);
+
         $this->product->create($data);
 
         Flash::success( trans('admin/products/general.status.created') );
@@ -268,18 +270,16 @@ class ProductsController extends Controller
         $query      = $request->input('term');
 
         // $perfumes   = $this->perfume->pushCriteria(new PerfumeWhereNameLike($query))->all();
-	$perfumes   = \App\Models\Product::where('category_id', 'like', 10)
+        $perfumes   = \App\Models\Product::where('category_id', 'like', 10)
                 ->where('name', 'like', '%'.$query.'%')
                 ->orderBy('name', 'desc')
                 ->take(10)
                 ->get();
 
         foreach ($perfumes as $perfume) {
-            $id              = $perfume->id;
             $name            = $perfume->name;
 
             $entry_arr = [
-              'id'              => $id,
               'value'           => $name
             ];
 

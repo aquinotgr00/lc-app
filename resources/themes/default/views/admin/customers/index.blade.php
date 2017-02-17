@@ -15,7 +15,7 @@
                     <a class="btn btn-default btn-sm" href="{!! route('admin.customer-candidates.create') !!}" title="{{ trans('admin/customers/general.button.create') }}">
                         <i class="fa fa-plus-square"></i>
                     </a>
-		    <a class="btn btn-default btn-sm" href="{!! route('admin.customers.export', $tipe) !!}" title="{{ trans('admin/customers/general.button.export') }}">
+		            <a class="btn btn-default btn-sm" href="{!! route('admin.customers.export', $tipe) !!}" title="{{ trans('admin/customers/general.button.export') }}">
                         Export Excel
                     </a>
 
@@ -39,9 +39,9 @@
                                     <th>{{ trans('admin/customers/general.columns.email') }}</th>
                                     <th>{{ trans('admin/customers/general.columns.phone') }}</th>
                                     <th>{{ trans('admin/customers/general.columns.address') }}</th>
-				    @if( $tipe == 8 )
-				    <th>Nomor Sertifikat</th>
-			 	    @endif
+                				    @if( $tipe == 8 )
+                				    <th>Nomor Sertifikat</th>
+                			 	    @endif
                                     <th>{{ trans('admin/customers/general.columns.status') }}</th>
                                     <th>{{ trans('admin/customers/general.columns.actions') }}</th>
                                 </tr>
@@ -57,9 +57,9 @@
                                     <th>{{ trans('admin/customers/general.columns.email') }}</th>
                                     <th>{{ trans('admin/customers/general.columns.phone') }}</th>
                                     <th>{{ trans('admin/customers/general.columns.address') }}</th>
-				    @if( $tipe == 8 )
-				    <th>Nomor Sertifikat</th>
-				    @endif
+                				    @if( $tipe == 8 )
+                				    <th>Nomor Sertifikat</th>
+                				    @endif
                                     <th>{{ trans('admin/customers/general.columns.status') }}</th>
                                     <th>{{ trans('admin/customers/general.columns.actions') }}</th>
                                 </tr>
@@ -74,9 +74,9 @@
                                         <td>{{ $c->email }}</td>
                                         <td>{{ $c->phone }}</td>
                                         <td>{{ $c->laundry_address ? $c->laundry_address : $c->address }}</td>
-					@if( $c->type == 8 )
-					<td>{{ $c->description }}</td>
-					@endif
+                    					@if( $c->type == 8 )
+                    					<td>{{ $c->description }}</td>
+                    					@endif
                                         <td>
                                             <a href="{!! route('admin.customers.update-status', $c->id) !!}" title="{{ trans('general.button.status') }}"><span class="label label-{{ $c->status == 1 ? 'success' : 'danger' }}">{{ Helpers::getCustomerStatusDisplayName($c->status) }}</span>
                                             </a>

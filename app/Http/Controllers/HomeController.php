@@ -34,7 +34,7 @@ class HomeController extends Controller
 
     public function index() {
 
-        $homeRouteName = 'login';
+        $homeRouteName = 'store.front';
 
         try {
             $user = Auth::user();
@@ -48,7 +48,7 @@ class HomeController extends Controller
                 } else {
                     // TODO: create check if the user is outlet owner,
                     // and redirect to it's dashboard.
-                    $homeRouteName = 'welcome';
+                    $homeRouteName = 'store.front';
                 }
             }
             // $homeCandidateName = config('app.home_route');
@@ -58,19 +58,4 @@ class HomeController extends Controller
 
         return \Redirect::route($homeRouteName);
     }
-
-    public function storeFront() {
-        $node = \App\Models\Category::where('slug', 'chemical-laundry')->first();
-        // return view('test_custom_variables', compact('node'));
-        return view('front.index', compact('node'));
-    }
-
-    public function storeCart() {
-        return view('front.cart');
-    }
-
-    public function checkout() {
-        return view('front.checkout');
-    }
-
 }

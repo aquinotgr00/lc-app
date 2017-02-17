@@ -51,9 +51,21 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $appends = ['full_name'];
 
+    public function affiliate() {
+        return $this->hasOne('App\Models\Affiliate');
+    }
+
+    public function storeCustomer() {
+        return $this->hasOne('App\Models\StoreCustomer');
+    }
+
     public function outlet()
     {
         return $this->belongsTo('App\Models\Outlet');
+    }
+
+    public function partner() {
+        return $this->hasOne('App\Models\Partner');
     }
 
     /**

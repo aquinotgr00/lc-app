@@ -55,7 +55,7 @@
             });
         });
 
-	$('.product').change(function() {
+        $('.product').change(function() {
             var currentId = $(this).attr('id').replace('product','');
 
             $('#product'+currentId).removeAttr('style');

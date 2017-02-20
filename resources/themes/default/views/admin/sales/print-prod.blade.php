@@ -84,22 +84,26 @@
 		</tr>
 		<?php $totj = $totj + $jer;  $no++; ?>
 	@endforeach
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td class="bodered">{{ $totj }}</td>
+	</tr>
 </table>
 <div id='ket'>
-	<div class='kiri'>
-		Total Jerigen
-	</div><div class='tengah'>
-		{{ $totj }}
-	</div>
-	<div class='kanan' id='ekspedisi'>
-		<b>{{ $sale->expedition }}</b>
-	</div>
-	<div class='clearboth'></div>
 	<div class='kiri'>
 		Ongkir
 	</div><div class='tengah'>
 		{{ Helpers::reggo($sale->shipping_fee) }}
 	</div>
+	<div class='kanan' id='ekspedisi'>
+		<b>{{ $sale->expedition }}</b>
+	</div>
+	<div class='clearboth'></div>
 	<div class='kiri'>
 		Packing Kayu
 	</div>

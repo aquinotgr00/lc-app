@@ -107,11 +107,12 @@
 		<tr class="trhead">
 			<th class="bodered">No</th>
 			<th class="bodered">Nama Produk</th>
-			<th class="bodered">Jenis Spesifikasi</th>
+			<th class="bodered">Aroma</th>
 			<th class="bodered">Harga</th>
-			<th class="bodered">Qty Order</th>
-			<th class="bodered">Jumlah</th>
+			<th class="bodered">QTY</th>
+			<th class="bodered">Total</th>
 			<th class="bodered">Berat</th>
+			<th class="bodered">Ket</th>
 			<th class="bodered">QC</th>
 		</tr>
 		<?php
@@ -133,6 +134,7 @@
 			<td class="bodered">{{ $d->quantity }}</td>
 			<td class="bodered">{{ Helpers::reggo($d->total) }}</td>
 			<td class="bodered">{{ $d->weight }} Kg</td>
+			<td class="bodered">{{ $d->keterangan }}</td>
 			<td class="bodered"></td>
 			<td >{{ $jer = $d->quantity / 5 }}</td>
 		</tr>

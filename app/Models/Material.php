@@ -24,9 +24,4 @@ class Material extends Model
     {
         return $this->hasMany('App\Models\FormulaDetail');
     }
-
-    public function purchaseOrderDetails()
-    {
-        return $this->belongsToMany('App\Models\PurchaseOrderDetail');
-    }
 }

@@ -36,7 +36,7 @@
             <th>{{ trans('admin/purchase-orders/general.columns.actions') }}</th>
         </tr>
         <tr v-for="material in materials">
-            <input type="hidden" name="material[@{{ $index }}][material_id]" value="@{{ material.id }}">
+            <input type="hidden" name="material[@{{ $index }}][product_id]" value="@{{ material.id }}">
             <td><input type="text" value="@{{ material.name }}" disabled></td>
             <td><input type="text" value="@{{ material.price }}" disabled></td>
             <td><input type="text" name="material[@{{ $index }}][quantity]" value="@{{ material.quantity }}" v-model="material.quantity"></td>

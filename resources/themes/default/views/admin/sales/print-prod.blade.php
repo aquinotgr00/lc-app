@@ -87,14 +87,19 @@
 </table>
 <div id='ket'>
 	<div class='kiri'>
-		Ongkir
+		Total Jerigen
 	</div><div class='tengah'>
-		{{ Helpers::reggo($sale->shipping_fee) }}
+		{{ $totj }}
 	</div>
 	<div class='kanan' id='ekspedisi'>
 		<b>{{ $sale->expedition }}</b>
 	</div>
 	<div class='clearboth'></div>
+	<div class='kiri'>
+		Ongkir
+	</div><div class='tengah'>
+		{{ Helpers::reggo($sale->shipping_fee) }}
+	</div>
 	<div class='kiri'>
 		Packing Kayu
 	</div>

@@ -44,6 +44,7 @@ class PurchaseOrdersController extends Controller
             \Route::get(  '/create',                'PurchaseOrdersController@create')          ->name('admin.purchase-orders.create');
             \Route::get(  '/{poId}',                'PurchaseOrdersController@show')            ->name('admin.purchase-orders.show');
             \Route::patch('/{poId}',                'PurchaseOrdersController@update')          ->name('admin.purchase-orders.update');
+            \Route::patch('/{poId}/approved',       'PurchaseOrdersController@approvedBy')      ->name('admin.purchase-orders.approved-by');
             \Route::get(  '/{poId}/print',          'PurchaseOrdersController@print')           ->name('admin.purchase-orders.print');
             \Route::get(  '/{poId}/edit',           'PurchaseOrdersController@edit')            ->name('admin.purchase-orders.edit');
             \Route::get(  '/{poId}/delete',         'PurchaseOrdersController@destroy')         ->name('admin.purchase-orders.delete');
@@ -195,6 +196,13 @@ class PurchaseOrdersController extends Controller
         Flash::success( trans('admin/purchase-orders/general.status.updated') );
 
         return redirect()->route('admin.purchase-orders.show', $id);
+    }
+
+    public function approvedBy(Request $request, $id) {
+        $data = $request->only('approved');
+        $data['status']   = 2;
+        $this->purchaseOrder->update($data, $id);
+        return redirect( route('admin.purchase-orders.show', $id) );
     }
 
     /**

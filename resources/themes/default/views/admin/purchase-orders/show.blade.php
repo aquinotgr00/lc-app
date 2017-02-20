@@ -109,13 +109,36 @@
         <!-- /.box-body -->
         <div class="box-footer clearfix no-border">
             <a href="{{ route('admin.purchase-orders.edit', $purchaseOrder->id) }}" class="btn btn-default"><i class="fa fa-edit"></i> {{ trans('general.button.edit') }}</a>
-            <a href="{{ route('admin.purchase-orders.print', $purchaseOrder->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-edit"></i> Print</a>
+            <a href="{{ route('admin.purchase-orders.print', $purchaseOrder->id) }}" target="_blank" class="btn btn-default"> Print</a>
             <div class="pull-right">
-                <a href="{{ route('admin.purchase-orders.check-all', $purchaseOrder->id) }}" class="btn btn-default"><i class="fa fa-check"></i> {{ trans('general.button.check-all') }}</a>
+                <a href="{{ route('admin.purchase-orders.check-all', $purchaseOrder->id) }}" class="btn btn-default"><i class="fa fa-check"></i> Check all</a>
+                @if($purchaseOrder->approved == null)
+                <a href="#" class="btn btn-default" data-toggle="modal" data-target="#approve-modal">Approve</a>
+                @endif
                 <a href="{{ route('admin.purchase-orders.index') }}" class="btn btn-default"><i class="fa fa-times"></i> {{ trans('general.button.close') }}</a>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="approve-modal" tabindex="-1" role="dialog">
+    {!! Form::open(['route' => ['admin.purchase-orders.approved-by', $purchaseOrder->id], 'method' => 'PATCH']) !!}
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            {!! Form::label('approved', 'Disetujui oleh') !!}
+            {!! Form::text('approved', '', ['class' => 'form-control']) !!}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    {!! Form::close() !!}
+    </div><!-- /.modal -->
 @endsection
 
 @section('body_bottom')

@@ -135,7 +135,7 @@
 			<td class="bodered">{{ Helpers::reggo($d->total) }}</td>
 			<td class="bodered">{{ $d->weight }} Kg</td>
 			<td class="bodered">{{ $d->keterangan }}</td>
-			<td class="bodered"></td>
+			<td class="bodered" width="3%"></td>
 			<td >{{ $jer = $d->quantity / 5 }}</td>
 		</tr>
 		<?php $totj = $totj + $jer;  $no++; ?>
@@ -160,6 +160,7 @@
 			<th colspan=5 class="bodered">Jumlah</th>
 			<th class="bodered">{{ Helpers::reggo($nom) }}</th>
 			<th class="bodered">{{$kg+($kg/40)}} Kg</th>
+			<td></td>
 			<td></td>
 			<th class="bodered">{{ $totj }}</th>
 		</tr>

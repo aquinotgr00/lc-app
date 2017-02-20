@@ -25,12 +25,14 @@ class Utils {
         if ($status == 1) {
             return 'New';
         } elseif ($status == 2) {
-            return 'Ordered';
+            return 'Approved';
         } elseif ($status == 3) {
-            return 'Shipped';
+            return 'Ordered';
         } elseif ($status == 4) {
+            return 'Shipped';
+        } elseif ($status == 5) {
             return 'Pending';
-        } else {
+        } elseif ($status == 6) {
             return 'Finished';
         }
     }

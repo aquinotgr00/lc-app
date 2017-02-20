@@ -92,7 +92,9 @@
                         <tr>
                             <td class="tdBesar" style="height:90px;"></td>
                             <td class="tdBesar" style="height:90px;"></td>
-                            <td class="tdBesar" style="height:90px;"></td>
+                            <td class="tdBesar" style="height:90px;">
+                                <h1 class="text-center text-uppercase">{{ $purchaseOrder->approved }}</h1>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

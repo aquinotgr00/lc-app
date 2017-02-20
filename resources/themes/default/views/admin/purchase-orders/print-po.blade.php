@@ -50,17 +50,19 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach($purchaseOrder->purchaseOrderDetails as $value)
+                    <?php $no = 1; ?>
+                    @foreach($purchaseOrder->purchaseOrderDetails as $key => $value)
                     <tr>
-                        <td>{{ $value->id }}</td>
-                        <td>{{ $value->material->name }}</td>
+                        <td>{{ $no }}</td>
+                        <td>{{ $value->product->name }}</td>
                         <td>{{ $value->quantity }}</td>
                         <td>Kg/Lt</td>
-                        <td>{{ Helpers::reggo($value->material->price) }}</td>
+                        <td>{{ Helpers::reggo($value->product->price) }}</td>
                         <td>{{ Helpers::reggo($value->total) }}</td>
                         <td>{{ $value->supplier->name }}</td>
                         <td>{{ $value->description }}</td>
                     </tr>
+                    <?php $no++; ?>
                     @endforeach
                 </tbody>
             </table>

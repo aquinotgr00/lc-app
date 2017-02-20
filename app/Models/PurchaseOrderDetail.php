@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class PurchaseOrderDetail extends Model
 {
-    protected $fillable = ['purchase_order_id', 'material_id', 'quantity', 'total', 'supplier_id', 'description'];
+    protected $fillable = ['purchase_order_id', 'product_id', 'quantity', 'total', 'supplier_id', 'description'];
 
     public function purchaseOrder()
     {
         return $this->belongsTo('App\Models\PurchaseOrder');
     }
 
-    public function material()
+    public function product()
     {
-        return $this->belongsTo('App\Models\Material');
+        return $this->belongsTo('App\Models\Product');
     }
 
     public function supplier()

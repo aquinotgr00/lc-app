@@ -20,7 +20,7 @@
         });
         // details tab
         $('#material_name').autocomplete({
-            source   : '/admin/formulas/search',
+            source   : '/admin/products/search',
             minLength: 2,
             autoFocus: true,
             select:function(e,ui){

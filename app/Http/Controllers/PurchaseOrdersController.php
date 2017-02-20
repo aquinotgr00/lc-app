@@ -106,7 +106,7 @@ class PurchaseOrdersController extends Controller
         foreach ($items as $key => $pODetails) {
             foreach ($pODetails as $key => $pODetail) {
                 if ( !isset($pODetail['total']) ) {
-                    $pODetail['total'] = Helpers::getMaterialById($pODetail['material_id'])->price * $pODetail['quantity'];
+                    $pODetail['total'] = App\Models\Product::find($pODetail['product_id'])->price * $pODetail['quantity'];
                 }
                 $data['total'] += $pODetail['total'];
             }

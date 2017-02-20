@@ -59,6 +59,11 @@ class Product extends Model
         return $this->hasMany('App\Models\StorePartnerProduct');
     }
 
+    public function purchaseOrderDetails()
+    {
+        return $this->belongsToMany('App\Models\PurchaseOrderDetail');
+    }
+
     public function scopeCategorized($query, Category $category=null) {
         if ( is_null($category) ) return $query->with('categories');
         

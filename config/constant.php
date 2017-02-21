@@ -12,6 +12,11 @@ return [
     '8' => 'Trainee'
   ],
 
+  'training-categories' => [
+    '1' => 'Chemicals',
+    '2' => 'Management'
+  ],
+
   'banks' => [
     ""         => "choose",
     "BCA"      => "BCA",

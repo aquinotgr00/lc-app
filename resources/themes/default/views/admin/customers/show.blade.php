@@ -27,7 +27,7 @@
                         </li>
                     </ul>
 			
-		    <a href="{{ route('admin.customers.export-sales', $customer->id) }}" class="btn btn-info btn-block" title="{{ trans('general.button.export') }}"><b> Export Sales </b></a>
+                    <a href="{{ route('admin.customers.export-sales', $customer->id) }}" class="btn btn-info btn-block" title="{{ trans('general.button.export') }}"><b> Export Sales </b></a>
                     <a href="{{ route('admin.customers.confirm-delete', $customer->id) }}" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><b> Delete </b></a>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
@@ -59,10 +59,14 @@
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
+
         <div class="col-md-9">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#activity" data-toggle="tab">Followup</a></li>
+                    @if($customer->type == 8)
+                    <li><a href="#payment" data-toggle="tab">Pembayaran</a></li>
+                    @endif
                     <li><a href="#orders" data-toggle="tab">Order History</a></li>
                     <li><a href="#settings" data-toggle="tab">Edit</a></li>
                 </ul>
@@ -106,6 +110,50 @@
                             </tbody>
                         </table>
                     </div><!-- /.tab-pane -->
+                    
+                    @if($customer->type == 8)
+                    <div class="tab-pane" id="payment">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Jenis</th>
+                                    <th>Harga</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($customer->trainings as $key => $value)
+                                <tr>
+                                    <td>{{ $value->categoryDisplayName() }}</td>
+                                    <td>{{ Helpers::reggo($value->price) }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.trainings.delete', $value->id) }}"><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        {!! Form::open(['route' => 'admin.trainings.store', 'method'=>'POST']) !!}
+                            {!! Form::hidden('customer_id', $customer->id) !!}
+
+                            <div class="form-group">
+                                {!! Form::label('category', 'Jenis') !!}
+                                {!! Form::select('category', config('constant.training-categories'), 'default', ['class' => 'form-control type']) !!}
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('price', 'Harga') !!}
+                                {!! Form::text('price', null, ['class' => 'form-control']) !!}
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::submit( trans('general.button.save'), ['class' => 'btn btn-primary', 'id' => 'btn-submit-edit'] ) !!}
+                            </div>
+
+                        {!! Form::close() !!}
+                    </div>
+                    @endif
 
                     <div class="tab-pane" id="orders">
                         <table class="table table-striped">

@@ -36,6 +36,8 @@ Route::group(['middleware' => 'authorize'], function () {
 
     // Site administration section
     Route::group(['prefix' => 'admin'], function () {
+        // Training
+        \App\Http\Controllers\TrainingsController::routes();
         // Affiliate
         \App\Http\Controllers\AffController::routes();
         // Store Orders 

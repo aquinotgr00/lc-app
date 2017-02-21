@@ -121,8 +121,6 @@ class ProductsController extends Controller
     {
         $data = $request->except(['_token']);
 
-        dd($data);
-
         $this->product->create($data);
 
         Flash::success( trans('admin/products/general.status.created') );

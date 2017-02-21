@@ -78,7 +78,7 @@
 			<td class="bodered">{{ $d->product->name }}</td>
 			<td class="bodered">{{ $d->description }}</td>
 			<td class="bodered">{{ $d->quantity }}</td>
-			<td class="bodered"></td>
+			<td class="bodered">{{ $d->keterangan }}</td>
 			<td class="bodered"></td>
 			<td >{{ $jer = $d->quantity / 5 }}</td>
 		</tr>

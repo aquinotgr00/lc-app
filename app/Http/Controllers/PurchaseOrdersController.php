@@ -46,6 +46,7 @@ class PurchaseOrdersController extends Controller
             \Route::patch('/{poId}',                'PurchaseOrdersController@update')          ->name('admin.purchase-orders.update');
             \Route::patch('/{poId}/approved',       'PurchaseOrdersController@approvedBy')      ->name('admin.purchase-orders.approved-by');
             \Route::get(  '/{poId}/print',          'PurchaseOrdersController@print')           ->name('admin.purchase-orders.print');
+            \Route::get(  '/{poId}/print-prod',     'PurchaseOrdersController@printProd')       ->name('admin.purchase-orders.print-prod');
             \Route::get(  '/{poId}/edit',           'PurchaseOrdersController@edit')            ->name('admin.purchase-orders.edit');
             \Route::get(  '/{poId}/delete',         'PurchaseOrdersController@destroy')         ->name('admin.purchase-orders.delete');
             \Route::get(  '/{poId}/get-details',    'PurchaseOrdersController@getDetails')      ->name('admin.purchase-orders.get-details');
@@ -241,6 +242,11 @@ class PurchaseOrdersController extends Controller
     }
 
     public function print($id) {
+        $purchaseOrder = $this->purchaseOrder->find($id);
+        return view('admin.purchase-orders.print-po', compact('purchaseOrder'));
+    }
+
+    public function printProd($id) {
         $purchaseOrder = $this->purchaseOrder->find($id);
         return view('admin.purchase-orders.print-po', compact('purchaseOrder'));
     }

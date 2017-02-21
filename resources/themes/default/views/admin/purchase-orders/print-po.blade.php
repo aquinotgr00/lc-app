@@ -35,8 +35,10 @@
                         <th>Bahan</th>
                         <th>jumlah</th>
                         <th>unit</th>
+                        @if(!str_contains(Request::fullUrl(), 'prod'))
                         <th>harga</th>
                         <th>total</th>
+                        @endif
                         <th>vendor</th>
                         <th>keterangan</th>
                     </tr>
@@ -45,8 +47,6 @@
                     <tr>
                         <th class="thCenter" style="text-align:center;" colspan="5">total</th>
                         <th>{{ Helpers::reggo($purchaseOrder->total) }}</th>
-                        <th></th>
-                        <th></th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -57,8 +57,10 @@
                         <td>{{ $value->product->name }}</td>
                         <td>{{ $value->quantity }}</td>
                         <td>Kg/Lt</td>
+                        @if(!str_contains(Request::fullUrl(), 'prod'))
                         <td>{{ Helpers::reggo($value->product->price) }}</td>
                         <td>{{ Helpers::reggo($value->total) }}</td>
+                        @endif
                         <td>{{ $value->supplier->name }}</td>
                         <td>{{ $value->description }}</td>
                     </tr>

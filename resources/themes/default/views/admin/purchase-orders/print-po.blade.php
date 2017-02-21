@@ -43,12 +43,16 @@
                         <th>keterangan</th>
                     </tr>
                 </thead>
+                @if(!str_contains(Request::fullUrl(), 'prod'))
                 <tfoot>
                     <tr>
                         <th class="thCenter" style="text-align:center;" colspan="5">total</th>
                         <th>{{ Helpers::reggo($purchaseOrder->total) }}</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </tfoot>
+                @endif
                 <tbody>
                     <?php $no = 1; ?>
                     @foreach($purchaseOrder->purchaseOrderDetails as $key => $value)

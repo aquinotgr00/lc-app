@@ -121,9 +121,8 @@ class CustomersController extends Controller
      */
     public function show($id)
     {
-        $customer         = $this->customer->pushCriteria(new CustomersWithFollowups())->find($id);
+        $customer         = $this->customer->find($id);
         $sales            = $this->sale->pushCriteria(new SalesByOrderDateDescending())->findWhere(['customer_id' => $id]);
-        
         $page_title       = trans('admin/customers/general.page.show.title');
         $page_description = trans('admin/customers/general.page.show.description', ['name' => $customer->name]);
 

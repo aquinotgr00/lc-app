@@ -21,6 +21,10 @@ class Customer extends Model
         return $this->hasMany('App\Models\Sale');
     }
 
+    public function trainings() {
+        return $this->hasMany('App\Models\Training');
+    }
+
     public function getCustomerTypeDisplayName()
     {
         if ( $this->type == 1 ) {

@@ -109,7 +109,8 @@
         <!-- /.box-body -->
         <div class="box-footer clearfix no-border">
             <a href="{{ route('admin.purchase-orders.edit', $purchaseOrder->id) }}" class="btn btn-default"><i class="fa fa-edit"></i> {{ trans('general.button.edit') }}</a>
-            <a href="{{ route('admin.purchase-orders.print', $purchaseOrder->id) }}" target="_blank" class="btn btn-default"> Print</a>
+            <a href="{{ route('admin.purchase-orders.print', $purchaseOrder->id) }}" target="_blank" class="btn btn-default"> Print Admin</a>
+            <a href="{{ route('admin.purchase-orders.print-prod', $purchaseOrder->id) }}" target="_blank" class="btn btn-default"> Print Produksi</a>
             <div class="pull-right">
                 <a href="{{ route('admin.purchase-orders.check-all', $purchaseOrder->id) }}" class="btn btn-default"><i class="fa fa-check"></i> Check all</a>
                 @if($purchaseOrder->approved == null)

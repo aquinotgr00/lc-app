@@ -1,5 +1,12 @@
 <!-- REQUIRED JS SCRIPTS -->
-
+<script>
+  var AdminLTEOptions = {
+    //Enable sidebar expand on hover effect for sidebar mini
+    //This option is forced to true if both the fixed layout and sidebar mini
+    //are used together
+    sidebarExpandOnHover: true
+  };
+</script>
 <!-- jQuery 2.1.4 -->
 <script src="{{ asset ("/bower_components/admin-lte/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script>
 <!-- Bootstrap 3.3.2 JS -->

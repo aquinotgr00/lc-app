@@ -18,7 +18,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="skin-blue sidebar-mini fixed">
+<body class="skin-blue sidebar-mini fixed sidebar-collapse">
 
     <!-- Main body content -->
     @include('partials._body_content')

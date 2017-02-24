@@ -1,5 +1,14 @@
 @extends('layouts.store')
 
+@section('top_styles')
+<!-- autocomplete ui -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" type="text/css">
+<!-- autocomplete loading gif -->
+<style>
+    input.ui-autocomplete-loading { background:url('http://preloaders.net/preloaders/712/Floating%20rays-16.gif') no-repeat right center }
+</style>
+@endsection
+
 @section('content')	
 	<section id="cart-view">
 		<div class="container">
@@ -55,9 +64,31 @@
 			</div>
 		</div>
 	</section>
+    <!-- addProduct Modal -->
+    <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            {!! Form::text('name', '', ['id' => 'productName', 'class' => 'form-control']) !!}
+            <div class="row" id="productList"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
 @endsection
 
 @section('bottom_scripts')
+<!-- autocomplete UI -->
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
 <script>
 	$("#prov").change(function() {
         $.getJSON("api/get-kokab/" + $("#prov").val(), function(data) {
@@ -69,7 +100,7 @@
             $("#kota").trigger("change"); /* trigger next drop down list not in the example */
         });
     });
-    var tabClick = function(e, tab) {};
+
     $(".tabs").on('click', function (event) {
     	event.preventDefault();
     	$("#edit").parent('li').removeClass('active');
@@ -89,5 +120,32 @@
             }
         });
     });
+
+    $(document).ready(function () {
+        var products = [];
+        $('#productName').autocomplete({
+            source       : '/store/products/search',
+            minLength    : 3,
+            matchContains: true,
+            selectFirst  : false,
+            autoFocus    : true,
+            appendTo     : '#addProduct',
+            select       : function(e, ui) {
+                var para = document.createElement('div');
+                var node = document.createTextNode(ui.item.value);
+                para.setAttribute('class', 'col-md-3');
+                para.appendChild(node);
+                document.getElementById('productList').appendChild(ui.item.data);
+                $(this).val('');
+                return false;
+            }
+        });
+    });
+
+
+    function addProduct() {
+        event.preventDefault();
+        alert("clicked");
+    };
 </script>
 @endsection

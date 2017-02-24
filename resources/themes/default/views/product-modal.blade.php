@@ -44,6 +44,7 @@
 				</div>
 				<p>{{ $product->description }}</p>
 				<div class="aa-prod-quantity">
+					{!! Form::label('quantity', 'Jumlah', ['class' => 'control-label']) !!}
 					{!! Form::number('quantity', 1, ['required', 'class' => 'form-control']) !!}
 					{!! Form::select('aroma_id', $aroma, 'default', ['placeholder' => 'pilih aroma', 'class' => 'form-control']) !!}
 					<p class="aa-prod-category">
@@ -51,8 +52,8 @@
 					</p>
 				</div>
 				<div class="aa-prod-view-bottom">
-					<button type="submit" class="btn aa-add-to-cart-btn"><span class="fa fa-shopping-cart"></span>Add To Cart</button>
-					<a href="#" class="aa-add-to-cart-btn">View Details</a>
+					<a href="#" class="aa-add-to-cart-btn pull-left" style="border:none;margin-top:0;">View Details</a>
+					<button type="submit" class="btn aa-add-to-cart-btn pull-right" style="border:none;margin-top:0;"><span class="fa fa-shopping-cart"></span>Add To Cart</button>
 				</div>
 			</div>
 			{!! Form::close() !!}

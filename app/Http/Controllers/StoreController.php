@@ -35,6 +35,7 @@ class StoreController extends Controller
         \Route::get(  'member/{id}',                'StoreController@profile')       ->name('store.profile')            ->middleware('authorize');
         \Route::get(  'member/{id}/{tab}',          'StoreController@profileTab')    ->name('store.profile.tab')        ->middleware('authorize');
         \Route::post( 'update-stock',               'StoreController@updateStock')   ->name('store.update-stock')       ->middleware('authorize');
+        \Route::get(  'store/products/search',      'StoreController@productSearch') ->name('store.products.search');
         \Route::get(  'daftar',                     'StoreController@daftar')        ->name('store.daftar');
         \Route::post( 'postDaftar',                 'StoreController@postDaftar')    ->name('store.postDaftar');
     }
@@ -189,6 +190,39 @@ class StoreController extends Controller
         } elseif ($user->hasRole('partners') && $tab == 'stok') {
             return view('front.member.profile-stock', compact('user'));
         }
+    }
+
+    public function addProduct() {
+        //
+    }
+
+    public function productSearch(Request $request) {
+        $return_arr = null;
+
+        $query      = $request->input('term');
+
+        $products   = Product::where('name', 'LIKE', '%'.$query.'%')->get();
+
+        foreach ($products as $product) {
+            $id              = $product->id;
+            $name            = $product->name;
+            $price           = $product->price;
+            $agenresmi_price = $product->agenresmi_price;
+            $agenlepas_price = $product->agenlepas_price;
+            $weight          = $product->weight;
+
+            $entry_arr = [
+                'id'              => $id,
+                'value'           => $name,
+                'price'           => $price,
+                'agenresmi_price' => $agenresmi_price,
+                'agenlepas_price' => $agenlepas_price,
+                'weight'          => $weight
+            ];
+            $return_arr[] = $entry_arr;
+        }
+
+        return response()->json($return_arr);
     }
 
     public function updateStock(Request $request) {

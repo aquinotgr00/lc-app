@@ -60,6 +60,8 @@ Route::group(['middleware' => 'authorize'], function () {
         \App\Http\Controllers\CandidateFollowupsController::routes();
         // Sale routes
         \App\Http\Controllers\SalesController::routes();
+        // Seed routes
+        \App\Http\Controllers\SeedsController::routes();
         // Material routes
         \App\Http\Controllers\MaterialsController::routes();
         // Purchase Order routes

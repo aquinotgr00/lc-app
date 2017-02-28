@@ -42,6 +42,8 @@
     <!-- Select2 4.0.0 -->
     <script src="{{ asset ("/bower_components/admin-lte/select2/js/select2.min.js") }}" type="text/javascript"></script>
 
+    @include('partials.body_bottom_js.sale_forms_js')
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('.delete').click(function(event){
@@ -55,7 +57,7 @@
             });
         });
 
-        $('.product').change(function() {
+        $('.productss').change(function() { // disabled this
             var currentId = $(this).attr('id').replace('product','');
 
             $('#product'+currentId).removeAttr('style');
@@ -75,6 +77,4 @@
             productValidation(currentId);
         });
     </script>
-
-    @include('partials.body_bottom_js.sale_forms_js')
 @endsection

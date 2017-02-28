@@ -108,6 +108,7 @@
                                 <td>{{ Helpers::getMaterialById($material)->stock - $value }}</td>
                                 <td>
                                     {!! Form::text('material['. $x .'][quantity]', null, ['class' => 'form-control quantity', 'id' => 'quantity'. $x .'', 'disabled']); !!}
+                                    {!! Form::hidden('material['. $x .'][need]', $value, ['id' => 'need'. $x .'', 'disabled']) !!}
                                     {!! Form::hidden('price', Helpers::getMaterialById($material)->price, ['id' => 'price'. $x .'']) !!}
                                     {!! Form::hidden('material['. $x .'][total]', null, ['id' => 'total'. $x .'', 'disabled']) !!}
                                 </td>
@@ -159,6 +160,7 @@
 
         $('.material').change(function(){
             var currentId = $(this).attr('id').replace('material', '');
+            $('#need' + currentId).prop('disabled', function(i, v) { return !v; });
             $('#total' + currentId).prop('disabled', function(i, v) { return !v; });
             $('#quantity' + currentId).prop('disabled', function(i, v) { return !v; });
         });

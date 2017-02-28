@@ -64,6 +64,10 @@ class Product extends Model
         return $this->belongsToMany('App\Models\PurchaseOrderDetail');
     }
 
+    public function seed() {
+        return $this->hasOne('App\Models\Seed');
+    }
+
     public function scopeCategorized($query, Category $category=null) {
         if ( is_null($category) ) return $query->with('categories');
         

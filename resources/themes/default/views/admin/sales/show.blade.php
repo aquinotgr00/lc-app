@@ -63,7 +63,8 @@
                     <tr>
                         <th>{{ trans('admin/sales/detail.columns.quantity') }}</th>
                         <th>{{ trans('admin/sales/detail.columns.name') }}</th>
-                        <th>{{ trans('admin/sales/detail.columns.description') }}</th>
+                        <th>Aroma</th>
+                        <th>Keterangan</th>
                         <th>{{ trans('admin/sales/detail.columns.price') }}</th>
                         <th>{{ trans('admin/sales/detail.columns.total') }}</th>
                         <th>{{ trans('admin/sales/detail.columns.weight') }}</th>
@@ -81,6 +82,7 @@
                                 <td>{{ $d->quantity }}</td>
                                 <td>{{ $d->product->name }}</td>
                                 <td>{{ $d->description }}</td>
+                                <td>{{ $d->keterangan }}</td>
                                 <td>{{ Helpers::reggo($d->price) }}</td>
                                 <td>{{ Helpers::reggo($d->total) }}</td>
                                 <td>{{ $d->weight }}</td>
@@ -88,15 +90,15 @@
                         @endforeach
                         <?php $sumber = $totber/40; ?>
                         <tr>
-                            <td colspan="5">Berat Kemasan</td>
+                            <td colspan="6">Berat Kemasan</td>
                             <td>{{ $totber }} Kg</td>
                         </tr>
                         <tr>
-                            <td colspan="5">Berat Packing</td>
+                            <td colspan="6">Berat Packing</td>
                             <td>{{ $sumber }} Kg</td>
                         </tr>
                         <tr>
-                            <td colspan="5">Total Berat </td>
+                            <td colspan="6">Total Berat </td>
                             <td>{{ $totber+$sumber }} Kg</td>
                         </tr>
                     @else

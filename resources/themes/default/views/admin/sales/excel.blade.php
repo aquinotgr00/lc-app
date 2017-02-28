@@ -61,10 +61,10 @@
       <th align="center" style="border:1px solid #000000;">Nama Produk</th>
       <th align="center" style="border:1px solid #000000;">Aroma</th>
       <th align="center" style="border:1px solid #000000;">Harga</th>
-      <th align="center" style="border:1px solid #000000;">Keterangan</th>
       <th align="center" style="border:1px solid #000000;">Qty Order</th>
       <th align="center" style="border:1px solid #000000;">Jumlah</th>
       <th align="center" style="border:1px solid #000000;">Berat</th>
+      <th align="center" style="border:1px solid #000000;">Keterangan</th>
       <th align="center" style="border:1px solid #000000;">QC</th>
       <th align="center" style="border:1px solid #000000;">Packing</th>
     </tr>
@@ -82,25 +82,25 @@
       <td style="border:1px solid #000000;">{{ $row->product->name }}</td>
       <td style="border:1px solid #000000;">{{ $row->description }}</td>
       <td style="border:1px solid #000000;">{{ Helpers::reggo($row->price) }}</td>
-      <td style="border:1px solid #000000;">{{ $row->keterangan }} Kg</td>
       <td style="border:1px solid #000000;">{{ $row->quantity }}</td>
       <td style="border:1px solid #000000;">{{ Helpers::reggo($row->total) }}</td>
       <td style="border:1px solid #000000;">{{ $row->weight }} Kg</td>
+      <td style="border:1px solid #000000;">{{ $row->keterangan }} Kg</td>
       <td style="border:1px solid #000000;"></td>
       <td style="border:1px solid #000000;"></td>
       <td>{{ $jer = $row->quantity/5 }}</td>
     </tr>
     <?php $totj = $totj + $jer; $no++; }?>
     <tr>
-      <td colspan="7" style="border:1px solid #000000;">Berat Kemasan</td>
+      <td colspan="6" style="border:1px solid #000000;">Berat Kemasan</td>
       <th style="border:1px solid #000000;">{{ $kg }} Kg</th>
     </tr>
     <tr>
-      <td colspan="7" style="border:1px solid #000000;">Berat Packing</td>
+      <td colspan="6" style="border:1px solid #000000;">Berat Packing</td>
       <th style="border:1px solid #000000;">{{ $kg/40 }} Kg</th>
     </tr>
     <tr>
-      <td align="center" colspan="6" style="border:1px solid #000000;">Jumlah</td>
+      <td align="center" colspan="5" style="border:1px solid #000000;">Jumlah</td>
       <td style="border:1px solid #000000;">{{ Helpers::reggo($nom) }}</td>
       <td style="border:1px solid #000000;">{{ $kg+($kg/40) }} Kg</td>
       <td></td>

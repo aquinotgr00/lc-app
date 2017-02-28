@@ -103,9 +103,11 @@ class PurchaseOrdersController extends Controller
         $data          = $request->only('description');
         $data['total'] = 0;
         $items         = $request->only('material');
-
         foreach ($items as $key => $pODetails) {
             foreach ($pODetails as $key => $pODetail) {
+                $material      = $this->material->find($pODetail['material_id']);
+                $newStock      = $material->stock - $pODetail['need'];
+                $material->update(['stock' => $newStock]);
                 if ( !isset($pODetail['total']) ) {
                     $pODetail['total'] = App\Models\Product::find($pODetail['product_id'])->price * $pODetail['quantity'];
                 }

@@ -11,6 +11,7 @@ use App\Repositories\Criteria\Product\ProductOrderByColumn;
 use App\Repositories\Criteria\Product\ProductsByNamesAscending;
 use App\Repositories\Criteria\Product\PerfumeWhereNameLike;
 use App\Repositories\Criteria\Product\ProductsWithSuppliers;
+use App\Models\Seed;
 
 use Illuminate\Http\Request;
 
@@ -86,8 +87,8 @@ class ProductsController extends Controller
     }
 
     public function indexCategory($slug) {
-        $node = \App\Models\Category::where('slug', $slug)->first();
-        $parent = $node->parent()->first();
+        $node     = \App\Models\Category::where('slug', $slug)->first();
+        $parent   = $node->parent()->first();
         $products = \App\Models\Product::where('category_id', $node->id)->get();
         return view('admin.products.test-index', compact('parent', 'products', 'slug'));
     }
@@ -241,24 +242,23 @@ class ProductsController extends Controller
         $products   = $this->product->pushCriteria(new ProductWhereNameLike($query))->all();
 
         foreach ($products as $product) {
-            $id              = $product->id;
-            $name            = $product->name;
-            $price           = $product->price;
-            $agenresmi_price = $product->agenresmi_price;
-            $agenlepas_price = $product->agenlepas_price;
-            $weight          = $product->weight;
-
             $entry_arr = [
-                'id'              => $id,
-                'value'           => $name,
-                'price'           => $price,
-                'agenresmi_price' => $agenresmi_price,
-                'agenlepas_price' => $agenlepas_price,
-                'weight'          => $weight
+                'id'              => $product->id,
+                'value'           => $product->name,
+                'price'           => $product->price,
+                'agenresmi_price' => $product->agenresmi_price,
+                'agenlepas_price' => $product->agenlepas_price,
+                'weight'          => $product->weight
             ];
+            if ($product->seed && $product->category_id == 10) {
+                $entry_arr['category']= 10;
+                $entry_arr['seed']    = 1;
+                $entry_arr['price_1'] = $product->seed->price_1;
+                $entry_arr['price_2'] = $product->seed->price_2;
+                $entry_arr['price_3'] = $product->seed->price_3;
+            }
             $return_arr[] = $entry_arr;
         }
-
         return response()->json($return_arr);
     }
 

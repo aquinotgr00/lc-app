@@ -34,7 +34,7 @@
                             <tr>
                                 <th>No PO</th>
                                 <th>Customer</th>
-				<th>Tipe Customer</th>
+				                <th>Tipe Customer</th>
                                 <th>Tanggal Order</th>
                                 <th>Tanggal Transfer</th>
                                 <th>Status</th>
@@ -42,7 +42,7 @@
                                 <th>Bahan Baku</th>
                                 <th>Perlengkapan</th>
                                 <th>Ongkir</th>
-				<th>Packing</th>
+				                <th>Packing</th>
                                 <th>Nominal</th>
                             </tr>
                         </thead>

@@ -109,7 +109,7 @@ class SalesController extends Controller
         $data    = $request->all();
         $items   = $request->input('item');
         $nominal = 0;
-
+        
         // because database cannot read null
         if ($data['transfer_date'] == '') {
             $data['transfer_date'] = null;
@@ -199,7 +199,7 @@ class SalesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data    = $request->except(['item', 'productName', 'baseWeight', 'customer_id', '_method', '_token']);
+        $data    = $request->except(['selectPrice', 'item', 'productName', 'baseWeight', 'customer_id', '_method', '_token']);
         $items   = $request->input('item');
         $nominal = 0;
         $status  = $this->sale->find($id)->status;
@@ -353,15 +353,15 @@ class SalesController extends Controller
                                     ->pushCriteria(new SalesOrderAfter($_POST['eStart']))
                                     ->pushCriteria(new SalesOrderBefore($_POST['eEnd']))
                                     ->all();
-                $chemicalIndex      = [1,2,3,4,8];
-        		$materialIndex      = [6,7];
+                $chemicalIndex      = [2,5,6,7,8,9];
+        		$materialIndex      = [10,11];
                 $chemicals          = 0;
         		$materials          = 0;
                 $equipments         = 0;
                 $no                 = 1;
                 $total              = 0;
                 $total_shipping_fee = 0;
-		$total_packing_fee  = 0;
+		        $total_packing_fee  = 0;
 
                 foreach ($sales as $key => $row) {
         	        foreach($row->saleDetails as $key => $d) {
@@ -401,8 +401,8 @@ class SalesController extends Controller
                             ->pushCriteria(new SalesOrderBefore($_POST['end']))
                             ->all();
 
-        $chemicalIndex      = [1,2,3,4,8];
-		$materialIndex      = [6,7];
+        $chemicalIndex      = [2,5,6,7,8,9];
+		$materialIndex      = [10,11];
 
 		$chemicals          = 0;
 		$materials          = 0;
@@ -414,9 +414,9 @@ class SalesController extends Controller
         $total_packing_fee  = 0;
         foreach ($sales as $key => $row) {
             foreach($row->saleDetails as $key => $d) {
-                if(in_array( $d->product->category, $chemicalIndex)) {
+                if(in_array( $d->product->category_id, $chemicalIndex)) {
                     $chemicals += $d->total;
-                } elseif (in_array( $d->product->category, $materialIndex)) {
+                } elseif (in_array( $d->product->category_id, $materialIndex)) {
                     $materials += $d->total;
                 } else {
                     $equipments += $d->total;

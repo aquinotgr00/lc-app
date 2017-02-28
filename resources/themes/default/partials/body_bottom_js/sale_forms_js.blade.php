@@ -97,15 +97,35 @@
             select       : function(e, ui) {
                 currentId = $(this).attr('id').replace('product', '');
                 type      = $('#type').val();
-                if(type == 1 || type == 3 || type == 6 || type == 8) {
-                    $('#displayPrice'+currentId).val(ui.item.agenlepas_price);
-                    $('#price'+currentId).val(ui.item.agenlepas_price);
-                } else if(type == 2 || type == 7) {
-                    $('#displayPrice'+currentId).val(ui.item.agenresmi_price);
-                    $('#price'+currentId).val(ui.item.agenresmi_price);
+                if (ui.item.seed == 1 && ui.item.category == 10) {
+                    $('#displayPrice'+currentId).fadeOut();
+                    var optDef    = document.createElement('option');
+                    optDef.innerHTML = 'Pilih';
+                    var opt       = document.createElement('option');
+                    opt.value     = ui.item.price_1;
+                    opt.innerHTML = '1 liter';
+                    var opt2      = document.createElement('option');
+                    opt2.value    = ui.item.price_2;
+                    opt2.innerHTML= '600 ml';
+                    var opt3      = document.createElement('option');
+                    opt3.value    = ui.item.price_3;
+                    opt3.innerHTML= '100 ml';
+                    document.getElementById('selectPrice'+currentId).add(optDef);
+                    document.getElementById('selectPrice'+currentId).add(opt);
+                    document.getElementById('selectPrice'+currentId).add(opt2);
+                    document.getElementById('selectPrice'+currentId).add(opt3);
+                    $('#selectPrice'+currentId).fadeIn();
                 } else {
-                    $('#displayPrice'+currentId).val(ui.item.price);
-                    $('#price'+currentId).val(ui.item.price);
+                    if (type == 1 || type == 3 || type == 6 || type == 8) {
+                        $('#displayPrice'+currentId).val(ui.item.agenlepas_price);
+                        $('#price'+currentId).val(ui.item.agenlepas_price);
+                    } else if (type == 2 || type == 7) {
+                        $('#displayPrice'+currentId).val(ui.item.agenresmi_price);
+                        $('#price'+currentId).val(ui.item.agenresmi_price);
+                    } else {
+                        $('#displayPrice'+currentId).val(ui.item.price);
+                        $('#price'+currentId).val(ui.item.price);
+                    }
                 }
 
                 $('#baseWeight'+currentId).val(ui.item.weight);
@@ -113,6 +133,12 @@
                 $('#productName'+currentId).val(ui.item.id);
                 $('#product'+currentId).removeAttr('style');
             }
+        });
+
+        $('.selectt').change(function () {
+            currentId = $(this).attr('id').replace('selectPrice', '');
+            $('#price'+currentId).val($('#selectPrice'+currentId).val());
+            $('#ket'+currentId).val($('#selectPrice'+currentId+'  option:selected').text());
         });
 
         function productValidation(currentId) {

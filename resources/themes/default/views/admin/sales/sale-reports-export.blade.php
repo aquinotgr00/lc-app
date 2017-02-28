@@ -6,7 +6,7 @@
         <tr>
             <th>No</th>
             <th>Customer</th>
-	    <th>Tipe Customer</th>
+	        <th>Tipe Customer</th>
             <th>Tanggal Order</th>
             <th>Tanggal Transfer</th>
             <th>Status</th>
@@ -14,7 +14,7 @@
             <th>Bahan Baku</th>
             <th>Perlengkapan</th>
             <th>Ongkir</th>
-	    <th>Packing</th>
+	        <th>Packing</th>
             <th>Nominal</th>
         </tr>
         <?php
@@ -24,11 +24,11 @@
         foreach ($sales as $key => $sale):
             $total               += $sale->nominal;
             $total_shipping_fee  += $sale->shipping_fee;
-	    $total_packing_fee   += $sale->packing_fee;
+	        $total_packing_fee   += $sale->packing_fee;
             foreach( $sale->saleDetails as $key => $d ):
-                if( in_array($d->product->category, $chemicalIndex) ) {
+                if( in_array($d->product->category_id, $chemicalIndex) ) {
                     $totalChemicals += $d->total;
-                } elseif ( in_array($d->product->category, $materialIndex) ) {
+                } elseif ( in_array($d->product->category_id, $materialIndex) ) {
                     $totalMaterials += $d->total;
                 } else {
                     $totalEquipments += $d->total;
@@ -39,7 +39,7 @@
                     {!! link_to_route('admin.sales.show', $sale->id.'-'.date("d-m-Y", strtotime($sale->order_date)), $sale->id) !!}
                 </td>
                 <td>{{ $sale->customer->name }}</td>
-		<td>{{ Helpers::getCustomerTypeDisplayName($sale->customer->type) }}</td>
+		        <td>{{ Helpers::getCustomerTypeDisplayName($sale->customer->type) }}</td>
                 <td>{{ $sale->order_date }}</td>
                 <td>{{ $sale->transfer_date }}</td>
                 <td>
@@ -51,7 +51,7 @@
                 <td>{{ $totalMaterials }}</td>
                 <td>{{ $totalEquipments }}</td>
                 <td>{{ $sale->shipping_fee }}</td>
-		<td>{{ $sale->packing_fee }}</td>
+		        <td>{{ $sale->packing_fee }}</td>
                 <td>{{ ($sale->nominal-$sale->discount)+$sale->shipping_fee+$sale->packing_fee }}</td>
             </tr>
             <?php
@@ -69,7 +69,7 @@
             <td>{{ Helpers::reggo($materials) }}</td>
             <td>{{ Helpers::reggo($equipments) }}</td>
             <td>{{ Helpers::reggo($total_shipping_fee) }}</td>
-	    <td>{{ Helpers::reggo($total_packing_fee) }}</td>
+	        <td>{{ Helpers::reggo($total_packing_fee) }}</td>
             <td>{{ Helpers::reggo($total + $total_shipping_fee + $total_packing_fee) }}</td>
         </tr>
     </tbody>

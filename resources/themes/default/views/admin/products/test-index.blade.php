@@ -1,13 +1,3 @@
-{{-- 
-@foreach($parent->getDescendants() as $descendant)
-	<li><a href="{{ route('admin.products.index-category', $descendant->slug) }}">{{ $descendant->name }}</a></li>
-@endforeach
-
-<hr>
-
-@foreach($products as $value)
-	<li>{{ $value->name }}</li>
-@endforeach --}}
 @extends('layouts.master')
 
 @section('head_extra')

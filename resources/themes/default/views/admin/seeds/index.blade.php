@@ -45,14 +45,16 @@
                         <thead>
                             <th>Nama</th>
                             <th>Harga 1 liter</th>
-                            <th>Harga 600 ml</th>
+                            <th>Harga 500 ml</th>
+                            <th>Harga 250 ml</th>
                             <th>Harga 100 ml</th>
                             <th>Aksi</th>
                         </thead>
                         <tfoot>
                             <th>Nama</th>
                             <th>Harga 1 liter</th>
-                            <th>Harga 600 ml</th>
+                            <th>Harga 500 ml</th>
+                            <th>Harga 250 ml</th>
                             <th>Harga 100 ml</th>
                             <th>Aksi</th>
                         </tfoot>
@@ -60,6 +62,7 @@
                             @foreach($seeds as $p)
                                 <tr>
                                     <td>{{ $p->name }}</td>
+                                    <td>{{ Helpers::reggo($p->price) }}</td>
                                     <td>{{ Helpers::reggo($p->seed->price_1) }}</td>
                                     <td>{{ Helpers::reggo($p->seed->price_2) }}</td>
                                     <td>{{ Helpers::reggo($p->seed->price_3) }}</td>

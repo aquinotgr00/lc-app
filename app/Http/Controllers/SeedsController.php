@@ -17,7 +17,6 @@ class SeedsController extends Controller
         \Route::group(['prefix' => 'seeds'], function () {
             \Route::get(    '{id}/edit',    'SeedsController@edit')  ->name('admin.seeds.edit');
             \Route::patch(  '{id}/update',  'SeedsController@update')->name('admin.seeds.update');
-            \Route::get(    '/search',      'SeedsController@search')->name('admin.seeds.search');
         });
     }
     /**

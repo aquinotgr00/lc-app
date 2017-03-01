@@ -26,10 +26,6 @@
                         Sort by status&nbsp;
                         <i class="fa fa-search"></i>
                     </a>
-
-                    <div class="box-tools pull-right">
-                      <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-                    </div>
                 </div>
                 <div class="box-body">
                     <div class="table-responsive">

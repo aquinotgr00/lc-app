@@ -7,9 +7,9 @@ foreach ($sales as $key => $sale):
     $total_shipping_fee  += $sale->shipping_fee;
     $total_packing_fee   += $sale->packing_fee;
     foreach( $sale->saleDetails as $key => $d ):
-        if( in_array($d->product->category, $chemicalIndex) ) {
+        if( in_array($d->product->category_id, $chemicalIndex) ) {
             $totalChemicals += $d->total;
-        } elseif ( in_array($d->product->category, $materialIndex) ) {
+        } elseif ( in_array($d->product->category_id, $materialIndex) ) {
             $totalMaterials += $d->total;
         } else {
             $totalEquipments += $d->total;

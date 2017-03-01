@@ -21,14 +21,18 @@
                     <thead>
                         <tr>
                             <th>Material Name</th>
+                            <th>HPP</th>
                             <th>Quantity</th>
+                            <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($formula->formulaDetails as $d)
                         <tr>
                             <td><a href="#">{{ $d->material->name }}</a></td>
+                            <td>{{ Helpers::reggo($d->material->price) }}</td>
                             <td>{{ $d->quantity }}</td>
+                            <td>{{ Helpers::reggo($d->material->price*$d->quantity) }}</td>
                         </tr>
                         @endforeach
                     </tbody>

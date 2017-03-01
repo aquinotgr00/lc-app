@@ -155,7 +155,7 @@ class SalesController extends Controller
 
         Flash::success( trans('admin/sales/general.status.created') ); // 'Sale successfully created');
 
-        return redirect('admin/sales');
+        return redirect( route('admin.sales.show', $newSale->id) );
     }
 
     /**
@@ -412,18 +412,19 @@ class SalesController extends Controller
         $total              = 0;
         $total_shipping_fee = 0;
         $total_packing_fee  = 0;
+
         foreach ($sales as $key => $row) {
             foreach($row->saleDetails as $key => $d) {
-                if(in_array( $d->product->category_id, $chemicalIndex)) {
+                if( in_array($d->product->category_id, $chemicalIndex) ) {
                     $chemicals += $d->total;
-                } elseif (in_array( $d->product->category_id, $materialIndex)) {
+                } else if ( in_array($d->product->category_id, $materialIndex) ) {
                     $materials += $d->total;
                 } else {
                     $equipments += $d->total;
                 }
             }
         }
-
+        
         return view('admin.sales.get-report-data', compact(
                 'sales',
                 'chemicalIndex',

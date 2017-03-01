@@ -39,23 +39,41 @@
                         {!! Form::label('description', trans('admin/products/general.columns.description')) !!}
                         {!! Form::textarea('description', null, ['rows' => '3', 'class' => 'form-control']) !!}
                     </div>
-
-                    <div class="input-group">
-                        <span class="input-group-addon">Rp.</span>
-                        {!! Form::text('seed[price_1]', null, ['placeholder' => 'Harga 1 Liter', 'class' => 'form-control']) !!}
-                        <span class="input-group-addon">.000</span>
+                    
+                    <div class="form-group">
+                        {!! Form::label('price', 'Harga 1 Liter', ['class' => 'control-label']) !!}
+                        <div class="input-group">
+                            <span class="input-group-addon">Rp.</span>
+                            {!! Form::text('price', null, ['placeholder' => 'Harga 1 Liter', 'class' => 'form-control']) !!}
+                            <span class="input-group-addon">.000</span>
+                        </div>
                     </div>
                     <br>
-                    <div class="input-group">
-                        <span class="input-group-addon">Rp.</span>
-                        {!! Form::text('seed[price_2]', null, ['placeholder' => 'Harga 600 ml', 'class' => 'form-control']) !!}
-                        <span class="input-group-addon">.000</span>
+                    <div class="form-group">
+                        {!! Form::label('price_1', 'Harga 500 ml', ['class' => 'control-label']) !!}
+                        <div class="input-group">
+                            <span class="input-group-addon">Rp.</span>
+                            {!! Form::text('seed[price_1]', null, ['placeholder' => 'Harga 500 ml', 'class' => 'form-control']) !!}
+                            <span class="input-group-addon">.000</span>
+                        </div>
                     </div>
                     <br>
-                    <div class="input-group">
-                        <span class="input-group-addon">Rp.</span>
-                        {!! Form::text('seed[price_3]', null, ['placeholder' => 'Harga 100 ml', 'class' => 'form-control']) !!}
-                        <span class="input-group-addon">.000</span>
+                    <div class="form-group">
+                        {!! Form::label('price_2', 'Harga 250 ml', ['class' => 'control-label']) !!}
+                        <div class="input-group">
+                            <span class="input-group-addon">Rp.</span>
+                            {!! Form::text('seed[price_2]', null, ['placeholder' => 'Harga 250 ml', 'class' => 'form-control']) !!}
+                            <span class="input-group-addon">.000</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        {!! Form::label('price_3', 'Harga 100 ml', ['class' => 'control-label']) !!}
+                        <div class="input-group">
+                            <span class="input-group-addon">Rp.</span>
+                            {!! Form::text('seed[price_3]', null, ['placeholder' => 'Harga 100 ml', 'class' => 'form-control']) !!}
+                            <span class="input-group-addon">.000</span>
+                        </div>
                     </div>
                     <br>
                     <div class="form-group">

@@ -6,21 +6,9 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        //  purchase order tab
-        $('#supplier_name').autocomplete({
-            source   : '/admin/suppliers/search',
-            minLength: 3,
-            autoFocus: true,
-            select:function(e, ui){
-                // asigning input column from the data that we got above
-                $('#supplier_id').val(ui.item.id);
-                vm.newMaterial.supplier      = ui.item.id;
-                vm.newMaterial.supplier_name = ui.item.value;
-            }
-        });
         // details tab
         $('#material_name').autocomplete({
-            source   : '/admin/products/search',
+            source   : '/admin/material/search',
             minLength: 2,
             autoFocus: true,
             select:function(e,ui){

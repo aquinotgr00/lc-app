@@ -13,9 +13,9 @@ class PurchaseOrderDetail extends Model
         return $this->belongsTo('App\Models\PurchaseOrder');
     }
 
-    public function product()
+    public function material()
     {
-        return $this->belongsTo('App\Models\Product');
+        return $this->belongsTo('App\Models\Material');
     }
 
     public function supplier()

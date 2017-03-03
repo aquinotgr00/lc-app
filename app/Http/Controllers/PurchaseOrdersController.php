@@ -103,6 +103,7 @@ class PurchaseOrdersController extends Controller
         $data          = $request->only('description');
         $data['total'] = 0;
         $items         = $request->only('material');
+        dd($items);
         foreach ($items as $key => $pODetails) {
             foreach ($pODetails as $key => $pODetail) {
                 $material      = $this->material->find($pODetail['material_id']);

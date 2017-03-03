@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\MaterialRepository as Material;
 use App\Repositories\Criteria\Material\MaterialsOutOfStock;
+use App\Repositories\Criteria\Material\MaterialWhereNameLike;
 
 use Illuminate\Http\Request;
 
@@ -22,15 +23,16 @@ class MaterialsController extends Controller
 
     static function routes() {
         \Route::group(['prefix' => 'materials'], function () {
-            \Route::get(  '/',                     'MaterialsController@index')             ->name('admin.materials.index');
-            \Route::post( '/',                     'MaterialsController@store')             ->name('admin.materials.store');
-            \Route::patch('/{mId}',                'MaterialsController@update')            ->name('admin.materials.update');
-            \Route::get(  '/create',               'MaterialsController@create')            ->name('admin.materials.create');
-            \Route::get(  '/out-of-stock',         'MaterialsController@outOfStock')        ->name('admin.materials.out-of-stock');
-            \Route::post( '/createPurchaseOrder',  'MaterialsController@createSelected')    ->name('admin.materials.order-selected');
-            \Route::get(  '/{mId}/edit',           'MaterialsController@edit')              ->name('admin.materials.edit');
-            \Route::get(  '/{mId}/delete',         'MaterialsController@destroy')           ->name('admin.materials.delete');
-            \Route::get(  '/{mId}/confirm-delete', 'MaterialsController@getModalDelete')    ->name('admin.materials.confirm-delete');
+            \Route::get(  '/',                    'MaterialsController@index')             ->name('admin.materials.index');
+            \Route::post( '/',                    'MaterialsController@store')             ->name('admin.materials.store');
+            \Route::patch('{mId}',                'MaterialsController@update')            ->name('admin.materials.update');
+            \Route::get(  'create',               'MaterialsController@create')            ->name('admin.materials.create');
+            \Route::get(  'out-of-stock',         'MaterialsController@outOfStock')        ->name('admin.materials.out-of-stock');
+            \Route::post( 'createPurchaseOrder',  'MaterialsController@createSelected')    ->name('admin.materials.order-selected');
+            \Route::get(  'search',               'MaterialsController@search')            ->name('admin.materials.search');
+            \Route::get(  '{mId}/edit',           'MaterialsController@edit')              ->name('admin.materials.edit');
+            \Route::get(  '{mId}/delete',         'MaterialsController@destroy')           ->name('admin.materials.delete');
+            \Route::get(  '{mId}/confirm-delete', 'MaterialsController@getModalDelete')    ->name('admin.materials.confirm-delete');
         });
     }
 
@@ -169,5 +171,23 @@ class MaterialsController extends Controller
     public function createSelected(Request $request)
     {
         dd($request->all());
+    }
+
+    public function search(Request $request) {
+        $return_arr = null;
+
+        $query      = $request->input('term');
+
+        $materials  = $this->material->pushCriteria(new MaterialWhereNameLike($query))->all();
+
+        foreach ($materials as $value) {
+            $entry_arr = [
+                'id'              => $value->id,
+                'value'           => $value->name,
+                'price'           => $value->price
+            ];
+            $return_arr[] = $entry_arr;
+        }
+        return response()->json($return_arr);
     }
 }

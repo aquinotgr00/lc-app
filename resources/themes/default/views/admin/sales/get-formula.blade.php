@@ -10,7 +10,7 @@
         <div class="col-md-6">
             <div class="box box-solid">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Collapsible Accordion</h3>
+                    <h3 class="box-title">Item di PO</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -92,7 +92,7 @@
                                 <th>{{ trans('admin/formulas/general.columns.materials') }}</th>
                                 <th>{{ trans('admin/formulas/general.columns.total') }}</th>
                                 <th>{{ trans('admin/formulas/general.columns.stock') }}</th>
-                                <th>{{ trans('admin/formulas/general.columns.need') }}</th>
+                                <th>Harga</th>
                                 <th>{{ trans('admin/formulas/general.columns.quantity') }}</th>
                             </tr>
                         </thead>
@@ -105,16 +105,20 @@
                                 <td>{{ Helpers::getMaterialById($material)->name }}</td>
                                 <td>{{ $value }}</td>
                                 <td>{{ Helpers::getMaterialById($material)->stock }}</td>
-                                <td>{{ Helpers::getMaterialById($material)->stock - $value }}</td>
+                                <td>{{ Helpers::reggo(Helpers::getMaterialById($material)->price) }}</td>
                                 <td>
                                     {!! Form::text('material['. $x .'][quantity]', null, ['class' => 'form-control quantity', 'id' => 'quantity'. $x .'', 'disabled']); !!}
                                     {!! Form::hidden('material['. $x .'][need]', $value, ['id' => 'need'. $x .'', 'disabled']) !!}
                                     {!! Form::hidden('price', Helpers::getMaterialById($material)->price, ['id' => 'price'. $x .'']) !!}
-                                    {!! Form::hidden('material['. $x .'][total]', null, ['id' => 'total'. $x .'', 'disabled']) !!}
+                                    {!! Form::hidden('material['. $x .'][total]', null, ['id' => 'total'. $x .'', 'disabled', 'class' => 'totall']) !!}
                                 </td>
                             </tr>
                             <?php $x++ ?>
                             @endforeach
+                            <tr>
+                                <th colspan="5">Total</th>
+                                <td id="allTotal"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -124,12 +128,6 @@
                     <h3 class="box-title">{{ trans('admin/purchase-orders/general.page.create.section-title') }}</h3>
                 </div>
                 <div class="box-body">
-                    <div class="form-group">
-                        {!! Form::hidden('supplier_id', null, ['id' => 'supplier_id']) !!}
-                        {!! Form::label('supplier', trans('admin/purchase-orders/general.columns.supplier')) !!}
-                        {!! Form::text('supplier', null, ['class' => 'form-control', 'id' => 'supplier_name']) !!}
-                    </div>
-
                     <div class="form-group">
                         {!! Form::label('description', trans('admin/purchase-orders/general.columns.description')) !!}
                         {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => 3]) !!}
@@ -169,18 +167,16 @@
             var currentId = $(this).attr('id').replace('quantity', '');
             var total = $('#price' + currentId).val() * $('#quantity' + currentId).val();
             $('#total' + currentId).val(total);
-        });
 
-        $(document).ready(function () {
-            $('#supplier_name').autocomplete({
-                source   : '/admin/suppliers/search',
-                minLength: 3,
-                autoFocus: true,
-                select:function(e, ui){
-                    // asigning input column from the data that we got above
-                    $('#supplier_id').val(ui.item.id);
+            var arr = document.getElementsByClassName('totall');
+            var tot = 0;
+            for(var i=0;i<arr.length;i++){
+                if(parseInt(arr[i].value)) {
+                    tot += parseInt(arr[i].value);
                 }
-            });
+            }
+            console.log(tot);
+            $('#allTotal').html(tot);
         });
     </script>
 @endsection

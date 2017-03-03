@@ -52,16 +52,11 @@ class Product extends Model
 
     public function formula()
     {
-        return $this->belongsTo('App\Models\Formula');
+        return $this->hasOne('App\Models\Formula');
     }
 
     public function storePartnerProducts() {
         return $this->hasMany('App\Models\StorePartnerProduct');
-    }
-
-    public function purchaseOrderDetails()
-    {
-        return $this->belongsToMany('App\Models\PurchaseOrderDetail');
     }
 
     public function seed() {

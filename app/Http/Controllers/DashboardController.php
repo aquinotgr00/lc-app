@@ -46,8 +46,8 @@ class DashboardController extends Controller
             return $sale->nominal + $sale->shipping_fee + $sale->packing_fee;
         });
 
-        $chemicalIndex      = [1,2,3,4,8];
-        $materialIndex      = [6,7];
+        $chemicalIndex      = [2,5,6,7,8,9];
+        $materialIndex      = [10,11];
 
         $saleDetails = [
             'chemicals' => [
@@ -70,7 +70,7 @@ class DashboardController extends Controller
             ],
         ];
 
-         $sales = Sale::
+        $sales = Sale::
             whereBetween('transfer_date', [Carbon::now()->startOfMonth(), Carbon::today()])
             ->get();
 
@@ -120,10 +120,8 @@ class DashboardController extends Controller
             }
         }
 
-        $page_title = "Dashboard";
+        $page_title       = "Dashboard";
         $page_description = "This is the dashboard";
-
-        flash('Welcome Aboard!');
 
         return view('dashboard', compact(
             'page_title',

@@ -260,6 +260,20 @@ class SalesController extends Controller
         $sale         = $this->sale->find($id);
         $sale->status = $status;
         $sale->save();
+
+        if ($sale->status == 2) {
+            foreach ($sale->saleDetails as $key => $d) {
+                $quantity = $d->quantity;
+                if($d->product->formula) {
+                    foreach ($d->product->formula->formulaDetails as $key => $value) {
+                        $totalNeeded = $value->quantity*$quantity;
+                        $material = $value->material;
+                        $material->stock -= $totalNeeded;
+                        $material->save();
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -424,7 +438,7 @@ class SalesController extends Controller
                 }
             }
         }
-        
+
         return view('admin.sales.get-report-data', compact(
                 'sales',
                 'chemicalIndex',
@@ -503,7 +517,7 @@ class SalesController extends Controller
                 $data[$d->product->name]['materials'] = $formula->formulaDetails;
             }
         }
-
+        
         return view('admin.sales.get-formula', compact(
             'data',
             'total',

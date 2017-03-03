@@ -29,17 +29,17 @@
                     <tbody>
                         <?php $total = 0; ?>
                         @foreach($formula->formulaDetails as $d)
-                        <?php $total += ($d->material->price*$d->quantity); ?>
+                        <?php $total += $d->material->price*$d->quantity; ?>
                         <tr>
                             <td><a href="#">{{ $d->material->name }}</a></td>
                             <td>{{ Helpers::reggo($d->material->price) }}</td>
                             <td>{{ $d->quantity }}</td>
-                            <td>{{ Helpers::reggo($d->material->price*$d->quantity) }}</td>
+                            <td>{{ Helpers::reggo(round($d->material->price*$d->quantity)) }}</td>
                         </tr>
                         @endforeach
                         <tr>
                             <th colspan="3">Total</th>
-                            <td>{{ Helpers::reggo($total) }}</td>
+                            <td>{{ Helpers::reggo(round($total)) }}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -93,7 +93,7 @@
                         <tr>
                             <th></th>
                             <th>purchasing</th>
-                            <th>BOD / GM</th>
+                            <th>HOD / CEO</th>
                         </tr>
                     </tfoot>
                     <tbody>

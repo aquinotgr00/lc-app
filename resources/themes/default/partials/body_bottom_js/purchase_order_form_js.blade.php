@@ -8,7 +8,7 @@
     $(document).ready(function() {
         // details tab
         $('#material_name').autocomplete({
-            source   : '/admin/material/search',
+            source   : '/admin/materials/search',
             minLength: 2,
             autoFocus: true,
             select:function(e,ui){

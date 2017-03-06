@@ -71,13 +71,8 @@ class FormulasController extends Controller
     {
         $page_title       = trans('admin/formulas/general.page.create.title');
         $page_description = trans('admin/formulas/general.page.create.description');
-
-        $seeds = DB::table('products')
-                ->where('category_id', 10)
-                ->join('seeds', 'products.id', '=', 'seeds.product_id')
-                ->lists('products.name', 'seeds.id');
                 
-        return view('admin.formulas.create', compact('page_title', 'page_description', 'seeds'));
+        return view('admin.formulas.create', compact('page_title', 'page_description'));
     }
 
     /**

@@ -27,8 +27,4 @@ class Formula extends Model
     {
         return $this->hasMany('App\Models\FormulaDetail');
     }
-
-    public function seed() {
-        return $this->hasOne('App\Models\Seed');
-    }
 }

@@ -218,8 +218,8 @@ class SalesController extends Controller
         }
 
         if ($data['transfer_date'] != '' && $data['transfer_date'] != '0000-00-00') {
-            if ($status == 1) {
-                $data['status'] = 2;
+            if ($status == 6) {
+                $data['status'] = 1;
             }
         }
 

@@ -45,12 +45,14 @@ return [
   ],
 
   'sale-status' => [
-      '1' => 'New',
-      '2' => 'Release',
-      '3' => 'Process Problem',
-      '4' => 'Ready Ship',
-      '5' => 'Shipped',
-      '6' => 'Pending'
+      '1' => 'Pending',
+      '2' => 'New',
+      '3' => 'Release',
+      '4' => 'Process Problem',
+      '5' => 'Ready Hold',
+      '6' => 'Ready Ship',
+      '7' => 'Ship',
+      '8' => 'Finished'
   ],
 
   'supplier-categories' => [

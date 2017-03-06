@@ -503,11 +503,12 @@ class SalesController extends Controller
 
     public function formula($id)
     {
-        $sale   = $this->sale->pushCriteria(new SalesWithSaleDetails())->find($id);
-        $data   = [];
-        $total  = [];
-        $newVar = [];
-        $x      = 1;
+        $sale      = $this->sale->pushCriteria(new SalesWithSaleDetails())->find($id);
+        $data      = [];
+        $total     = [];
+        $totalSeed = [];
+        $newVar    = [];
+        $x         = 1;
 
         $page_title       = trans('admin/sales/general.page.formula.title');
         $page_description = trans('admin/sales/general.page.formula.description', ['name' => $sale->customer->name]);
@@ -538,6 +539,7 @@ class SalesController extends Controller
         return view('admin.sales.get-formula', compact(
             'data',
             'total',
+            'totalSeed',
             'newVar',
             'page_title',
             'page_description',

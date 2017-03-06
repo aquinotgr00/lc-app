@@ -103,25 +103,39 @@ class PurchaseOrdersController extends Controller
         $data          = $request->only('description');
         $data['total'] = 0;
         $items         = $request->only('material');
-        dd($items);
-        foreach ($items as $key => $pODetails) {
-            foreach ($pODetails as $key => $pODetail) {
-                $material      = $this->material->find($pODetail['material_id']);
-                $newStock      = $material->stock - $pODetail['need'];
+        $seeds         = $request->only('seed');
+
+        foreach ($items as $key => $poDetails) {
+            foreach ($poDetails as $key => $poDetail) {
+                $material      = $this->material->find($poDetail['material_id']);
+                $newStock      = $material->stock - $poDetail['need'];
                 $material->update(['stock' => $newStock]);
-                if ( !isset($pODetail['total']) ) {
-                    $pODetail['total'] = App\Models\Product::find($pODetail['product_id'])->price * $pODetail['quantity'];
-                }
-                $data['total'] += $pODetail['total'];
+                $data['total'] += $poDetail['total'];
+            }
+        }
+
+        foreach ($seeds as $key => $poDetails) {
+            foreach ($poDetails as $key => $poDetail) {
+                $seed      = \App\Models\Seed::find($poDetail['seed_id']);
+                $newStock  = $seed->stock - $poDetail['need'];
+                $seed->update(['stock' => $newStock]);
+                $data['total'] += $poDetail['total'];
             }
         }
 
         $newPurchaseOrder = $this->purchaseOrder->create($data);
 
-        foreach ($items as $key => $pODetails) {
-            foreach ($pODetails as $key => $pODetail) {
-                $pODetail['purchase_order_id'] = $newPurchaseOrder->id;
-                $this->purchaseOrderDetail->create($pODetail);
+        foreach ($items as $key => $poDetails) {
+            foreach ($poDetails as $key => $poDetail) {
+                $poDetail['purchase_order_id'] = $newPurchaseOrder->id;
+                $this->purchaseOrderDetail->create($poDetail);
+            }
+        }
+
+        foreach ($seeds as $key => $poDetails) {
+            foreach ($poDetails as $key => $poDetail) {
+                $poDetail['purchase_order_id'] = $newPurchaseOrder->id;
+                $this->purchaseOrderDetail->create($poDetail);
             }
         }
 
@@ -276,6 +290,8 @@ class PurchaseOrdersController extends Controller
         $purchaseOrder = $this->purchaseOrder->pushCriteria(new PurchaseOrdersWithDetails())->find($id);
 
         foreach ($purchaseOrder->purchaseOrderDetails as $key => $detail) {
+            $detail->material->stock += $detail->quantity;
+            $detail->material->save();
             $detail->accepted = 1;
             $detail->save();
         }

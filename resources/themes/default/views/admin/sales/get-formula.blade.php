@@ -53,6 +53,20 @@
                                                 <td>{{ $val['quantity'] * $saleDetail['quantity'] }}</td>
                                             </tr>
                                         @endforeach
+                                        @if( isset($saleDetail['seed']) )
+                                        <?php
+                                            if ( isset( $totalSeed[$saleDetail['description']] ) ) {
+                                                    $totalSeed[$saleDetail['description']] += $saleDetail['seed'] * $saleDetail['quantity'];
+                                                } else {
+                                                    $totalSeed[$saleDetail['description']] = 0 + $saleDetail['seed'] * $saleDetail['quantity'];
+                                                }
+                                        ?>
+                                        <tr>
+                                            <td>{{ $saleDetail['description'] }}</td>
+                                            <td>{{ $saleDetail['seed'] }}</td>
+                                            <td>{{ $saleDetail['seed'] * $saleDetail['quantity'] }}</td>
+                                        </tr>
+                                        @endif
                                     </table>
                                 </div>
                             </div>
@@ -63,13 +77,8 @@
                 </div>
                 <!-- /.box-body -->
             </div>
-            <!-- /.box -->
         </div>
         <div class="col-md-6">
-            <a href="#" class="btn btn-default" disabled><i class="fa fa-print"></i> Print</a>
-            <a href="#" class="btn btn-default" disabled><i class="fa fa-print"></i> Print</a>
-            <a href="#" class="btn btn-default" disabled><i class="fa fa-print"></i> Print</a>
-            <a href="{{ route('admin.sales.show', $sale->id) }}" class="btn btn-default"><i class="fa fa-times"></i> Close</a>
         </div>
     </div>
 
@@ -115,8 +124,26 @@
                             </tr>
                             <?php $x++ ?>
                             @endforeach
+                            @foreach($totalSeed as $name => $value)
                             <tr>
-                                <th colspan="5">Total</th>
+                                <td align="center">
+                                    {!! Form::checkbox('seed['. $x .'][seed_id]', Helpers::getSeedByName($name)->seed->id, false, ['class' => 'material', 'id' => 'material'. $x .'']) !!}
+                                </td>
+                                <td>{{ $name }}</td>
+                                <td>{{ $value }}</td>
+                                <td>{{ Helpers::getSeedByName($name)->seed->stock }}</td>
+                                <td>{{ Helpers::reggo(Helpers::getSeedByName($name)->price) }}</td>
+                                <td>
+                                    {!! Form::text('seed['. $x .'][quantity]', null, ['class' => 'form-control quantity', 'id' => 'quantity'. $x .'', 'disabled']); !!}
+                                    {!! Form::hidden('seed['. $x .'][need]', $value, ['id' => 'need'. $x .'', 'disabled']) !!}
+                                    {!! Form::hidden('price', Helpers::getSeedByName($name)->price, ['id' => 'price'. $x .'']) !!}
+                                    {!! Form::hidden('seed['. $x .'][total]', null, ['id' => 'total'. $x .'', 'disabled', 'class' => 'totall']) !!}
+                                </td>
+                            </tr>
+                            <?php $x++ ?>
+                            @endforeach
+                            <tr>
+                                <th colspan="4">Total</th>
                                 <td id="allTotal"></td>
                             </tr>
                         </tbody>
@@ -144,6 +171,8 @@
 @endsection
 
 @section('body_bottom')
+    <!-- Vue JS -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.22/vue.min.js" type="text/javascript"></script>
 
     <!-- autocomplete UI -->
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
@@ -175,7 +204,6 @@
                     tot += parseInt(arr[i].value);
                 }
             }
-            console.log(tot);
             $('#allTotal').html(tot);
         });
     </script>

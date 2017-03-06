@@ -11,7 +11,7 @@
         <div class="col-md-8" style="float:none;margin:0 auto;">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{{ trans('admin/products/general.page.edit.section-title') }}</h3>
+                    <h3 class="box-title">Edit Bibit</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                     </div>
@@ -33,6 +33,11 @@
                     <div class="form-group">
                         {!! Form::label('weight', trans('admin/products/general.columns.weight')) !!}
                         {!! Form::text('weight', null, ['class' => 'form-control']) !!}
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('stock', 'Stock') !!}
+                        {!! Form::text('seed[stock]', null, ['class' => 'form-control']) !!}
                     </div>
 
                     <div class="form-group">
@@ -76,6 +81,26 @@
                         </div>
                     </div>
                     <br>
+                    <div class="form-group">
+                        {!! Form::label('prime_plus', 'Prime Plus') !!}
+                        {!! Form::text('seed[prime_plus]', null, ['rows' => '3', 'class' => 'form-control']) !!}
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('prime_standart', 'Prime Standar') !!}
+                        {!! Form::text('seed[prime_standart]', null, ['rows' => '3', 'class' => 'form-control']) !!}
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('superior_a', 'Superior A') !!}
+                        {!! Form::text('seed[superior_a]', null, ['rows' => '3', 'class' => 'form-control']) !!}
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('superior_b', 'Superior B') !!}
+                        {!! Form::text('seed[superior_b]', null, ['rows' => '3', 'class' => 'form-control']) !!}
+                    </div>
+
                     <div class="form-group">
                         {!! Form::submit( trans('general.button.edit'), ['class' => 'btn btn-primary'] ) !!}
                         <a href="{!! route('admin.seeds.index') !!}" title="{{ trans('general.button.cancel') }}" class='btn btn-default'>

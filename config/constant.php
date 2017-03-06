@@ -27,12 +27,12 @@ return [
   ],
 
   'product-categories' => [
-    '2' => 'Barang Setengah Jadi',
-    '5' => 'Chemical Otomotif',
-    '6' => 'Chemical Rumahan',
-    '7' => 'Deterjen',
-    '8' => 'Parfum',
-    '9' => 'Chemical Laundry',
+    '2'  => 'Barang Setengah Jadi',
+    '5'  => 'Chemical Otomotif',
+    '6'  => 'Chemical Rumahan',
+    '7'  => 'Deterjen',
+    '8'  => 'Parfum',
+    '9'  => 'Chemical Laundry',
     '10' => 'Bibit Parfum',
     '11' => 'Bahan Mentah',
     '12' => 'Peralatan',
@@ -47,7 +47,7 @@ return [
   'sale-status' => [
       '1' => 'New',
       '2' => 'Release',
-      '3' => 'Ready Hold',
+      '3' => 'Process Problem',
       '4' => 'Ready Ship',
       '5' => 'Shipped',
       '6' => 'Pending'

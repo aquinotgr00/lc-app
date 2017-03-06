@@ -2,6 +2,7 @@
 
 use App\Models\Product;
 use App\Models\Material;
+use App\Models\Seed;
 
 class Utils {
 
@@ -42,6 +43,15 @@ class Utils {
         $material = Material::find($id);
         if ($material) {
             return $material;
+        }
+        return false;
+    }
+
+    public static function getSeedByName($name)
+    {
+        $seed = Product::where('name', $name)->first();
+        if ($seed) {
+            return $seed;
         }
         return false;
     }

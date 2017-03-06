@@ -18,6 +18,8 @@ use App\Repositories\Criteria\Sale\SalesByOrderDateDescending;
 use App\Repositories\Criteria\Sale\SalesOrderAfter;
 use App\Repositories\Criteria\Sale\SalesOrderBefore;
 
+use App\Models\Product;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Flash;
@@ -511,13 +513,28 @@ class SalesController extends Controller
         $page_description = trans('admin/sales/general.page.formula.description', ['name' => $sale->customer->name]);
 
         foreach ($sale->saleDetails as $key => $d) {
-            $data[$d->product->name]['quantity'] = $d->quantity;
+            $data[$d->product->name .' '. $d->description]['quantity']    = $d->quantity;
+            $data[$d->product->name .' '. $d->description]['description'] = $d->description;
             $formula = $this->formula->findBy('product_id', $d->product_id);
             if ($formula) {
-                $data[$d->product->name]['materials'] = $formula->formulaDetails;
+                $data[$d->product->name .' '. $d->description]['materials'] = $formula->formulaDetails;
+                if ($d->product->category_id == 8) {
+                    $seed = Product::where('name', $d->description)->first();
+                    if ($seed) {
+                        if (str_contains($d->product->name, 'titanium') || str_contains($d->product->name, 'prime_plus')) {
+                            $data[$d->product->name .' '. $d->description]['seed'] = $seed->seed->prime_plus;
+                        } elseif (str_contains($d->product->name, 'platinum') || str_contains($d->product->name, 'prime_standart')) {
+                            $data[$d->product->name .' '. $d->description]['seed'] = $seed->seed->prime_standart;
+                        } elseif (str_contains($d->product->name, 'gold') || str_contains($d->product->name, 'superior a')) {
+                            $data[$d->product->name .' '. $d->description]['seed'] = $seed->seed->superior_a;
+                        } elseif (str_contains($d->product->name, 'silver') || str_contains($d->product->name, 'superior b')) {
+                            $data[$d->product->name .' '. $d->description]['seed'] = $seed->seed->superior_b;
+                        }
+                    }
+                }
             }
         }
-        
+
         return view('admin.sales.get-formula', compact(
             'data',
             'total',

@@ -85,7 +85,7 @@ class SeedsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->except(['_method', '_token', 'seed']);
+        $data        = $request->except(['_method', '_token', 'seed']);
         $seed_prices = $request->seed;
         Product::find($id)->update($data);
         Seed::where('product_id', $id)->first()->update($seed_prices);

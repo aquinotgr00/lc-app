@@ -248,7 +248,8 @@ class ProductsController extends Controller
                 'price'           => $product->price,
                 'agenresmi_price' => $product->agenresmi_price,
                 'agenlepas_price' => $product->agenlepas_price,
-                'weight'          => $product->weight
+                'weight'          => $product->weight,
+                'category_id'     => $product->category_id
             ];
             if ($product->seed && $product->category_id == 10) {
                 $entry_arr['category']= 10;

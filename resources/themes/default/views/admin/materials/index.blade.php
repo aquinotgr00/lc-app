@@ -7,23 +7,36 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-3">
+            {!! link_to('admin/materials/create', 'Tambah Bahan', ['class' => 'btn btn-primary btn-block margin-bottom']); !!}
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ trans('admin/products/general.page.index.categories') }}</h3>
+                    <div class="box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="{{ isset($seed) ? '':'active' }}">
+                            <a href="{{ route('admin.materials.index') }}">
+                                Bahan
+                            </a>
+                        </li>
+                        <li class="{{ isset($seed) ? 'active':'' }}">
+                            <a href="{{ route('admin.materials.index-seed') }}">
+                                Bibit
+                            </a>
+                        </li>
+                    </ul>
+                </div><!-- /.box-body -->
+            </div><!-- /. box -->
+        </div>
+        <div class="col-md-9">
             {!! Form::open( array('route' => 'admin.materials.order-selected', 'id' => 'frmMaterialList') ) !!}
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">{{ trans('admin/materials/general.page.index.title') }}</h3>
-                    &nbsp;
-                    <a class="btn btn-default btn-sm" href="{{ route('admin.materials.create') }}" title="{{ trans('general.button.create') }}">
-                        <i class="fa fa-plus-square"></i>
-                    </a>
-                    &nbsp;
-                    <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmMaterialList'].action = '{!! route('admin.materials.order-selected') !!}';  document.forms['frmMaterialList'].submit(); return false;" title="{{ trans('general.button.create') }}" disabled>
-                        <i class="fa fa-times"></i>
-                    </a>
-
-                    <div class="box-tools pull-right">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    </div>
                 </div>
                 <div class="box-body">
                     <div class="table-responsive">

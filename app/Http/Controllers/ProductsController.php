@@ -269,8 +269,8 @@ class ProductsController extends Controller
         $query      = $request->input('term');
 
         // $perfumes   = $this->perfume->pushCriteria(new PerfumeWhereNameLike($query))->all();
-        $perfumes   = \App\Models\Product::where('category_id', 'like', 10)
-                ->where('name', 'like', '%'.$query.'%')
+        $perfumes = \App\Models\Material::where('category', 2)
+                ->where('name', 'LIKE', '%'.$query.'%')
                 ->orderBy('name', 'desc')
                 ->take(10)
                 ->get();

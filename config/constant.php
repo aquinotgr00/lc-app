@@ -39,6 +39,11 @@ return [
     '13' => 'Perlengkapan'
   ],
 
+  'material-categories' => [
+    '1' => 'Bahan',
+    '2' => 'Bibit'
+  ],
+
   'product-status' => [
     '0' => 'Unpublished',
     '1' => 'Published'

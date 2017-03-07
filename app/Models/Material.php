@@ -9,7 +9,7 @@ class Material extends Model
     /**
     * @var array
     */
-    protected $fillable = ['name', 'stock', 'min_stock', 'price'];
+    protected $fillable = ['category', 'name', 'stock', 'min_stock', 'price'];
 
     /**
     * @var timestamps
@@ -28,5 +28,9 @@ class Material extends Model
     public function purchaseOrderDetails()
     {
         return $this->belongsToMany('App\Models\PurchaseOrderDetail');
+    }
+
+    public function seedMaterial() {
+        return $this->hasOne('App\Models\SeedMaterial');
     }
 }

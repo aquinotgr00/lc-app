@@ -87,7 +87,11 @@ class MaterialsController extends Controller
     {
         $data = $request->all();
 
-        $this->material->create($data);
+        $material = $this->material->create($data);
+
+        if ($request->category == 2) {
+            SeedMaterial::create(['material_id' => $material->id]);
+        }
 
         Flash::success( trans('admin/materials/general.status.created') );
 
@@ -133,6 +137,10 @@ class MaterialsController extends Controller
         $data = $request->only(['category', 'name', 'stock', 'price', 'min_stock']);
 
         $this->material->update($data, $id);
+
+        if ($request->category == 2) {
+            SeedMaterial::create(['material_id' => $id]);
+        }
 
         if ($request->seedMaterial) {
             $seedMaterial = SeedMaterial::where('material_id', $id)->first();

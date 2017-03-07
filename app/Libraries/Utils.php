@@ -49,7 +49,7 @@ class Utils {
 
     public static function getSeedByName($name)
     {
-        $seed = Product::where('name', $name)->first();
+        $seed = Material::where('name', $name)->first();
         if ($seed) {
             return $seed;
         }

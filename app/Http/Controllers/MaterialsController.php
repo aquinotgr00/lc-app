@@ -6,6 +6,8 @@ use App\Repositories\MaterialRepository as Material;
 use App\Repositories\Criteria\Material\MaterialsOutOfStock;
 use App\Repositories\Criteria\Material\MaterialWhereNameLike;
 
+use App\Models\SeedMaterial;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -26,6 +28,7 @@ class MaterialsController extends Controller
             \Route::get(  '/',                    'MaterialsController@index')             ->name('admin.materials.index');
             \Route::post( '/',                    'MaterialsController@store')             ->name('admin.materials.store');
             \Route::patch('{mId}',                'MaterialsController@update')            ->name('admin.materials.update');
+            \Route::get(  'seeds',                'MaterialsController@indexSeed')         ->name('admin.materials.index-seed');
             \Route::get(  'create',               'MaterialsController@create')            ->name('admin.materials.create');
             \Route::get(  'out-of-stock',         'MaterialsController@outOfStock')        ->name('admin.materials.out-of-stock');
             \Route::post( 'createPurchaseOrder',  'MaterialsController@createSelected')    ->name('admin.materials.order-selected');
@@ -43,12 +46,22 @@ class MaterialsController extends Controller
      */
     public function index()
     {
-        $materials        = $this->material->all();
+        $materials        = $this->material->findAllBy('category', 1);
 
         $page_title       = trans('admin/materials/general.page.index.title');
         $page_description = trans('admin/materials/general.page.index.description');
 
         return view('admin.materials.index', compact('page_title', 'page_description', 'materials'));
+    }
+
+    public function indexSeed() {
+        $materials        = $this->material->findAllBy('category', 2);
+        $seed             = true;
+
+        $page_title       = trans('admin/materials/general.page.index.title');
+        $page_description = trans('admin/materials/general.page.index.description');
+
+        return view('admin.materials.index', compact('page_title', 'page_description', 'materials', 'seed'));
     }
 
     /**
@@ -117,9 +130,14 @@ class MaterialsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->except(['_token', '_method']);
+        $data = $request->only(['category', 'name', 'stock', 'price', 'min_stock']);
 
         $this->material->update($data, $id);
+
+        if ($request->seedMaterial) {
+            $seedMaterial = SeedMaterial::where('material_id', $id)->first();
+            $seedMaterial->update($request->seedMaterial);
+        }
 
         Flash::success( trans('admin/materials/general.status.updated') );
 

@@ -17,7 +17,7 @@
         });
 
         $('#product_name').autocomplete({
-            source   : '/admin/products/search',
+            source   : '/admin/formulas/productsearch',
             minLength: 2,
             autoFocus: true,
             select:function(e,ui){

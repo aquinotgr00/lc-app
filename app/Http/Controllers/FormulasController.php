@@ -9,6 +9,7 @@ use App\Repositories\Criteria\Material\MaterialWhereNameLike;
 use App\Repositories\Criteria\Formula\FormulasWithFormulaDetails;
 use App\Models\Seed;
 use DB;
+use App\Models\Product;
 
 use Illuminate\Http\Request;
 
@@ -35,15 +36,16 @@ class FormulasController extends Controller
         \Route::group(['prefix' => 'formulas'], function () {
             \Route::get(  '/',                     'FormulasController@index')              ->name('admin.formulas.index');
             \Route::post( '/',                     'FormulasController@store')              ->name('admin.formulas.store');
-            \Route::get(  '/create',               'FormulasController@create')             ->name('admin.formulas.create');
-            \Route::get(  '/search',               'FormulasController@materialSearch')     ->name('admin.formulas.search');
-            \Route::get(  '/{fId}',                'FormulasController@show')               ->name('admin.formulas.show');
-            \Route::patch('/{fId}',                'FormulasController@update')             ->name('admin.formulas.update');
-            \Route::get(  '/{fId}/edit',           'FormulasController@edit')               ->name('admin.formulas.edit');
-            \Route::get(  '/{fId}/delete',         'FormulasController@destroy')            ->name('admin.formulas.delete');
-            \Route::post( '/add-purchase-order',   'FormulasController@addPurchaseOrder')   ->name('admin.formulas.add-porder');
-            \Route::get(  '/{fId}/get-materials',  'FormulasController@getMaterials')       ->name('admin.formulas.get-materials');
-            \Route::get(  '/{fId}/confirm-delete', 'FormulasController@getModalDelete')     ->name('admin.formulas.confirm-delete');
+            \Route::get(  'create',                'FormulasController@create')             ->name('admin.formulas.create');
+            \Route::get(  'search',                'FormulasController@materialSearch')     ->name('admin.formulas.search');
+            \Route::get(  'productsearch',        'FormulasController@productSearch')      ->name('admin.formulas.product-search');
+            \Route::get(  '{fId}',                 'FormulasController@show')               ->name('admin.formulas.show');
+            \Route::patch('{fId}',                 'FormulasController@update')             ->name('admin.formulas.update');
+            \Route::get(  '{fId}/edit',            'FormulasController@edit')               ->name('admin.formulas.edit');
+            \Route::get(  '{fId}/delete',          'FormulasController@destroy')            ->name('admin.formulas.delete');
+            \Route::post( 'add-purchase-order',    'FormulasController@addPurchaseOrder')   ->name('admin.formulas.add-porder');
+            \Route::get(  '{fId}/get-materials',   'FormulasController@getMaterials')       ->name('admin.formulas.get-materials');
+            \Route::get(  '{fId}/confirm-delete',  'FormulasController@getModalDelete')     ->name('admin.formulas.confirm-delete');
         });
     }
 
@@ -193,6 +195,25 @@ class FormulasController extends Controller
         }
 
         return $return_arr;
+    }
+
+    public function productSearch(Request $request) {
+        $return_arr = null;
+
+        $query      = $request->input('term');
+
+        $products   = Product::where('name', 'like', '%'.$query.'%')->get();
+
+        foreach ($products as $product) {
+            if (!$product->formula) {
+                $entry_arr = [
+                    'id'              => $product->id,
+                    'value'           => $product->name,
+                ];
+                $return_arr[] = $entry_arr;
+            }
+        }
+        return response()->json($return_arr);
     }
 
      /**

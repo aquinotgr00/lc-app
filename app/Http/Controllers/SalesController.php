@@ -520,16 +520,16 @@ class SalesController extends Controller
             if ($formula) {
                 $data[$d->product->name .' '. $d->description]['materials'] = $formula->formulaDetails;
                 if ($d->product->category_id == 8) {
-                    $seed = Product::where('name', $d->description)->first();
-                    if ($seed) {
+                    $material = $this->material->findBy('name', $d->description);
+                    if ($material) {
                         if (str_contains($d->product->name, 'titanium') || str_contains($d->product->name, 'Prime Plus')) {
-                            $data[$d->product->name .' '. $d->description]['seed'] = $seed->seed->prime_plus;
+                            $data[$d->product->name .' '. $d->description]['seed'] = $material->seedMaterial->prime_plus;
                         } elseif (str_contains($d->product->name, 'platinum') || str_contains($d->product->name, 'Prime Standart')) {
-                            $data[$d->product->name .' '. $d->description]['seed'] = $seed->seed->prime_standart;
+                            $data[$d->product->name .' '. $d->description]['seed'] = $material->seedMaterial->prime_standart;
                         } elseif (str_contains($d->product->name, 'gold') || str_contains($d->product->name, 'Superior A')) {
-                            $data[$d->product->name .' '. $d->description]['seed'] = $seed->seed->superior_a;
+                            $data[$d->product->name .' '. $d->description]['seed'] = $material->seedMaterial->superior_a;
                         } elseif (str_contains($d->product->name, 'silver') || str_contains($d->product->name, 'Superior B')) {
-                            $data[$d->product->name .' '. $d->description]['seed'] = $seed->seed->superior_b;
+                            $data[$d->product->name .' '. $d->description]['seed'] = $material->seedMaterial->superior_b;
                         }
                     }
                 }

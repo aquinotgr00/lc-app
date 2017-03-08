@@ -524,7 +524,7 @@ class SalesController extends Controller
                     if ($material) {
                         if (str_contains($d->product->name, 'titanium') || str_contains($d->product->name, 'Prime Plus')) {
                             $data[$d->product->name .' '. $d->description]['seed'] = $material->seedMaterial->prime_plus;
-                        } elseif (str_contains($d->product->name, 'platinum') || str_contains($d->product->name, 'Prime Standart')) {
+                        } elseif (str_contains($d->product->name, 'platinum') || str_contains($d->product->name, 'Prime Standard')) {
                             $data[$d->product->name .' '. $d->description]['seed'] = $material->seedMaterial->prime_standart;
                         } elseif (str_contains($d->product->name, 'gold') || str_contains($d->product->name, 'Superior A')) {
                             $data[$d->product->name .' '. $d->description]['seed'] = $material->seedMaterial->superior_a;

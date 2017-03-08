@@ -25,7 +25,8 @@ class Sale extends Model
         'expedition',
         'resi',
         'description',
-        'status'
+        'status',
+        'note'
     ];
 
     /**

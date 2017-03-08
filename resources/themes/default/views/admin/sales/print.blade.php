@@ -193,12 +193,19 @@
 			Total
 		</div>
 		<div class='tengah'>
-		<?php $potongan = round($sale->discount/100*$nom) ?>
+		<?php $potongan = round($sale->discount/100*$nom); ?>
 			<b>{{ Helpers::reggo($nom-$potongan + $sale->shipping_fee + $sale->packing_fee) }}</b>
 		</div>
 		<div class='clearboth'></div>
 		<div class='kiri'>
-			Ket :
+			Catatan
+		</div>
+		<div class='tengah'>
+			<b>{!! nl2br($sale->note) !!}</b>
+		</div>
+		<div class='clearboth'></div>
+		<div class='kiri'>
+			Keterangan
 		</div>
 		<div class='tengah' id="ketnya">
 			<b>{!! nl2br($sale->description) !!}</b>

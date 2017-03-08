@@ -102,6 +102,11 @@
                 {!! Form::label('description', trans('admin/sales/general.columns.description')) !!}
                 {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => '3']) !!}
             </div>
+
+            <div class="form-group">
+                {!! Form::label('note', 'Catatan') !!}
+                {!! Form::textarea('note', null, ['class' => 'form-control', 'rows' => '3']) !!}
+            </div>
         </div><!-- /.tab-pane -->
 
         <div class="tab-pane" id="tab_roles">

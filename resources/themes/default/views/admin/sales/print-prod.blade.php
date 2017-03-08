@@ -111,6 +111,13 @@
 		{{ Helpers::reggo($sale->packing_fee) }}
 	</div>
 	<div class='clearboth'></div>
+	<div class='kiri'>
+		Catatan
+	</div>
+	<div class='tengah'>
+		{{ $sale->note }}
+	</div>
+	<div class='clearboth'></div>
 </div>
 
 </div>

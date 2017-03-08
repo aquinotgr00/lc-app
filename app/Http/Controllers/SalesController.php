@@ -263,7 +263,7 @@ class SalesController extends Controller
         $sale->status = $status;
         $sale->save();
 
-        if ($sale->status == 2) {
+        if ($sale->status == 3) {
             foreach ($sale->saleDetails as $key => $d) {
                 $quantity = $d->quantity;
                 if($d->product->formula) {

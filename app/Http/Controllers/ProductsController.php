@@ -122,7 +122,11 @@ class ProductsController extends Controller
     {
         $data = $request->except(['_token']);
 
-        $this->product->create($data);
+        $product = $this->product->create($data);
+
+        if ($request->category_id == 10) {
+            Seed::create(['product_id' => $product->id]);
+        }
 
         Flash::success( trans('admin/products/general.status.created') );
 

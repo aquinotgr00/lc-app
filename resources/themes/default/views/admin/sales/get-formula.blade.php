@@ -127,11 +127,11 @@
                             @foreach($totalSeed as $name => $value)
                             <tr>
                                 <td align="center">
-                                    {!! Form::checkbox('seed['. $x .'][seed_id]', Helpers::getSeedByName($name)->seed->id, false, ['class' => 'material', 'id' => 'material'. $x .'']) !!}
+                                    {!! Form::checkbox('seed['. $x .'][seed_id]', Helpers::getSeedByName($name)->seedMaterial->id, false, ['class' => 'material', 'id' => 'material'. $x .'']) !!}
                                 </td>
                                 <td>{{ $name }}</td>
                                 <td>{{ $value }}</td>
-                                <td>{{ Helpers::getSeedByName($name)->seed->stock }}</td>
+                                <td>{{ Helpers::getSeedByName($name)->seedMaterial->stock }}</td>
                                 <td>{{ Helpers::reggo(Helpers::getSeedByName($name)->price) }}</td>
                                 <td>
                                     {!! Form::text('seed['. $x .'][quantity]', null, ['class' => 'form-control quantity', 'id' => 'quantity'. $x .'', 'disabled']); !!}

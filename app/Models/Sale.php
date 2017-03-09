@@ -46,17 +46,23 @@ class Sale extends Model
 
     public function getStatusDisplayName() {
         if ( $this->status == 1 ) {
-            return "Baru";
+            return "Pending";
         } elseif ( $this->status == 2 ) {
             return "Release";
         } elseif ( $this->status == 3 ) {
-            return "Ready Hold";
+            return "Process";
         } elseif ( $this->status == 4 ) {
-            return "Siap Kirim";
+            return "Processing dengan masalah";
         } elseif ( $this->status == 5 ) {
-            return "Kirim";
+            return "Masalah";
         } elseif ( $this->status == 6 ) {
-            return "Pending";
+            return "Ready Hold";
+        } elseif ( $this->status == 7 ) {
+            return "Ready Ship";
+        } elseif ( $this->status == 8 ) {
+            return "Ship";
+        } elseif ( $this->status == 9 ) {
+            return "Finish";
         }
     }
 

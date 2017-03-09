@@ -79,6 +79,8 @@ class Sale extends Model
             return "success";
         } elseif ($this->status == 6) {
             return "warning";
+        } else {
+            return "info";
         }
     }
 }

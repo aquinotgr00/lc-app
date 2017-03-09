@@ -51,13 +51,14 @@ return [
 
   'sale-status' => [
       '1' => 'Pending',
-      '2' => 'New',
-      '3' => 'Release',
-      '4' => 'Process Problem',
-      '5' => 'Ready Hold',
-      '6' => 'Ready Ship',
-      '7' => 'Ship',
-      '8' => 'Finished'
+      '2' => 'Release',
+      '3' => 'Process',
+      '4' => 'Processing with problem',
+      '5' => 'Process Problem',
+      '6' => 'Ready Hold',
+      '7' => 'Ready Ship',
+      '8' => 'Ship',
+      '9' => 'Finished'
   ],
 
   'supplier-categories' => [

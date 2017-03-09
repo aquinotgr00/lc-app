@@ -55,12 +55,12 @@ class CustomersController extends Controller
     }
 
     public function export($id) {
-	Excel::create('Customer', function($excel) use($id) {
-		$excel->sheet('Customer', function($sheet) use($id) {
-			$customers = $this->customer->pushCriteria(new CustomerByCreatedDescending())->findWhere(['type' => $id]);
-			$sheet->loadView('admin.customers.excel', ['customers' => $customers,'id'=>$id]);
-		});
-	})->export('csv');
+    	Excel::create('Customer', function($excel) use($id) {
+    		$excel->sheet('Customer', function($sheet) use($id) {
+    			$customers = $this->customer->pushCriteria(new CustomerByCreatedDescending())->findWhere(['type' => $id]);
+    			$sheet->loadView('admin.customers.excel', ['customers' => $customers,'id'=>$id]);
+    		});
+    	})->export('xls');
     }
 
     public function exportSales($id) {

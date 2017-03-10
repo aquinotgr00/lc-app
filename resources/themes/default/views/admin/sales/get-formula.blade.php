@@ -102,6 +102,7 @@
                                 <th>{{ trans('admin/formulas/general.columns.total') }}</th>
                                 <th>{{ trans('admin/formulas/general.columns.stock') }}</th>
                                 <th>Harga</th>
+                                <th>Vendor</th>
                                 <th>{{ trans('admin/formulas/general.columns.quantity') }}</th>
                             </tr>
                         </thead>
@@ -115,6 +116,10 @@
                                 <td>{{ $value }}</td>
                                 <td>{{ Helpers::getMaterialById($material)->stock }}</td>
                                 <td>{{ Helpers::reggo(Helpers::getMaterialById($material)->price) }}</td>
+                                <td>
+                                    {!! Form::hidden('material['. $x .'][supplier_id]', '', ['id' => 'supplier_id'.$x.'', 'disabled']) !!}
+                                    {!! Form::text('supplier_name', '', ['class' => 'form-control supplier', 'id' => 'supplier'.$x.'', 'disabled']) !!}
+                                </td>
                                 <td>
                                     {!! Form::text('material['. $x .'][quantity]', null, ['class' => 'form-control quantity', 'id' => 'quantity'. $x .'', 'disabled']); !!}
                                     {!! Form::hidden('material['. $x .'][need]', $value, ['id' => 'need'. $x .'', 'disabled']) !!}
@@ -133,6 +138,10 @@
                                 <td>{{ $value }}</td>
                                 <td>{{ Helpers::getSeedByName($name)->seedMaterial->stock }}</td>
                                 <td>{{ Helpers::reggo(Helpers::getSeedByName($name)->price) }}</td>
+                                <td>
+                                    {!! Form::hidden('seed['. $x .'][supplier_id]', '', ['id' => 'supplier_id'.$x.'', 'disabled']) !!}
+                                    {!! Form::text('supplier_name', '', ['class' => 'form-control supplier', 'id' => 'supplier'.$x.'', 'disabled']) !!}
+                                </td>
                                 <td>
                                     {!! Form::text('seed['. $x .'][quantity]', null, ['class' => 'form-control quantity', 'id' => 'quantity'. $x .'', 'disabled']); !!}
                                     {!! Form::hidden('seed['. $x .'][need]', $value, ['id' => 'need'. $x .'', 'disabled']) !!}
@@ -185,11 +194,23 @@
             }
         }
 
+        $('.supplier').autocomplete({
+            source   : '/admin/suppliers/search',
+            minLength: 2,
+            autoFocus: true,
+             select       : function(e, ui) {
+                currentId = $(this).attr('id').replace('supplier', '');
+                $('#supplier_id'+currentId).val(ui.item.id);
+            }
+        });
+
         $('.material').change(function(){
             var currentId = $(this).attr('id').replace('material', '');
             $('#need' + currentId).prop('disabled', function(i, v) { return !v; });
             $('#total' + currentId).prop('disabled', function(i, v) { return !v; });
             $('#quantity' + currentId).prop('disabled', function(i, v) { return !v; });
+            $('#supplier' + currentId).prop('disabled', function(i, v) { return !v; });
+            $('#supplier_id' + currentId).prop('disabled', function(i, v) { return !v; });
         });
 
         $('.quantity').focusout(function () {

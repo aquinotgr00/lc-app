@@ -6,6 +6,8 @@ use App\Repositories\SupplierRepository as Supplier;
 use App\Repositories\Criteria\Supplier\SupplierWhereNameLike;
 use App\Repositories\Criteria\Supplier\SuppliersByNamesAscending;
 
+use App\Models\SupplierDetail;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -117,9 +119,13 @@ class SuppliersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->except(['_token', '_method']);
+        $data     = $request->except(['_token', '_method', 'material']);
 
-        $this->supplier->update($data, $id);
+        $supplier = $this->supplier->update($data, $id);
+
+        foreach ($request->material as $key => $value) {
+            SupplierDetail::create(['supplier_id' => $id, 'material_id' => $value['material_id'], 'price' => $value['price']]);
+        }
 
         Flash::success( trans('admin/suppliers/general.status.updated') );
 

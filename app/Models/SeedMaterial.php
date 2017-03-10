@@ -11,4 +11,8 @@ class SeedMaterial extends Model
     public function material() {
         return $this->belongsTo('App\Models\Material');
     }
+
+    public function purchaseOrderDetails() {
+        return $this->hasMany('App\Models\PurchaseOrderDetail');
+    }
 }

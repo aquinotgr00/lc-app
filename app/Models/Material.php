@@ -33,4 +33,8 @@ class Material extends Model
     public function seedMaterial() {
         return $this->hasOne('App\Models\SeedMaterial');
     }
+
+    public function supplierDetails() {
+        return $this->hasMany('App\Models\SupplierDetail');
+    }
 }

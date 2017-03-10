@@ -10,6 +10,8 @@ use App\Repositories\Criteria\Material\MaterialsOutOfStock;
 use App\Repositories\Criteria\PurchaseOrder\PurchaseOrdersByCreatedAtDescending;
 use App\Repositories\Criteria\PurchaseOrder\PurchaseOrdersWhereStatus;
 
+use App\Models\SeedMaterial;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -117,7 +119,7 @@ class PurchaseOrdersController extends Controller
         if ($request->seed != null) {
             foreach ($seeds as $key => $poDetails) {
                 foreach ($poDetails as $key => $poDetail) {
-                    $seed      = \App\Models\Seed::find($poDetail['seed_id']);
+                    $seed      = \App\Models\SeedMaterial::find($poDetail['seed_id']);
                     $newStock  = $seed->stock - $poDetail['need'];
                     $seed->update(['stock' => $newStock]);
                     $data['total'] += $poDetail['total'];

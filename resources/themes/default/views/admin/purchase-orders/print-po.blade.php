@@ -58,11 +58,11 @@
                     @foreach($purchaseOrder->purchaseOrderDetails as $key => $value)
                     <tr>
                         <td>{{ $no }}</td>
-                        <td>{{ $value->material->name or $value->seed->product->name }}</td>
+                        <td>{{ $value->material->name or $value->seedMaterial->material->name }}</td>
                         <td>{{ $value->quantity }}</td>
                         <td>g/mL</td>
                         @if(!str_contains(Request::fullUrl(), 'prod'))
-                        <td>{{ isset($value->material->price) ? Helpers::reggo($value->material->price) : Helpers::reggo($value->seed->price) }}</td>
+                        <td>{{ isset($value->material->price) ? Helpers::reggo($value->material->price) : Helpers::reggo($value->seedMaterial->material->price) }}</td>
                         <td>{{ Helpers::reggo($value->total) }}</td>
                         @endif
                         <td>{{ $value->supplier->name or '' }}</td>

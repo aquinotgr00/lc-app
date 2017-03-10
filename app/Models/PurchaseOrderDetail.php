@@ -23,7 +23,7 @@ class PurchaseOrderDetail extends Model
         return $this->belongsTo('App\Models\Supplier');
     }
 
-    public function seed() {
-        return $this->belongsTo('App\Models\Seed');
+    public function seedMaterial() {
+        return $this->belongsTo('App\Models\SeedMaterial');
     }
 }

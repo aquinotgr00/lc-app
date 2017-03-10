@@ -93,7 +93,7 @@
                             <td style="text-align: center">
                                 {!! Form::checkbox('accepted', $detail->status, $detail->accepted, ['class' => 'status', 'id' => $detail->id]) !!}
                             </td>
-                            <td>{{ $detail->material->name or $detail->seed->product->name }}</td>
+                            <td>{{ $detail->material->name or $detail->seedMaterial->material->name }}</td>
                             <td>{{ $detail->quantity }}</td>
                             <td>{{ Helpers::reggo($detail->total) }}</td>
                             <td>{{ $detail->supplier->name or '' }}</td>

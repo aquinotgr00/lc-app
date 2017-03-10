@@ -114,12 +114,14 @@ class PurchaseOrdersController extends Controller
             }
         }
 
-        foreach ($seeds as $key => $poDetails) {
-            foreach ($poDetails as $key => $poDetail) {
-                $seed      = \App\Models\Seed::find($poDetail['seed_id']);
-                $newStock  = $seed->stock - $poDetail['need'];
-                $seed->update(['stock' => $newStock]);
-                $data['total'] += $poDetail['total'];
+        if ($request->seed != null) {
+            foreach ($seeds as $key => $poDetails) {
+                foreach ($poDetails as $key => $poDetail) {
+                    $seed      = \App\Models\Seed::find($poDetail['seed_id']);
+                    $newStock  = $seed->stock - $poDetail['need'];
+                    $seed->update(['stock' => $newStock]);
+                    $data['total'] += $poDetail['total'];
+                }
             }
         }
 
@@ -132,10 +134,12 @@ class PurchaseOrdersController extends Controller
             }
         }
 
-        foreach ($seeds as $key => $poDetails) {
-            foreach ($poDetails as $key => $poDetail) {
-                $poDetail['purchase_order_id'] = $newPurchaseOrder->id;
-                $this->purchaseOrderDetail->create($poDetail);
+        if ($request->seed != null) {
+            foreach ($seeds as $key => $poDetails) {
+                foreach ($poDetails as $key => $poDetail) {
+                    $poDetail['purchase_order_id'] = $newPurchaseOrder->id;
+                    $this->purchaseOrderDetail->create($poDetail);
+                }
             }
         }
 

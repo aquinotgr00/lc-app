@@ -241,7 +241,7 @@ class PurchaseOrdersController extends Controller
 
         Flash::success( trans('admin/purchase-orders/general.status.deleted') );
 
-        return view('/admin/purchase-orders');
+        return redirect('admin/purchase-orders');
     }
 
     /**

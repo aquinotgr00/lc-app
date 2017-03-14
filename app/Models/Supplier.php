@@ -34,4 +34,8 @@ class Supplier extends Model
             return "Lain - lain";
         }
     }
+
+    public function supplierDetails() {
+        return $this->hasMany('App\Models\SupplierDetail');
+    }
 }

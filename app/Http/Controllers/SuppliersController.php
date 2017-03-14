@@ -34,6 +34,7 @@ class SuppliersController extends Controller
             \Route::patch('/{suppId}',               'SuppliersController@update')        ->name('admin.suppliers.update');
             \Route::get(  '/{suppId}/edit',          'SuppliersController@edit')          ->name('admin.suppliers.edit');
             \Route::get(  '/{suppId}/delete',        'SuppliersController@destroy')       ->name('admin.suppliers.delete');
+            \Route::get(  '/{suppDId}/delete-detail','SuppliersController@destroyDetail') ->name('admin.suppliers.delete-detail');
             \Route::get(  '/{suppId}/confirm-delete','SuppliersController@getModalDelete')->name('admin.suppliers.confirm-delete');
         });
     }
@@ -123,13 +124,19 @@ class SuppliersController extends Controller
 
         $supplier = $this->supplier->update($data, $id);
 
-        foreach ($request->material as $key => $value) {
-            SupplierDetail::create(['supplier_id' => $id, 'material_id' => $value['material_id'], 'price' => $value['price']]);
+        if ($request->material) {
+            $old = SupplierDetail::where('supplier_id', $id)->get();
+            foreach ($old as $key => $value) {
+                SupplierDetail::destroy($value->id);
+            }
+            foreach ($request->material as $key => $value) {
+                SupplierDetail::create(['supplier_id' => $id, 'material_id' => $value['material_id'], 'price' => $value['price']]);
+            }
         }
 
         Flash::success( trans('admin/suppliers/general.status.updated') );
 
-        return redirect('/admin/suppliers');
+        return redirect( route('admin.suppliers.edit', $id) );
     }
 
     /**
@@ -145,6 +152,12 @@ class SuppliersController extends Controller
         Flash::success( trans('admin/suppliers/general.status.deleted') );
 
         return redirect('/admin/suppliers');
+    }
+
+    public function destroyDetail($id) {
+        $supplier_id = SupplierDetail::find($id)->supplier_id;
+        SupplierDetail::destroy($id);
+        return redirect( route('admin.suppliers.edit', $supplier_id) );
     }
 
     /**
@@ -182,8 +195,9 @@ class SuppliersController extends Controller
         foreach ($suppliers as $e) {
             $id   = $e->id;
             $name = $e->name;
+            $detail = $e->supplierDetails;
 
-            $entry_arr    = [ 'id' => $id, 'text' => $name, 'value' => $name];
+            $entry_arr    = [ 'id' => $id, 'text' => $name, 'value' => $name, 'detail' => $detail];
             $return_arr[] = $entry_arr;
         }
 

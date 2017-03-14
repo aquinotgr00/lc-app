@@ -115,7 +115,7 @@
                                 <td>{{ Helpers::getMaterialById($material)->name }}</td>
                                 <td>{{ $value }}</td>
                                 <td>{{ Helpers::getMaterialById($material)->stock }}</td>
-                                <td>{{ Helpers::reggo(Helpers::getMaterialById($material)->price) }}</td>
+                                <td id="harga{{$x}}">{{ Helpers::reggo(Helpers::getMaterialById($material)->price) }}</td>
                                 <td>
                                     {!! Form::hidden('material['. $x .'][supplier_id]', '', ['id' => 'supplier_id'.$x.'', 'disabled']) !!}
                                     {!! Form::text('supplier_name', '', ['class' => 'form-control supplier', 'id' => 'supplier'.$x.'', 'disabled']) !!}
@@ -132,12 +132,12 @@
                             @foreach($totalSeed as $name => $value)
                             <tr>
                                 <td align="center">
-                                    {!! Form::checkbox('seed['. $x .'][seed_material_id]', Helpers::getSeedByName($name)->seedMaterial->id, false, ['class' => 'material', 'id' => 'material'. $x .'']) !!}
+                                    {!! Form::checkbox('seed['. $x .'][seed_material_id]', Helpers::getSeedByName($name)->id, false, ['class' => 'material', 'id' => 'material'. $x .'']) !!}
                                 </td>
                                 <td>{{ $name }}</td>
                                 <td>{{ $value }}</td>
                                 <td>{{ Helpers::getSeedByName($name)->seedMaterial->stock }}</td>
-                                <td>{{ Helpers::reggo(Helpers::getSeedByName($name)->price) }}</td>
+                                <td id="harga{{$x}}">{{ Helpers::reggo(Helpers::getSeedByName($name)->price) }}</td>
                                 <td>
                                     {!! Form::hidden('seed['. $x .'][supplier_id]', '', ['id' => 'supplier_id'.$x.'', 'disabled']) !!}
                                     {!! Form::text('supplier_name', '', ['class' => 'form-control supplier', 'id' => 'supplier'.$x.'', 'disabled']) !!}
@@ -201,7 +201,19 @@
              select       : function(e, ui) {
                 currentId = $(this).attr('id').replace('supplier', '');
                 $('#supplier_id'+currentId).val(ui.item.id);
+                for (prop in ui.item.detail) {
+                    if ($('#material'+currentId).val() == ui.item.detail[prop]['material_id']) {
+                        $('#harga'+currentId).html(ui.item.detail[prop]['price']);
+                        $('#price'+currentId).val(ui.item.detail[prop]['price']);
+                    }
+                }
             }
+        });
+
+        $('.supplier').change(function () {
+            currentId = $(this).attr('id').replace('supplier', '');
+            console.log(currentId);
+            $('#harga'+currentId).html('');
         });
 
         $('.material').change(function(){

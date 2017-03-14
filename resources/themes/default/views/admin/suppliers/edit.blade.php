@@ -1,7 +1,11 @@
 @extends('layouts.master')
 
-@section('content')
+@section('head_extra')
+    <!-- autocomplete ui css -->
+    @include('partials.head_css.autocomplete_css')
+@endsection
 
+@section('content')
   <div class="row">
       <div class="col-md-12">
         <div class="box box-primary" style="float:none;margin:0 auto;">
@@ -12,7 +16,7 @@
               </div>
             </div><!-- /.box-header -->
 
-            <div class="box-body">
+            <div class="box-body" id="form">
               {!! Form::model($supplier, ['route' => ['admin.suppliers.update', $supplier->id], 'method' => 'patch', 'files' => true]) !!}
 
               @include('partials.forms.supplier_form')
@@ -27,5 +31,8 @@
         </div><!-- /.box -->
       </div>
   </div>
+@endsection
 
+@section('body_bottom')
+    @include('partials.body_bottom_js.supplier_form_js')
 @endsection

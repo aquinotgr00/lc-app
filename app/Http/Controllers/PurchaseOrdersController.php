@@ -119,7 +119,7 @@ class PurchaseOrdersController extends Controller
         if ($request->seed != null) {
             foreach ($seeds as $key => $poDetails) {
                 foreach ($poDetails as $key => $poDetail) {
-                    $seed      = \App\Models\SeedMaterial::find($poDetail['seed_material_id']);
+                    $seed      = \App\Models\Material::find($poDetail['material_id']);
                     $newStock  = $seed->stock - $poDetail['need'];
                     $seed->update(['stock' => $newStock]);
                     $data['total'] += $poDetail['total'];

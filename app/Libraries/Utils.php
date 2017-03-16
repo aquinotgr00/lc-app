@@ -47,7 +47,7 @@ class Utils {
         return false;
     }
 
-    public static function getSeedByName($name)
+    public static function getMaterialByName($name)
     {
         $seed = Material::where('name', $name)->first();
         if ($seed) {

@@ -132,12 +132,12 @@
                             @foreach($totalSeed as $name => $value)
                             <tr>
                                 <td align="center">
-                                    {!! Form::checkbox('seed['. $x .'][seed_material_id]', Helpers::getSeedByName($name)->id, false, ['class' => 'material', 'id' => 'material'. $x .'']) !!}
+                                    {!! Form::checkbox('seed['. $x .'][material_id]', Helpers::getMaterialByName($name)->id, false, ['class' => 'material', 'id' => 'material'. $x .'']) !!}
                                 </td>
                                 <td>{{ $name }}</td>
                                 <td>{{ $value }}</td>
-                                <td>{{ Helpers::getSeedByName($name)->seedMaterial->stock }}</td>
-                                <td id="harga{{$x}}">{{ Helpers::reggo(Helpers::getSeedByName($name)->price) }}</td>
+                                <td>{{ Helpers::getMaterialByName($name)->seedMaterial->stock }}</td>
+                                <td id="harga{{$x}}">{{ Helpers::reggo(Helpers::getMaterialByName($name)->price) }}</td>
                                 <td>
                                     {!! Form::hidden('seed['. $x .'][supplier_id]', '', ['id' => 'supplier_id'.$x.'', 'disabled']) !!}
                                     {!! Form::text('supplier_name', '', ['class' => 'form-control supplier', 'id' => 'supplier'.$x.'', 'disabled']) !!}
@@ -145,7 +145,7 @@
                                 <td>
                                     {!! Form::text('seed['. $x .'][quantity]', null, ['class' => 'form-control quantity', 'id' => 'quantity'. $x .'', 'disabled']); !!}
                                     {!! Form::hidden('seed['. $x .'][need]', $value, ['id' => 'need'. $x .'', 'disabled']) !!}
-                                    {!! Form::hidden('price', Helpers::getSeedByName($name)->price, ['id' => 'price'. $x .'']) !!}
+                                    {!! Form::hidden('price', Helpers::getMaterialByName($name)->price, ['id' => 'price'. $x .'']) !!}
                                     {!! Form::hidden('seed['. $x .'][total]', null, ['id' => 'total'. $x .'', 'disabled', 'class' => 'totall']) !!}
                                 </td>
                             </tr>
@@ -208,12 +208,6 @@
                     }
                 }
             }
-        });
-
-        $('.supplier').change(function () {
-            currentId = $(this).attr('id').replace('supplier', '');
-            console.log(currentId);
-            $('#harga'+currentId).html('');
         });
 
         $('.material').change(function(){

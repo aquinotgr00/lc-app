@@ -81,10 +81,41 @@
             <!-- /.tab-pane -->
             <div class="tab-pane" id="tab_3-2">
                     @if($products->count())
-                        @foreach($products as $product)
-                            <div class="bs-callout bs-callout-info">
-                                <h4>{!! link_to_route('admin.products.edit', $product->name, $product->id) !!}</h4>
-                                <p> Price: {{ Helpers::reggo($product->price) }} Agen Resmi Price: {{ Helpers::reggo($product->agenresmi_price) }} Agen Lepas Price: {{ Helpers::reggo($product->agenlepas_price) }}</p>
+                        @foreach($products as $key => $product)
+                            <div class="panel box box-primary">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $key }}">
+                                        {{ $product->name }}
+                                        </a>
+                                    </h4>
+                                    <div class="pull-right">
+                                        <span class="badge">{{ Helpers::getCategoryNameByCategoryId($product->category_id) }}</span>
+                                    </div>
+                                </div>
+                                <div id="collapse{{ $key }}" class="panel-collapse collapse">
+                                    <div class="box-body">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Harga Agen Resmi</th>
+                                                    <td>{{ Helpers::reggo($product->agenresmi_price) }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Harga Agen Lepas</th>
+                                                    <td>{{ Helpers::reggo($product->agenlepas_price) }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Harga</th>
+                                                    <td>{{ Helpers::reggo($product->price) }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{!! link_to_route('admin.products.edit', 'Edit', $product->id) !!}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         @endforeach
                     @else

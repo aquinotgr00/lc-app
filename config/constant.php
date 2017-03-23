@@ -41,7 +41,8 @@ return [
 
   'material-categories' => [
     '1' => 'Bahan',
-    '2' => 'Bibit'
+    '2' => 'Bibit',
+    '3' => 'Peralatan',
   ],
 
   'product-status' => [

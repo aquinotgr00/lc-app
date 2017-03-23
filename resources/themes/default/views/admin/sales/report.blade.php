@@ -11,45 +11,50 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box box-warning">
-                <div class="box-header pull-left">
-                    <form action="#" class="form-inline">
-                        <input id="token" type="hidden" value="{{ csrf_token() }}">
-                        {!! Form::text('start', '', ['class' => 'date form-control', 'placeholder' => 'Starting Date', 'id' => 'start']) !!}
-                        {!! Form::text('end', '', ['class' => 'date form-control', 'placeholder' => 'End Date', 'id' => 'end']) !!}
-                        <button class="btn btn-primary" id="go">GO</button>
-                        <button class="btn btn-primary" id="go2">By Ship Date</button>
-                    </form>
-                </div>
-                <div class="box-header pull-right">
-                    <form action="{{ route('admin.sales.export') }}" method="post" class="form-inline">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        {!! Form::hidden('eStart', '', ['id' => 'eStart']) !!}
-                        {!! Form::hidden('eEnd', '', ['id' => 'eEnd']) !!}
-                        <button class="btn btn-success" id="export">Export</button>
-                    </form>
+                <div class="box-header">
+                    <div class="col-md-6 no-padding">
+                        <form action="#" class="form-inline">
+                            <input id="token" type="hidden" value="{{ csrf_token() }}">
+                            {!! Form::text('start', '', ['class' => 'date form-control', 'placeholder' => 'Starting Date', 'id' => 'start']) !!}
+                            {!! Form::text('end', '', ['class' => 'date form-control', 'placeholder' => 'End Date', 'id' => 'end']) !!}
+                            <button class="btn btn-primary" id="go">GO</button>
+                            <button class="btn btn-primary" id="go2">By Ship Date</button>
+                        </form>
+                    </div>
+                    <div class="col-md-6 no-padding">
+                        <div class="pull-right">
+                            <form action="{{ route('admin.sales.export') }}" method="post" class="form-inline">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                {!! Form::hidden('eStart', '', ['id' => 'eStart']) !!}
+                                {!! Form::hidden('eEnd', '', ['id' => 'eEnd']) !!}
+                                <button class="btn btn-success" id="export">Export</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="box-body">
-                    <table class='table table-bordered'>
-                        <thead>
-                            <tr>
-                                <th>No PO</th>
-                                <th>Customer</th>
-				                <th>Tipe Customer</th>
-                                <th>Tanggal Order</th>
-                                <th>Tanggal Transfer</th>
-                                <th>Status</th>
-                                <th>Chemical</th>
-                                <th>Bahan Baku</th>
-                                <th>Perlengkapan</th>
-                                <th>Ongkir</th>
-				                <th>Packing</th>
-                                <th>Nominal</th>
-                            </tr>
-                        </thead>
-                        <tbody id='isi'>
-
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class='table table-bordered'>
+                            <thead>
+                                <tr>
+                                    <th>No PO</th>
+                                    <th>Customer</th>
+    				                <th>Tipe Customer</th>
+                                    <th>Tanggal Order</th>
+                                    <th>Tanggal Transfer</th>
+                                    <th>Status</th>
+                                    <th>Chemical</th>
+                                    <th>Bahan Baku</th>
+                                    <th>Perlengkapan</th>
+                                    <th>Ongkir</th>
+    				                <th>Packing</th>
+                                    <th>Nominal</th>
+                                </tr>
+                            </thead>
+                            <tbody id='isi'>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

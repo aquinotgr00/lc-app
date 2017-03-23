@@ -18,7 +18,7 @@ use App\Models\Role;
 class AffController extends Controller
 {
     static function routes() {
-        \Route::get('aff/{link}',     'AffController@affClicked');
+        \Route::get('/aff/{link}',     'AffController@affClicked');
         \Route::group(['prefix' => 'affiliate'], function () {
             \Route::get(  '/',          'AffController@dashboard')->name('admin.affiliate.dashboard');
             \Route::get(  '/create',    'AffController@create')   ->name('admin.affiliate.create');

@@ -3,13 +3,19 @@
 use App\Models\Product;
 use App\Models\Material;
 use App\Models\Seed;
+use App\Models\Category;
 
 class Utils {
 
     public static function countProducts($category_id)
     {
-        $products = Product::where('category', $category_id)->count();
+        $products = Product::where('category_id', $category_id)->count();
         return $products;
+    }
+
+    public static function getCategoryNameByCategoryId($id)
+    {
+        return Category::find($id)->name;
     }
 
     public static function getCustomerStatusDisplayName($id)

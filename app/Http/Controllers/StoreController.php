@@ -129,7 +129,7 @@ class StoreController extends Controller
     }
 
     public function getKokab($id) {
-        $kab = DB::table('master_kokab')->where('provinsi_id', 'like', $id)->lists('nama', 'id');
+        $kab = DB::table('master_kokab')->where('provinsi_id', 'like', $id)->orderBy('nama')->lists('nama', 'id');
         return response()->json($kab);
     }
 

@@ -139,7 +139,7 @@ class DashboardController extends Controller
         $products      = Product::where('name', 'like', '%'.$keyword.'%')
                         ->orderBy('name', 'ASC')
                         ->get();
-
+                        
         $customers     = Customer::where('name', 'LIKE', '%'.$keyword.'%')
                         ->orWhere('address',     'LIKE', '%'.$keyword.'%')
 			->orWhere('laundry_address', 'LIKE', '%'.$keyword.'%')

@@ -147,34 +147,35 @@
                                         {!! Form::text('item['. $key .'][description]', $d->description, ['placeholder' => 'description', 'class' => 'aroma form-control', 'id' => 'aroma'. $key .'']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::hidden('item['. $key .'][price]', $d->price, ['id' => 'price'. $no .'']) !!}
+                                        {!! Form::hidden('item['. $key .'][price]', $d->price, ['id' => 'price'. $key .'']) !!}
                                         @if($d->product->category_id == 10 && $d->product->seed)
-                                        {!! Form::select('selectPrice',
-                                            [   // if there's 2 same value. the last is the one that will be used, since the value must be unique.
-                                                $d->product->seed->price_1 => '1 liter',
-                                                $d->product->seed->price_2 => '600 ml',
-                                                $d->product->seed->price_3 => '100 ml'
-                                            ], '', ['id' => 'selectPrice'.$key.'', 'class' => 'form-control selectt'])
-                                        !!}
+                                            {!! Form::select('selectPrice',
+                                                [   // if there's 2 same value. the last is the one that will be used, since the value must be unique.
+                                                    $d->product->price         => '1 liter',
+                                                    $d->product->seed->price_1 => '500 ml',
+                                                    $d->product->seed->price_2 => '250 ml',
+                                                    $d->product->seed->price_3 => '100 ml'
+                                                ], $d->price, ['id' => 'selectPrice'.$key.'', 'class' => 'form-control selectt'])
+                                            !!}
                                         @else
-                                        {!! Form::text('price', $d->price, ['placeholder' => 'price', 'class' => 'form-control', 'id' => 'displayPrice'. $no .'', 'disabled']) !!}
+                                            {!! Form::text('price', $d->price, ['placeholder' => 'price', 'class' => 'form-control', 'id' => 'displayPrice'. $no .'', 'disabled']) !!}
                                         @endif
                                     </td>
                                     <td>
-                                        {!! Form::text('item['. $key .'][quantity]', $d->quantity, ['placeholder' => 'quantity', 'class' => 'form-control Qty','id' => 'Qty'. $no .'']) !!}
+                                        {!! Form::text('item['. $key .'][quantity]', $d->quantity, ['placeholder' => 'quantity', 'class' => 'form-control Qty','id' => 'Qty'. $key .'']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::hidden('item['. $key .'][total]', $d->total, ['id' => 'total'. $no .'']) !!}
-                                        {!! Form::text('total', $d->total, ['placeholder' => 'total', 'class' => 'form-control', 'id' => 'displayTotal'. $no .'', 'disabled']) !!}
+                                        {!! Form::hidden('item['. $key .'][total]', $d->total, ['id' => 'total'. $key .'']) !!}
+                                        {!! Form::text('total', $d->total, ['placeholder' => 'total', 'class' => 'form-control', 'id' => 'displayTotal'. $key .'', 'disabled']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::hidden('item['. $key .'][weight]', $d->weight, ['id' => 'weight'. $no .'']) !!}
-                                        {!! Form::text('weight', $d->weight, ['placeholder' => 'weight', 'class' => 'form-control sumWeight', 'id' => 'displayWeight'. $no .'', 'disabled']) !!}
+                                        {!! Form::hidden('item['. $key .'][weight]', $d->weight, ['id' => 'weight'. $key .'']) !!}
+                                        {!! Form::text('weight', $d->weight, ['placeholder' => 'weight', 'class' => 'form-control sumWeight', 'id' => 'displayWeight'. $key .'', 'disabled']) !!}
                                     </td>
                 				    <td>
                 					{!! Form::text('item['. $key .'][keterangan]', $d->keterangan, ['class' => 'form-control', 'id' => 'ket'.$key.'']) !!}
                 				    </td>
-                                    <td id='jer{{$no}}' class='qtyJer' value=''>
+                                    <td id='jer{{$key}}' class='qtyJer' value=''>
                                         0
                                     </td>
                                     <td>

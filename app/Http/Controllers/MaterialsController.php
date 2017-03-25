@@ -25,11 +25,10 @@ class MaterialsController extends Controller
 
     static function routes() {
         \Route::group(['prefix' => 'materials'], function () {
-            \Route::get(  '/',                    'MaterialsController@index')             ->name('admin.materials.index');
             \Route::post( '/',                    'MaterialsController@store')             ->name('admin.materials.store');
             \Route::patch('{mId}',                'MaterialsController@update')            ->name('admin.materials.update');
-            \Route::get(  'seeds',                'MaterialsController@indexSeed')         ->name('admin.materials.index-seed');
             \Route::get(  'create',               'MaterialsController@create')            ->name('admin.materials.create');
+            \Route::get(  '{slug}',               'MaterialsController@index')             ->name('admin.materials.index');
             \Route::get(  'out-of-stock',         'MaterialsController@outOfStock')        ->name('admin.materials.out-of-stock');
             \Route::post( 'createPurchaseOrder',  'MaterialsController@createSelected')    ->name('admin.materials.order-selected');
             \Route::get(  'search',               'MaterialsController@search')            ->name('admin.materials.search');
@@ -44,24 +43,20 @@ class MaterialsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($slug)
     {
-        $materials        = $this->material->findAllBy('category', 1);
+        if ($slug == 'bahan') {
+            $materials        = $this->material->findAllBy('category', 1);
+        } elseif ($slug == 'bibit') {
+            $materials        = $this->material->findAllBy('category', 2);
+        } elseif ($slug == 'peralatan') {
+            $materials        = $this->material->findAllBy('category', 3);
+        }
 
         $page_title       = trans('admin/materials/general.page.index.title');
         $page_description = trans('admin/materials/general.page.index.description');
 
         return view('admin.materials.index', compact('page_title', 'page_description', 'materials'));
-    }
-
-    public function indexSeed() {
-        $materials        = $this->material->findAllBy('category', 2);
-        $seed             = true;
-
-        $page_title       = trans('admin/materials/general.page.index.title');
-        $page_description = trans('admin/materials/general.page.index.description');
-
-        return view('admin.materials.index', compact('page_title', 'page_description', 'materials', 'seed'));
     }
 
     /**
@@ -95,7 +90,7 @@ class MaterialsController extends Controller
 
         Flash::success( trans('admin/materials/general.status.created') );
 
-        return redirect('/admin/materials');
+        return redirect( route('admin.materials.index', 1) );
     }
 
     /**

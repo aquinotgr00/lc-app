@@ -18,16 +18,13 @@
                 </div>
                 <div class="box-body no-padding">
                     <ul class="nav nav-pills nav-stacked">
-                        <li class="{{ isset($seed) ? '':'active' }}">
-                            <a href="{{ route('admin.materials.index') }}">
-                                Bahan
-                            </a>
-                        </li>
-                        <li class="{{ isset($seed) ? 'active':'' }}">
-                            <a href="{{ route('admin.materials.index-seed') }}">
-                                Bibit
-                            </a>
-                        </li>
+                        @foreach(config('constant.material-categories') as $value)
+                            <li class="{{ str_contains(Request::url(), $value) ? 'active':'' }}">
+                                <a href="/admin/materials/{{ $value['name'] }}">
+                                    {{ $value['display'] }}
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div><!-- /.box-body -->
             </div><!-- /. box -->

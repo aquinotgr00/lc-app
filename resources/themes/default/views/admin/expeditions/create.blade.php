@@ -1,7 +1,11 @@
 @extends('layouts.master')
 
-@section('content')
+@section('head_extra')
+    <!-- autocomplete ui css -->
+    @include('partials.head_css.autocomplete_css')
+@endsection
 
+@section('content')
     <div class="row">
         <div class="col-md-12">
             <!-- Box -->
@@ -13,7 +17,7 @@
                         <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                     </div>
                 </div>
-                <div class="box-body">
+                <div class="box-body" id="form">
 
                     {!! Form::open( ['route' => 'admin.expeditions.store', 'id' => 'form_edit_user'] ) !!}
 
@@ -30,5 +34,8 @@
             </div>
         </div>
     </div>
+@endsection
 
+@section('body_bottom')
+    @include('partials.body_bottom_js.expedition_form_js')
 @endsection

@@ -10,4 +10,8 @@ class Expedition extends Model
    * @var array
    */
   protected $fillable = ['name', 'contact', 'description'];
+
+  public function expeditionDetails() {
+      return $this->hasMany('App\Models\ExpeditionDetail');
+  }
 }

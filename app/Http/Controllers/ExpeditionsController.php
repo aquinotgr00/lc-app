@@ -30,13 +30,14 @@ class ExpeditionsController extends Controller
         \Route::group(['prefix' => 'expeditions'], function () {
             \Route::get(  '/',                     'ExpeditionsController@index')         ->name('admin.expeditions.index');
             \Route::post( '/',                     'ExpeditionsController@store')         ->name('admin.expeditions.store');
-            \Route::get(  '/create',               'ExpeditionsController@create')        ->name('admin.expeditions.create');
-            \Route::get(  '/search',               'ExpeditionsController@search')        ->name('admin.expeditions.search');
-            \Route::get(  '/{exId}',               'ExpeditionsController@show')          ->name('admin.expeditions.show');
-            \Route::patch('/{exId}',               'ExpeditionsController@update')        ->name('admin.expeditions.update');
-            \Route::get(  '/{exId}/edit',          'ExpeditionsController@edit')          ->name('admin.expeditions.edit');
-            \Route::get(  '/{exId}/delete',        'ExpeditionsController@destroy')       ->name('admin.expeditions.delete');
-            \Route::get(  '/{exId}/confirm-delete','ExpeditionsController@getModalDelete')->name('admin.expeditions.confirm-delete');
+            \Route::get(  'create',                'ExpeditionsController@create')        ->name('admin.expeditions.create');
+            \Route::get(  'search',                'ExpeditionsController@search')        ->name('admin.expeditions.search');
+            \Route::get(  'search-kokab',          'ExpeditionsController@searchKokab')   ->name('admin.expeditions.search-kokab');
+            \Route::get(  '{exId}',                'ExpeditionsController@show')          ->name('admin.expeditions.show');
+            \Route::patch('{exId}',                'ExpeditionsController@update')        ->name('admin.expeditions.update');
+            \Route::get(  '{exId}/edit',           'ExpeditionsController@edit')          ->name('admin.expeditions.edit');
+            \Route::get(  '{exId}/delete',         'ExpeditionsController@destroy')       ->name('admin.expeditions.delete');
+            \Route::get(  '{exId}/confirm-delete', 'ExpeditionsController@getModalDelete')->name('admin.expeditions.confirm-delete');
         });
     }
 
@@ -75,10 +76,18 @@ class ExpeditionsController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-
-        $this->expedition->create($data);
-
+        $data = $request->only(['name', 'contact', 'description']);
+        
+        $expedition = $this->expedition->create($data);
+        foreach ($request->detail as $key => $value) {
+            \App\Model\ExpeditionDetail::create(
+                [
+                    'expedition_id'   => $expedition->id,
+                    'master_kokab_id' => $value->master_kokab_id,
+                    'price'           => $value->price
+                ]
+            );
+        }
         Flash::success( trans('admin/expeditions/general.status.created') );
 
         return redirect('/admin/expeditions');
@@ -123,13 +132,27 @@ class ExpeditionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->except(['_method','_token']);
+        $data = $request->except(['_method','_token', 'detail']);
 
         $this->expedition->update($data, $id);
 
+        if ($request->detail) {
+            $old = \App\Models\ExpeditionDetail::where('expedition_id', $id)->get();
+            foreach ($old as $key => $value) {
+                \App\Models\ExpeditionDetail::destroy($value->id);
+            }
+            foreach ($request->detail as $key => $value) {
+                $detail = \App\Models\ExpeditionDetail::create([
+                    'expedition_id' => $id,
+                    'master_kokab_id' => $value['master_kokab_id'],
+                    'price' => $value['price']
+                ]);
+            }
+        }
+
         Flash::success( trans('admin/expeditions/general.status.updated') );
 
-        return redirect('/admin/expeditions');
+        return redirect( route('admin.expeditions.edit', $id) );
     }
 
     /**
@@ -173,6 +196,25 @@ class ExpeditionsController extends Controller
             $name = $e->name;
 
             $entry_arr    = ['value' => $name];
+            $return_arr[] = $entry_arr;
+        }
+
+        return $return_arr;
+    }
+    
+    public function searchKokab(Request $request)
+    {
+        $return_arr  = null;
+        
+        $query       = $request->input('term');
+
+        $kokabs      = \App\Models\Kokab::where('nama', 'LIKE', '%'.$query.'%')->get();
+
+        foreach ($kokabs as $e) {
+            $id   = $e->id;
+            $name = $e->nama;
+
+            $entry_arr    = ['id' => $id, 'value' => $name];
             $return_arr[] = $entry_arr;
         }
 

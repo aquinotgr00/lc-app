@@ -90,7 +90,7 @@ class MaterialsController extends Controller
 
         Flash::success( trans('admin/materials/general.status.created') );
 
-        return redirect( route('admin.materials.index', 1) );
+        return redirect( route('admin.materials.index', 'bahan') );
     }
 
     /**

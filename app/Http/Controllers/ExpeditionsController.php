@@ -136,11 +136,12 @@ class ExpeditionsController extends Controller
 
         $this->expedition->update($data, $id);
 
+        $old = \App\Models\ExpeditionDetail::where('expedition_id', $id)->get();
+        foreach ($old as $key => $value) {
+            \App\Models\ExpeditionDetail::destroy($value->id);
+        }
+        
         if ($request->detail) {
-            $old = \App\Models\ExpeditionDetail::where('expedition_id', $id)->get();
-            foreach ($old as $key => $value) {
-                \App\Models\ExpeditionDetail::destroy($value->id);
-            }
             foreach ($request->detail as $key => $value) {
                 $detail = \App\Models\ExpeditionDetail::create([
                     'expedition_id' => $id,

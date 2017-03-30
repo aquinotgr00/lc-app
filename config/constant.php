@@ -42,13 +42,13 @@ return [
   'material-categories' => [
     '1' => ['name' => 'bahan', 'display' => 'Bahan'],
     '2' => ['name'=> 'bibit', 'display' => 'Bibit'],
-    '3' => ['name'=> 'peralatan', 'display' => 'Peralatan'],
+    '3' => ['name'=> 'perlengkapan', 'display' => 'Perlengkapan'],
   ],
 
   'material-category-displays' => [
     '1' => 'Bahan',
     '2' => 'Bibit',
-    '3' => 'Peralatan'
+    '3' => 'Perlengkapan'
   ],
 
   'product-status' => [

@@ -21,8 +21,6 @@
 
                     <div class="box-tools pull-right">
                         <label class="label label-info">{{ $customers->count() }}</label>
-                        <label class="label label-info"></label>
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
                 </div>
                 <div class="box-body">

@@ -81,7 +81,7 @@ class MaterialsController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-
+        
         $material = $this->material->create($data);
 
         if ($request->category == 2) {
@@ -155,11 +155,12 @@ class MaterialsController extends Controller
      */
     public function destroy($id)
     {
+        $cat = $this->material->find($id)->category;
         $this->material->delete($id);
 
         Flash::success( trans('admin/materials/general.status.deleted') );
 
-        return redirect('/admin/materials');
+        return redirect( route('admin.materials.index', $cat) );
     }
 
     /**

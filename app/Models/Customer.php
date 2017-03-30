@@ -9,7 +9,20 @@ class Customer extends Model
     /**
      * @var array
      */
-    protected $fillable = ['name', 'email', 'phone', 'address', 'type', 'status', 'send_address', 'laundry_address', 'laundry_name', 'created_at', 'description'];
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'address',
+        // 'master_kokab_id',
+        'type',
+        'status',
+        'send_address',
+        'laundry_address',
+        'laundry_name',
+        'created_at',
+        'description'
+    ];
 
     public function customerFollowups()
     {
@@ -23,6 +36,14 @@ class Customer extends Model
 
     public function trainings() {
         return $this->hasMany('App\Models\Training');
+    }
+
+    // public function kokab() {
+    //     return $this->belongsTo('App\Models\Kokab');
+    // }
+
+    public function partnerFee() {
+        return $this->hasOne('App\Models\PartnerFee');
     }
 
     public function getCustomerTypeDisplayName()

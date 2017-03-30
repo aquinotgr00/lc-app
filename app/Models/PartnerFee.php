@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class PartnerFee extends Model
 {
-	protected $table = 'partner_fee';
-
     public $timestamps = false;
 
     protected $fillable = [
@@ -22,8 +20,8 @@ class PartnerFee extends Model
         'description'
     ];
 
-    public function partner() {
-        return $this->belongsTo('App\Models\Partner');
+    public function customer() {
+        return $this->belongsTo('App\Models\Customer');
     }
 
     public function packet() {

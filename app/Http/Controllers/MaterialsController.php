@@ -144,7 +144,7 @@ class MaterialsController extends Controller
 
         Flash::success( trans('admin/materials/general.status.updated') );
 
-        return redirect('/admin/materials');
+        return redirect( route('admin.materials.index', 'bahan') );
     }
 
     /**

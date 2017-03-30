@@ -40,8 +40,6 @@ Route::group(['middleware' => 'authorize'], function () {
         \App\Http\Controllers\AffController::routes();
         // Store Orders 
         \App\Http\Controllers\StoreOrdersController::routes();
-	    // partners
-        \App\Http\Controllers\PartnersController::routes();
         // Expedition routes
         \App\Http\Controllers\ExpeditionsController::routes();
         // Product routes

@@ -49,7 +49,7 @@ class MaterialsController extends Controller
             $materials        = $this->material->findAllBy('category', 1);
         } elseif ($slug == 'bibit') {
             $materials        = $this->material->findAllBy('category', 2);
-        } elseif ($slug == 'peralatan') {
+        } elseif ($slug == 'perlengkapan') {
             $materials        = $this->material->findAllBy('category', 3);
         }
 
@@ -81,7 +81,7 @@ class MaterialsController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        
+
         $material = $this->material->create($data);
 
         if ($request->category == 2) {

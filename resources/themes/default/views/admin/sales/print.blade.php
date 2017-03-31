@@ -208,7 +208,7 @@
 			Keterangan
 		</div>
 		<div class='tengah' id="ketnya">
-			<b>{!! nl2br($sale->description) !!}</b>
+			<b style="font-size:14px;">{!! nl2br($sale->description) !!}</b>
 		</div>
 		<div class='clearboth'></div>
 	</div>

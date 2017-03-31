@@ -8,6 +8,7 @@ use App\Repositories\Criteria\Customer\CustomerByCreatedDescending;
 use App\Repositories\Criteria\Customer\CustomersWithFollowups;
 use App\Repositories\Criteria\Customer\CustomerWhereNameLike;
 use App\Repositories\Criteria\Sale\SalesByOrderDateDescending;
+use App\Models\PartnerFee;
 
 use Illuminate\Http\Request;
 
@@ -32,15 +33,17 @@ class CustomersController extends Controller
     static function routes() {
         \Route::group(['prefix' => 'customers'], function () {
             \Route::post( '/',                     'CustomersController@store')         ->name('admin.customers.store');
-            \Route::get(  '/search',               'CustomersController@search')        ->name('admin.customers.search');
-            \Route::get(  '/{ccId}',               'CustomersController@show')          ->name('admin.customers.show');
-            \Route::patch('/{ccId}',               'CustomersController@update')        ->name('admin.customers.update');
-            \Route::get(  '/{ccId}/delete',        'CustomersController@destroy')       ->name('admin.customers.delete');
-            \Route::get(  '/{ccId}/type',          'CustomersController@indexByType')   ->name('admin.customers.index');
-            \Route::get(  '/{ccId}/export',       'CustomersController@export')         ->name('admin.customers.export');
-            \Route::get(  '/{ccId}/export-sales', 'CustomersController@exportSales')    ->name('admin.customers.export-sales');
-            \Route::get(  '/{ccId}/update-status', 'CustomersController@updateStatus')  ->name('admin.customers.update-status');
-            \Route::get(  '/{ccId}/confirm-delete','CustomersController@getModalDelete')->name('admin.customers.confirm-delete');
+            \Route::get(  'search',               'CustomersController@search')        ->name('admin.customers.search');
+            \Route::get(  '{ccId}',               'CustomersController@show')          ->name('admin.customers.show');
+            \Route::patch('{ccId}',               'CustomersController@update')        ->name('admin.customers.update');
+            \Route::get(  '{ccId}/delete',        'CustomersController@destroy')       ->name('admin.customers.delete');
+            \Route::get(  '{ccId}/type',          'CustomersController@indexByType')   ->name('admin.customers.index');
+            \Route::get(  '{ccId}/export',        'CustomersController@export')        ->name('admin.customers.export');
+            \Route::get(  '{ccId}/export-sales',  'CustomersController@exportSales')   ->name('admin.customers.export-sales');
+            \Route::get(  '{ccId}/update-status', 'CustomersController@updateStatus')  ->name('admin.customers.update-status');
+            \Route::get(  '{ccId}/confirm-delete','CustomersController@getModalDelete')->name('admin.customers.confirm-delete');
+            \Route::post( '{ccId}/storeFee',      'CustomersController@storeFee')      ->name('admin.customers.store-fee');
+            \Route::patch('{pfid}/updateFee',     'CustomersController@updateFee')     ->name('admin.customers.update-fee');
         });
     }
 
@@ -113,6 +116,22 @@ class CustomersController extends Controller
         return redirect()->route('admin.customers.index', $data['type']);
     }
 
+    public function storeFee(Request $request, $id) {
+        $input = $request->except(['_method', '_token']);
+        
+        if ($input['second_payment'] == '') {
+            $input['second_payment'] = null;
+        }
+        if ($input['settled'] == '') {
+            $input['settled'] = null;
+        }
+        if ($input['addition'] == '') {
+            $input['addition'] = null;
+        }
+        PartnerFee::create($input);
+        return redirect()->route('admin.customers.show', $input['customer_id']);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -122,11 +141,13 @@ class CustomersController extends Controller
     public function show($id)
     {
         $customer         = $this->customer->find($id);
+        $packets          = \App\Models\Packet::lists('name', 'id');
         $sales            = $this->sale->pushCriteria(new SalesByOrderDateDescending())->findWhere(['customer_id' => $id]);
         $page_title       = trans('admin/customers/general.page.show.title');
         $page_description = trans('admin/customers/general.page.show.description', ['name' => $customer->name]);
+        $prov             = \App\Models\Provinsi::lists('nama', 'id');
 
-        return view('admin.customers.show', compact('customer', 'page_title', 'page_description', 'sales'));
+        return view('admin.customers.show', compact('customer', 'page_title', 'page_description', 'sales', 'prov', 'packets'));
     }
 
     /**
@@ -156,6 +177,22 @@ class CustomersController extends Controller
         Flash::success( trans('admin/customers/general.status.updated') );
 
         return redirect()->back();
+    }
+
+    public function updateFee(Request $request, $id) {
+        $partnerFee = PartnerFee::find($id);
+        $input = $request->except(['_method', '_token']);
+        if ($input['second_payment'] == '') {
+            $input['second_payment'] = null;
+        }
+        if ($input['settled'] == '') {
+            $input['settled'] = null;
+        }
+        if ($input['addition'] == '') {
+            $input['addition'] = null;
+        }
+        $partnerFee->update($input);
+        return redirect()->route('admin.customers.show', $partnerFee->customer_id);
     }
 
     /**

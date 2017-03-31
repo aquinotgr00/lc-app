@@ -8,7 +8,6 @@
 @endsection
 
 @section('content')
-
     <div class="row">
         <div class="col-md-3">
             <!-- Profile Image -->
@@ -64,8 +63,11 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#activity" data-toggle="tab">Followup</a></li>
+                    @if($customer->type == 1 || $customer->type == 6)
+                        <li><a href="#payment" data-toggle="tab">Pembayaran</a></li>
+                    @endif
                     @if($customer->type == 8)
-                    <li><a href="#payment" data-toggle="tab">Pembayaran</a></li>
+                        <li><a href="#training" data-toggle="tab">Training</a></li>
                     @endif
                     <li><a href="#orders" data-toggle="tab">Order History</a></li>
                     <li><a href="#settings" data-toggle="tab">Edit</a></li>
@@ -111,48 +113,103 @@
                         </table>
                     </div><!-- /.tab-pane -->
                     
+                    @if($customer->type == 1 || $customer->type == 6)
+                        <div class="tab-pane" id="payment">
+                            @if($customer->partnerFee)
+                                {!! Form::model($customer->partnerFee, [ 'route' => ['admin.customers.update-fee', $customer->partnerFee->id], 'method' => 'PATCH' ]) !!}
+                            @else
+                                {!! Form::open(['route' => ['admin.customers.store-fee', $customer->id], 'method' => 'POST']) !!}
+                                {!! Form::hidden('customer_id', $customer->id) !!}
+                            @endif
+                                <div class="form-group">
+                                    {!! Form::label('packet_id', 'Paket', ['class' => 'control-label']) !!}
+                                    {!! Form::select('packet_id', $packets, null, ['class' => 'form-control', 'placeholder' => 'Pilih Paket']) !!}
+                                </div>
+
+                                <div class="form-group">
+                                    {!! Form::label('commitment_fee', 'Commitment Fee', ['class' => 'control-label']) !!}
+                                    {!! Form::text('commitment_fee', null, ['class' => 'form-control date']) !!}
+                                </div>
+
+                                <div class="form-group">
+                                    {!! Form::label('first_payment', 'Pembayaran Pertama', ['class' => 'control-label']) !!}
+                                    {!! Form::text('first_payment', null, ['class' => 'form-control']) !!}
+                                </div>
+
+                                <div class="form-group">
+                                    {!! Form::label('first_pay', 'Tanggal Pembayaran Pertama', ['class' => 'control-label']) !!}
+                                    {!! Form::text('first_pay', null, ['class' => 'form-control date']) !!}
+                                </div>
+
+                                <div class="form-group">
+                                    {!! Form::label('second_payment', 'Pembayaran Kedua', ['class' => 'control-label']) !!}
+                                    {!! Form::text('second_payment', null, ['class' => 'form-control']) !!}
+                                </div>
+
+                                <div class="form-group">
+                                    {!! Form::label('settled', 'Pelunasan', ['class' => 'control-label']) !!}
+                                    {!! Form::text('settled', null, ['class' => 'form-control date']) !!}
+                                </div>
+
+                                <div class="form-group">
+                                    {!! Form::label('addition', 'Tambahan', ['class' => 'control-label']) !!}
+                                    {!! Form::text('addition', null, ['class' => 'form-control']) !!}
+                                </div>
+
+                                <div class="form-group">
+                                    {!! Form::label('description', 'Deskripsi', ['class' => 'control-label']) !!}
+                                    {!! Form::textarea('description', null, ['class' => 'form-control', 'size' => '30x5']) !!}
+                                </div>
+
+                                <div class="form-group">
+                                    {!! Form::submit( 'Simpan', ['class' => 'btn btn-primary', 'id' => 'btn-submit-edit'] ) !!}
+                                </div>
+                            {!! Form::close() !!}
+                        </div>
+                    @endif
+
                     @if($customer->type == 8)
-                    <div class="tab-pane" id="payment">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Jenis</th>
-                                    <th>Harga</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($customer->trainings as $key => $value)
-                                <tr>
-                                    <td>{{ $value->categoryDisplayName() }}</td>
-                                    <td>{{ Helpers::reggo($value->price) }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.trainings.delete', $value->id) }}"><i class="fa fa-trash-o"></i></a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="tab-pane" id="training">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Jenis</th>
+                                        <th>Harga</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($customer->trainings as $key => $value)
+                                    <tr>
+                                        <td>{{ $value->categoryDisplayName() }}</td>
+                                        <td>{{ Helpers::reggo($value->price) }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.trainings.delete', $value->id) }}"><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
 
-                        {!! Form::open(['route' => 'admin.trainings.store', 'method'=>'POST']) !!}
-                            {!! Form::hidden('customer_id', $customer->id) !!}
+                            {!! Form::open(['route' => 'admin.trainings.store', 'method'=>'POST']) !!}
+                                {!! Form::hidden('customer_id', $customer->id) !!}
 
-                            <div class="form-group">
-                                {!! Form::label('category', 'Jenis') !!}
-                                {!! Form::select('category', config('constant.training-categories'), 'default', ['class' => 'form-control type']) !!}
-                            </div>
+                                <div class="form-group">
+                                    {!! Form::label('category', 'Jenis') !!}
+                                    {!! Form::select('category', config('constant.training-categories'), 'default', ['class' => 'form-control type']) !!}
+                                </div>
 
-                            <div class="form-group">
-                                {!! Form::label('price', 'Harga') !!}
-                                {!! Form::text('price', null, ['class' => 'form-control']) !!}
-                            </div>
+                                <div class="form-group">
+                                    {!! Form::label('price', 'Harga') !!}
+                                    {!! Form::text('price', null, ['class' => 'form-control']) !!}
+                                </div>
 
-                            <div class="form-group">
-                                {!! Form::submit( trans('general.button.save'), ['class' => 'btn btn-primary', 'id' => 'btn-submit-edit'] ) !!}
-                            </div>
+                                <div class="form-group">
+                                    {!! Form::submit( trans('general.button.save'), ['class' => 'btn btn-primary', 'id' => 'btn-submit-edit'] ) !!}
+                                </div>
 
-                        {!! Form::close() !!}
-                    </div>
+                            {!! Form::close() !!}
+                        </div>
                     @endif
 
                     <div class="tab-pane" id="orders">
@@ -199,7 +256,6 @@
             </div><!-- /.nav-tabs-custom -->
         </div><!-- /.col -->
     </div><!-- /.row -->
-
 @endsection
 
 @section('body_bottom')

@@ -9,7 +9,7 @@ class PartnerFee extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'partner_id',
+        'customer_id',
         'packet_id',
         'first_payment',
         'second_payment',

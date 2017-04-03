@@ -3,6 +3,8 @@
 @section('head_extra')
     <!-- jVectorMap 1.2.2 -->
     <link href="{{ asset("/bower_components/admin-lte/plugins/jvectormap/jquery-jvectormap-1.2.2.css") }}" rel="stylesheet" type="text/css" />
+    <!-- autocomplete ui css -->
+    @include('partials.head_css.autocomplete_css')
 @endsection
 
 @section('content')
@@ -11,7 +13,7 @@
             <div class="info-box">
                 <span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">New Customers</span>
+                    <span class="info-box-text">Customer Baru Bulan Ini</span>
                     <span class="info-box-number">{{ $newCustomersCount }}</span>
                 </div>
             </div>
@@ -20,7 +22,7 @@
             <div class="info-box">
                 <span class="info-box-icon bg-green"><i class="fa fa-bar-chart"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Sales</span>
+                    <span class="info-box-text">Penjualan Bulan Ini</span>
                     <span class="info-box-number">{{ $salesThisMonthCount }}</span>
                 </div>
             </div>
@@ -30,7 +32,7 @@
             <div class="info-box">
                 <span class="info-box-icon bg-aqua"><i class="fa fa-money"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Income Online</span>
+                    <span class="info-box-text">Pemasukan Online Bulan Ini</span>
                     <span class="info-box-number">{{ Helpers::reggo($incomeThisMountTotal) }}</span>
                 </div>
             </div>
@@ -46,14 +48,104 @@
         </div>
     </div>
     <div class='row'>
-        <div class='col-md-4 col-md-offset-8'>
+        <div class="col-md-4">
+            <div class="box box-success collapsed-box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Tambah Followup</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    {!! Form::open(['route' => 'admin.customer-followups.store', 'method' => 'POST', 'class' => 'form-horizontal']) !!}
+                        {!! Form::hidden('customer_id', null, ['id' => 'customer-id']) !!}
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email">Customer:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="customer-name" placeholder="nama customer">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email">Isi:</label>
+                            <div class="col-sm-10">
+                                <textarea name="content" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        {!! Form::submit('Tambah', ['class' => 'btn btn-info']) !!}
+                    {!! Form::close() !!}
+                </div>
+            </div>
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Followup Terakhir</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Isi</th>
+                                <th>Customer</th>
+                                <th>Tanggal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($latestFollowups as $key => $value)
+                            <tr>
+                                <td><a href="{{ route('admin.customers.show', $value->customer_id) }}">{{ $value->id }}</a></td>
+                                <td>{{ $value->content }}</td>
+                                <td>{{ $value->customer->name }}</td>
+                                <td>{{ $value->created_at }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">PO Terakhir</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Status</th>
+                                <th>Tanggal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($latestSales as $key => $value)
+                            <tr>
+                                <td><a href="{{ route('admin.sales.show', $value->id) }}">{{ $value->id }}</a></td>
+                                <td>{{ $value->customer->name }}</td>
+                                <td>{{ $value->getStatusDisplayName() }}</td>
+                                <td>{{ $value->order_date }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div>
+        </div>
+        <div class='col-md-4'>
             <!-- BROWSER USAGE -->
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Income Detail</h3>
+                    <h3 class="box-title">Detail Pemasukan</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body">
@@ -66,7 +158,7 @@
                         <div class="col-md-4">
                             <ul class="chart-legend clearfix">
                                 @foreach($saleDetails as $detail => $item)
-                                <li><i class="fa fa-circle-o text-{{ $item['color'] }}"></i> {{ $detail }}</li>
+                                    <li><i class="fa fa-circle-o text-{{ $item['color'] }}"></i> {{ $detail }}</li>
                                 @endforeach
                             </ul>
                         </div><!-- /.col -->
@@ -91,10 +183,26 @@
     </div><!-- /.row -->
 @endsection
 
-
 @section('body_bottom')
     <!-- ChartJS -->
     <script src="{{ asset ("/bower_components/admin-lte/plugins/chartjs/Chart.min.js") }}" type="text/javascript"></script>
+
+    <!-- autocomplete UI -->
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#customer-name').autocomplete({
+                source   : '/admin/customers/search',
+                minLength: 2,
+                autoFocus: true,
+                select:function(e,ui){
+                    // asigning input column from the data that we got above
+                    $('#customer-id').val(ui.item.id);
+                }
+            });
+        });
+    </script>
 
     <script type="text/javascript">
         //-------------

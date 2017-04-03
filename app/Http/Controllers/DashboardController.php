@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\Customer;
 use App\Models\CustomerCandidate;
 use App\Models\Sale;
+use App\Models\CustomerFollowup;
 
 use Carbon\Carbon;
 use DateTime;
@@ -31,6 +32,9 @@ class DashboardController extends Controller
     }
 
     public function index() {
+        $page_title       = "Dashboard";
+        $page_description = "Sepintas Informasi Bulan Ini";
+
         $newCustomersCount = Customer::where(DB::raw('YEAR(created_at)'), Carbon::now()->year)
             ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
             ->count();
@@ -45,6 +49,18 @@ class DashboardController extends Controller
         $incomeThisMountTotal = $incomeThisMount->sum(function ($sale) {
             return $sale->nominal + $sale->shipping_fee + $sale->packing_fee;
         });
+
+        $sales = Sale::
+            whereBetween('transfer_date', [Carbon::now()->startOfMonth(), Carbon::today()])
+            ->get();
+
+        $salesLastMonth = Sale::
+            whereBetween('transfer_date', [new DateTime('first day of previous month'), new DateTime('last day of previous month')])
+            ->get();
+
+        $latestSales = Sale::orderBy('id', 'desc')->take(5)->get();
+
+        $latestFollowups = CustomerFollowup::orderBy('id', 'desc')->take(5)->get();
 
         $chemicalIndex      = [2,5,6,7,8,9];
         $materialIndex      = [10,11];
@@ -70,25 +86,17 @@ class DashboardController extends Controller
             ],
         ];
 
-        $sales = Sale::
-            whereBetween('transfer_date', [Carbon::now()->startOfMonth(), Carbon::today()])
-            ->get();
-
         foreach ($sales as $key => $row) {
             foreach($row->saleDetails as $key => $d) {
-                if(in_array( $d->product->category, $chemicalIndex)) {
+                if(in_array( $d->product->category_id, $chemicalIndex)) {
                     $saleDetails['chemicals']['value'] += $d->total;
-                } elseif (in_array( $d->product->category, $materialIndex)) {
+                } elseif (in_array( $d->product->category_id, $materialIndex)) {
                     $saleDetails['materials']['value'] += $d->total;
                 } else {
                     $saleDetails['equipments']['value'] += $d->total;
                 }
             }
         }
-
-        $salesLastMonth = Sale::
-            whereBetween('transfer_date', [new DateTime('first day of previous month'), new DateTime('last day of previous month')])
-            ->get();
 
         $saleDetailsLastMonth = [
             'chemicals' => [
@@ -110,18 +118,15 @@ class DashboardController extends Controller
 
         foreach ($salesLastMonth as $key => $row) {
             foreach($row->saleDetails as $key => $d) {
-                if(in_array( $d->product->category, $chemicalIndex)) {
+                if(in_array( $d->product->category_id, $chemicalIndex)) {
                     $saleDetailsLastMonth['chemicals']['value'] += $d->total;
-                } elseif (in_array( $d->product->category, $materialIndex)) {
+                } elseif (in_array( $d->product->category_id, $materialIndex)) {
                     $saleDetailsLastMonth['materials']['value'] += $d->total;
                 } else {
                     $saleDetailsLastMonth['equipments']['value'] += $d->total;
                 }
             }
         }
-
-        $page_title       = "Dashboard";
-        $page_description = "This is the dashboard";
 
         return view('dashboard', compact(
             'page_title',
@@ -130,7 +135,10 @@ class DashboardController extends Controller
             'salesThisMonthCount',
             'incomeThisMountTotal',
             'saleDetails',
-            'saleDetailsLastMonth'));
+            'saleDetailsLastMonth',
+            'latestSales',
+            'latestFollowups'
+        ));
     }
 
     public function search(Request $request) {
@@ -139,11 +147,11 @@ class DashboardController extends Controller
         $products      = Product::where('name', 'like', '%'.$keyword.'%')
                         ->orderBy('name', 'ASC')
                         ->get();
-                        
+
         $customers     = Customer::where('name', 'LIKE', '%'.$keyword.'%')
                         ->orWhere('address',     'LIKE', '%'.$keyword.'%')
-			->orWhere('laundry_address', 'LIKE', '%'.$keyword.'%')
-			->orWhere('send_address', 'LIKE', '%'.$keyword.'%')
+                        ->orWhere('laundry_address', 'LIKE', '%'.$keyword.'%')
+                        ->orWhere('send_address', 'LIKE', '%'.$keyword.'%')
                         ->orWhere('phone',       'LIKE', '%'.$keyword.'%')
                         ->get();
 

@@ -115,7 +115,7 @@
 		Catatan
 	</div>
 	<div class='tengah'>
-		{{ $sale->note }}
+		<pre>{{ $sale->note }}</pre>
 	</div>
 	<div class='clearboth'></div>
 </div>

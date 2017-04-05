@@ -201,7 +201,7 @@
 			Catatan
 		</div>
 		<div class='tengah'>
-			<b>{!! nl2br($sale->note) !!}</b>
+			<b><pre>{!! nl2br($sale->note) !!}</pre></b>
 		</div>
 		<div class='clearboth'></div>
 		<div class='kiri'>

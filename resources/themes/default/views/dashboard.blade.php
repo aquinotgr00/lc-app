@@ -138,6 +138,32 @@
                     </table>
                 </div><!-- /.box-body -->
             </div>
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Best Aroma</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Terjual</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($final as $key => $value)
+                            <tr>
+                                <td>{{ $key }}</td>
+                                <td>{{ $value }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div>
         </div>
         <div class='col-md-4'>
             <!-- BROWSER USAGE -->

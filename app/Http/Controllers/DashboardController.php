@@ -128,6 +128,16 @@ class DashboardController extends Controller
             }
         }
 
+        $details = \App\Models\SaleDetail::where('description', '!=', '')->whereNotNull('description')->orderBy('description', 'asc')->lists('description');
+        $first = [];
+        $final = [];
+        foreach ($details as $key => $value) {
+            $first[] = $value;
+        }
+        $result = array_count_values($first);
+        arsort($result);
+        $final = array_slice($result, 0, 5);
+
         return view('dashboard', compact(
             'page_title',
             'page_description',
@@ -137,7 +147,8 @@ class DashboardController extends Controller
             'saleDetails',
             'saleDetailsLastMonth',
             'latestSales',
-            'latestFollowups'
+            'latestFollowups',
+            'final'
         ));
     }
 
@@ -146,13 +157,15 @@ class DashboardController extends Controller
 
         $products      = Product::where('name', 'like', '%'.$keyword.'%')
                         ->orderBy('name', 'ASC')
+                        ->take(50)
                         ->get();
 
-        $customers     = Customer::where('name', 'LIKE', '%'.$keyword.'%')
-                        ->orWhere('address',     'LIKE', '%'.$keyword.'%')
+        $customers     = Customer::where('name',     'LIKE', '%'.$keyword.'%')
+                        ->orWhere('address',         'LIKE', '%'.$keyword.'%')
                         ->orWhere('laundry_address', 'LIKE', '%'.$keyword.'%')
-                        ->orWhere('send_address', 'LIKE', '%'.$keyword.'%')
-                        ->orWhere('phone',       'LIKE', '%'.$keyword.'%')
+                        ->orWhere('send_address',    'LIKE', '%'.$keyword.'%')
+                        ->orWhere('phone',           'LIKE', '%'.$keyword.'%')
+                        ->take(50)
                         ->get();
 
         # TODO: create sales search by customer name
@@ -160,6 +173,7 @@ class DashboardController extends Controller
         $customerCandidates = CustomerCandidate::where('name','LIKE', '%'.$keyword.'%')
                 ->orWhere('address', 'LIKE', '%'.$keyword.'%')
                 ->orWhere('phone',   'LIKE', '%'.$keyword.'%')
+                ->take(50)
                 ->get();
 
         $page_title       = trans('general.page.search.title');

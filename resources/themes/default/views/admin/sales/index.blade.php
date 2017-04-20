@@ -35,7 +35,7 @@
                                     <th>{{ trans('admin/sales/general.columns.name') }}</th>
                                     <th>{{ trans('admin/sales/general.columns.order_date') }}</th>
                                     <th>{{ trans('admin/sales/general.columns.transfer_date') }}</th>
-				    <th>{{ trans('admin/sales/general.columns.estimation_date') }}</th>
+				                    <th>{{ trans('admin/sales/general.columns.estimation_date') }}</th>
                                     <th>{{ trans('admin/sales/general.columns.nominal') }}</th>
                                     <th>{{ trans('admin/sales/general.columns.total') }}</th>
                                     <th>{{ trans('admin/sales/general.columns.status') }}</th>
@@ -47,7 +47,7 @@
                                     <th>{{ trans('admin/sales/general.columns.name') }}</th>
                                     <th>{{ trans('admin/sales/general.columns.order_date') }}</th>
                                     <th>{{ trans('admin/sales/general.columns.transfer_date') }}</th>
-				    <th>{{ trans('admin/sales/general.columns.estimation_date') }}</th>
+				                    <th>{{ trans('admin/sales/general.columns.estimation_date') }}</th>
                                     <th>{{ trans('admin/sales/general.columns.nominal') }}</th>
                                     <th>{{ trans('admin/sales/general.columns.total') }}</th>
                                     <th>{{ trans('admin/sales/general.columns.status') }}</th>
@@ -60,7 +60,7 @@
                                     <td>{!! link_to_route('admin.sales.show', $sale->customer->name, $sale->id) !!}</td>
                                     <td>{{ Helpers::date($sale->order_date) }}</td>
                                     <td>{{ Helpers::date($sale->transfer_date) }}</td>
-				    <td>{{ Helpers::date($sale->estimation_date) }}</td>
+				                    <td>{{ Helpers::date($sale->estimation_date) }}</td>
                                     <td>{{ Helpers::reggo($sale->nominal) }}</td>
                                     <td>{{ Helpers::reggo(($sale->nominal-$sale->discount)+$sale->shipping_fee+$sale->packing_fee) }}</td>
                                     <td>

@@ -62,18 +62,21 @@ return [
   ],
 
   'sale-status' => [
-      '1' => 'Pending',
-      '2' => 'Release',
-      '3' => 'Process',
-      '4' => 'Processing with problem',
-      '5' => 'Process Problem',
-      '6' => 'Ready Hold',
-      '7' => 'Ready Ship',
-      '8' => 'Ship',
-      '9' => 'Finished',
-      '10' => 'Antar',
-      '11' => 'Ambil',
-      '12' => 'Tunggu'
+    '1' => 'Pending',
+    '2' => 'Release',
+    '3' => 'Process',
+    '4' => 'Processing with problem',
+    '5' => 'Process Problem',
+    '6' => 'Ready Hold',
+    '7' => 'Ready Ship',
+    '8' => 'Ship',
+    '9' => 'Finished'
+  ],
+
+  'sale-status-offline' => [
+    '10' => 'Antar',
+    '11' => 'Ambil',
+    '12' => 'Tunggu'
   ],
 
   'supplier-categories' => [

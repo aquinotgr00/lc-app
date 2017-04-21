@@ -20,7 +20,7 @@
                       <i class="fa fa-plus-square"></i>
                     </a>
                     &nbsp;
-                    {!! Form::select( 'saleStatus', config('constant.sale-status'), '', [ 'style' => 'max-width:150px;', 'id' => 'select-sale-status', 'class' => 'select-sale-status', '_token' => csrf_token()] ) !!}
+                    {!! Form::select( 'saleStatus', config('constant.sale-status-offline'), '', [ 'style' => 'max-width:150px;', 'id' => 'select-sale-status', 'class' => 'select-sale-status', '_token' => csrf_token()] ) !!}
                     &nbsp;
                     <a class="btn btn-default btn-sm" id="search" href="#" title="{{ trans('admin/sales/general.button.search') }}">
                         Sort by status&nbsp;
@@ -61,7 +61,7 @@
                                     <td>{{ Helpers::reggo($sale->nominal) }}</td>
                                     <td>{{ Helpers::reggo(($sale->nominal-$sale->discount)+$sale->shipping_fee+$sale->packing_fee) }}</td>
                                     <td>
-                                        {!! Form::select('status', config('constant.sale-status'), $sale->status, ['class' => 'form-control status',  'data-id' => $sale->id, 'data-token' => csrf_token()]) !!}
+                                        {!! Form::select('status', config('constant.sale-status-offline'), $sale->status, ['class' => 'form-control status',  'data-id' => $sale->id, 'data-token' => csrf_token()]) !!}
                                     </td>
                                     <td>
                                         <a href="{!! route('admin.sales.edit', $sale->id) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>
@@ -129,7 +129,7 @@
                 var token = $(".select-sale-status").attr('_token');
 
                 $.ajax({
-                    url : "sales/select-by-status",
+                    url : "select-by-status",
                     data: ({query : query, _token : token}),
                     type : 'POST',
                     dataType : 'html',

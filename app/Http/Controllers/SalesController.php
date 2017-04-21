@@ -357,7 +357,7 @@ class SalesController extends Controller
     {
         $status = $_POST['query'];
 
-        $sales = $this->sale->pushCriteria(new SalesByOrderDateDescending())->findWhere(['status' => $status, 'type' => 1]);
+        $sales = $this->sale->pushCriteria(new SalesByOrderDateDescending())->findWhere(['status' => $status]);
 
         return view('admin.sales.get-by-status', compact('sales'));
     }

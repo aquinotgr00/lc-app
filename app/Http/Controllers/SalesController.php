@@ -17,6 +17,9 @@ use App\Repositories\Criteria\Sale\SalesByShipDateAscending;
 use App\Repositories\Criteria\Sale\SalesByOrderDateDescending;
 use App\Repositories\Criteria\Sale\SalesOrderAfter;
 use App\Repositories\Criteria\Sale\SalesOrderBefore;
+use App\Repositories\Criteria\Sale\SalesOnline;
+
+use Carbon\Carbon;
 
 use App\Models\Product;
 
@@ -48,24 +51,26 @@ class SalesController extends Controller
 
     static function routes() {
         \Route::group(['prefix' => 'sales'], function () {
-            \Route::get(  '/',                     'SalesController@index')             ->name('admin.sales.index');
-            \Route::post( '/',                     'SalesController@store')             ->name('admin.sales.store');
-            \Route::get(  '/create',               'SalesController@create')            ->name('admin.sales.create');
-            \Route::get(  '/report',               'SalesController@report')            ->name('admin.sales.report');
-            \Route::post( '/export',               'SalesController@export')            ->name('admin.sales.export');
-            \Route::get(  '/{sId}',                'SalesController@show')              ->name('admin.sales.show');
-            \Route::patch('/{sId}',                'SalesController@update')            ->name('admin.sales.update');
-            \Route::get(  '/{sId}/edit',           'SalesController@edit')              ->name('admin.sales.edit');
-            \Route::get(  '/{sId}/excel',          'SalesController@excel')             ->name('admin.sales.excel');
-            \Route::get(  '/{sId}/print',          'SalesController@printTemp')         ->name('admin.sales.print');
-            \Route::get(  '/{sId}/delete',         'SalesController@destroy')           ->name('admin.sales.delete');
-            \Route::post( '/getReportData',        'SalesController@getReportData')     ->name('admin.sales.get-report-data');
-            \Route::post( '/getReportDataByShipDate', 'SalesController@getReportDataShip')->name('admin.sales.get-report-data-by-ship-date');
-            \Route::post( '/select-by-status',     'SalesController@selectByStatus')    ->name('admin.sales.select-by-status');
-            \Route::post( '/{sId}/update-status',  'SalesController@updateStatus')      ->name('admin.sales.update-status');
-            \Route::get(  '/{sId}/confirm-delete', 'SalesController@getModalDelete')    ->name('admin.sales.confirm-delete');
-            \Route::get(  '/{sId}/formula',        'SalesController@formula')           ->name('admin.sales.formula');
-	    \Route::get(  '{sId}/print-prod',      'SalesController@printProd')         ->name('admin.sales.print-prod');
+            \Route::get(  '/',                       'SalesController@index')             ->name('admin.sales.index');
+            \Route::post( '/',                       'SalesController@store')             ->name('admin.sales.store');
+            \Route::get(  'offline',                 'SalesController@indexOffline')      ->name('admin.sales.index-offline');
+            \Route::get(  'create',                  'SalesController@create')            ->name('admin.sales.create');
+            \Route::get(  'report',                  'SalesController@report')            ->name('admin.sales.report');
+            \Route::post( 'export',                  'SalesController@export')            ->name('admin.sales.export');
+            \Route::get(  '{sId}',                   'SalesController@show')              ->name('admin.sales.show');
+            \Route::patch('{sId}',                   'SalesController@update')            ->name('admin.sales.update');
+            \Route::get(  '{sId}/edit',              'SalesController@edit')              ->name('admin.sales.edit');
+            \Route::get(  '{sId}/excel',             'SalesController@excel')             ->name('admin.sales.excel');
+            \Route::get(  '{sId}/print',             'SalesController@printTemp')         ->name('admin.sales.print');
+            \Route::get(  '{sId}/print-offline',     'SalesController@printOffline')      ->name('admin.sales.print-offline');
+            \Route::get(  '{sId}/delete',            'SalesController@destroy')           ->name('admin.sales.delete');
+            \Route::post( 'getReportData',           'SalesController@getReportData')     ->name('admin.sales.get-report-data');
+            \Route::post( 'getReportDataByShipDate', 'SalesController@getReportDataShip')->name('admin.sales.get-report-data-by-ship-date');
+            \Route::post( 'select-by-status',        'SalesController@selectByStatus')    ->name('admin.sales.select-by-status');
+            \Route::post( '{sId}/update-status',     'SalesController@updateStatus')      ->name('admin.sales.update-status');
+            \Route::get(  '{sId}/confirm-delete',    'SalesController@getModalDelete')    ->name('admin.sales.confirm-delete');
+            \Route::get(  '{sId}/formula',           'SalesController@formula')           ->name('admin.sales.formula');
+	        \Route::get(  '{sId}/print-prod',        'SalesController@printProd')         ->name('admin.sales.print-prod');
         });
     }
 
@@ -79,12 +84,22 @@ class SalesController extends Controller
         $sales = $this->sale
             ->pushCriteria(new SalesWithCustomers())
             ->pushCriteria(new SalesByTransferDateDescending())
+            ->pushCriteria(new SalesOnline())
             ->all();
 
         $page_title       = trans('admin/sales/general.page.index.title');
         $page_description = trans('admin/sales/general.page.index.description');
 
         return view('admin.sales.index', compact('sales', 'page_title', 'page_description'));
+    }
+
+    public function indexOffline() {
+        $sales = $this->sale->findWhere(['type' => 2]);
+
+        $page_title       = trans('admin/sales/general.page.index.title');
+        $page_description = trans('admin/sales/general.page.index.description');
+
+        return view('admin.sales.index-offline', compact('sales', 'page_title', 'page_description'));
     }
 
     /**
@@ -108,10 +123,11 @@ class SalesController extends Controller
      */
     public function store(Request $request)
     {
-        $data    = $request->all();
-        $items   = $request->input('item');
-        $nominal = 0;
-        
+        $data           = $request->all();
+        $items          = $request->input('item');
+        $nominal        = 0;
+        $data['status'] = 1;
+
         // because database cannot read null
         if ($data['transfer_date'] == '') {
             $data['transfer_date'] = null;
@@ -138,11 +154,17 @@ class SalesController extends Controller
 
         // loop all the items to define the total sale nominal
         foreach($items as $order) {
-            if ( $order['product_id'] != '' ) {
+            if ( $order['product_id'] != '' && isset($order['total']) ) {
                 $nominal += $order['total'];
             }
         }
         $data['nominal'] = $nominal;
+        // if type po is 2 (offline) then status will be automatically 12
+        if ($data['type'] == 2) {
+            $data['status']       = 12;
+            $temp_time            = strtotime($data['offline_date']);
+            $data['offline_date'] = date('Y-m-d h:i:s', $temp_time);
+        }
         // save sale
         $newSale = $this->sale->create($data);
 
@@ -335,7 +357,7 @@ class SalesController extends Controller
     {
         $status = $_POST['query'];
 
-        $sales = $this->sale->pushCriteria(new SalesByOrderDateDescending())->findWhere(['status' => $status]);
+        $sales = $this->sale->pushCriteria(new SalesByOrderDateDescending())->findWhere(['status' => $status, 'type' => 1]);
 
         return view('admin.sales.get-by-status', compact('sales'));
     }
@@ -346,9 +368,17 @@ class SalesController extends Controller
 
         return view('admin.sales.print', compact('sale'));
     }
+
+    public function printOffline($id)
+    {
+        $sale = $this->sale->find($id);
+
+        return view('admin.sales.print-offline', compact('sale'));
+    }
+
     public function printProd($id) {
-	$sale = $this->sale->find($id);
-	return view('admin.sales.print-prod', compact('sale'));
+    	$sale = $this->sale->find($id);
+    	return view('admin.sales.print-prod', compact('sale'));
     }
 
     public function report()

@@ -6,7 +6,10 @@
         <div class="col-xs-12">
             <h2 class="page-header">
                 <i class="fa fa-globe"></i> Indotech Group
-                <small class="pull-right">Date: {{ \Carbon\Carbon::now()->format('d M Y') }}</small>
+                <small class="pull-right">
+                    Tanggal: {{ \Carbon\Carbon::now()->format('d M Y') }}
+                </small>
+                <span class="label label-primary pull-right">{{ $sale->type == 1 ? 'Online':'Offline' }}</span>
             </h2>
         </div><!-- /.col -->
     </div>
@@ -36,22 +39,24 @@
         <div class="col-sm-4 invoice-col">
             <b>{{ trans('admin/sales/general.columns.order_date') }}:</b>
             {{ Helpers::date($sale->order_date) }}
-            <br>
-            <br>
-            <b>{{ trans('admin/sales/general.columns.transfer_date') }}:</b>
-            {{ ($sale->transfer_date == '0000-00-00' || $sale->transfer_date == null) ? '' : Helpers::date($sale->transfer_date) }}
-            <br>
-            <b>{{ trans('admin/sales/general.columns.transfer_via') }}:</b> {{ $sale->transfer_via }}
-            <br>
-            <b>{{ trans('admin/sales/general.columns.ship_date') }}:</b>
-            {{ ($sale->ship_date == '0000-00-00' || $sale->ship_date == null) ? '' : Helpers::date($sale->ship_date) }}
-            <br>
-            <b>{{ trans('admin/sales/general.columns.estimation_date') }}:</b>
-            {{ ($sale->estimation_date == '0000-00-00' || $sale->estimation_date == null) ? '' : Helpers::date($sale->estimation_date) }}
-            <br>
-            <b>{{ trans('admin/sales/general.columns.expedition') }}:</b> {{ $sale->expedition }}
-            <br>
-            <b>{{ trans('admin/sales/general.columns.resi') }}:</b> {{ $sale->resi }}
+            @if($sale->type == 1)
+                <br>
+                <br>
+                <b>{{ trans('admin/sales/general.columns.transfer_date') }}:</b>
+                {{ ($sale->transfer_date == '0000-00-00' || $sale->transfer_date == null) ? '' : Helpers::date($sale->transfer_date) }}
+                <br>
+                <b>{{ trans('admin/sales/general.columns.transfer_via') }}:</b> {{ $sale->transfer_via }}
+                <br>
+                <b>{{ trans('admin/sales/general.columns.ship_date') }}:</b>
+                {{ ($sale->ship_date == '0000-00-00' || $sale->ship_date == null) ? '' : Helpers::date($sale->ship_date) }}
+                <br>
+                <b>{{ trans('admin/sales/general.columns.estimation_date') }}:</b>
+                {{ ($sale->estimation_date == '0000-00-00' || $sale->estimation_date == null) ? '' : Helpers::date($sale->estimation_date) }}
+                <br>
+                <b>{{ trans('admin/sales/general.columns.expedition') }}:</b> {{ $sale->expedition }}
+                <br>
+                <b>{{ trans('admin/sales/general.columns.resi') }}:</b> {{ $sale->resi }}
+            @endif
         </div><!-- /.col -->
     </div><!-- /.row -->
 
@@ -120,21 +125,23 @@
                         <th style="width:50%">{{ trans('admin/sales/general.columns.nominal') }}:</th>
                         <td>{{ Helpers::reggo($sale->nominal) }}</td>
                     </tr>
-                    <tr>
-                        <th style="width:50%">{{ trans('admin/sales/general.columns.discount') }}:</th>
-                        <td>{{ $sale->discount }}%</td>
-                    </tr>
-                    <tr>
-                        <th>{{ trans('admin/sales/general.columns.packing_fee') }}:</th>
-                        <td>{{ Helpers::reggo($sale->packing_fee) }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ trans('admin/sales/general.columns.shipping_fee') }}:</th>
-                        <td>{{ Helpers::reggo($sale->shipping_fee) }}</td>
-                    </tr>
+                    @if($sale->type == 1)
+                        <tr>
+                            <th style="width:50%">{{ trans('admin/sales/general.columns.discount') }}:</th>
+                            <td>{{ $sale->discount }}%</td>
+                        </tr>
+                        <tr>
+                            <th>{{ trans('admin/sales/general.columns.packing_fee') }}:</th>
+                            <td>{{ Helpers::reggo($sale->packing_fee) }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ trans('admin/sales/general.columns.shipping_fee') }}:</th>
+                            <td>{{ Helpers::reggo($sale->shipping_fee) }}</td>
+                        </tr>
+                    @endif
                     <tr>
                         <th>{{ trans('admin/sales/general.columns.total') }}:</th>
-			<?php $potongan = round($sale->discount/100*$sale->nominal); ?>
+            			<?php $potongan = round($sale->discount/100*$sale->nominal); ?>
                         <td>{{
                             Helpers::reggo( $sale->nominal-$potongan + $sale->shipping_fee + $sale->packing_fee )
                         }}</td>
@@ -146,9 +153,14 @@
 
     <div class="row no-print">
         <div class="col-xs-12">
-            <a href="{{ route('admin.sales.print', $sale->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-	    <a href="{{ route('admin.sales.print-prod', $sale->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print Produksi</a>
-            <a href="{{ route('admin.sales.formula', $sale->id) }}" class="btn btn-default"> Cetak Purchasing Order</a>
+            @if($sale->type == 1)
+                <a href="{{ route('admin.sales.print', $sale->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+        	    <a href="{{ route('admin.sales.print-prod', $sale->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print Produksi</a>
+                <a href="{{ route('admin.sales.formula', $sale->id) }}" class="btn btn-default"> Cetak Purchasing Order</a>
+            @else
+                <a href="{{ route('admin.sales.print-offline', $sale->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+            @endif
+
             <a href="{{ route('admin.sales.excel', $sale->id) }}" class="btn btn-success pull-right"><i class="fa fa-download"></i> Download Excel</a>
             <a href="{{ route('admin.sales.edit', $sale->id) }}" class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-edit"></i> Edit</a>
         </div>

@@ -12,6 +12,11 @@ return [
     '8' => 'Trainee'
   ],
 
+  'affiliator-types' => [
+    '1' => 'Biasa',
+    '2' => 'Super'
+  ],
+
   'training-categories' => [
     '1' => 'Chemicals',
     '2' => 'Management'
@@ -65,7 +70,10 @@ return [
       '6' => 'Ready Hold',
       '7' => 'Ready Ship',
       '8' => 'Ship',
-      '9' => 'Finished'
+      '9' => 'Finished',
+      '10' => 'Antar',
+      '11' => 'Ambil',
+      '12' => 'Tunggu'
   ],
 
   'supplier-categories' => [

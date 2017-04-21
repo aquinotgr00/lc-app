@@ -17,6 +17,7 @@ class Sale extends Model
         'transfer_date',
         'ship_date',
         'estimation_date',
+        'offline_date',
         'transfer_via',
         'discount',
         'nominal',
@@ -26,6 +27,7 @@ class Sale extends Model
         'resi',
         'description',
         'status',
+        'type',
         'note'
     ];
 

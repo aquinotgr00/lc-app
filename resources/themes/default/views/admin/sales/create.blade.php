@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker3.min.css">
     <!-- autocomplete ui css -->
     @include('partials.head_css.autocomplete_css')
+    <!-- bootstrap datetimepicker -->
+    <link rel="stylesheet" href="{{ asset("/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css") }}" />
 @endsection
 
 @section('content')

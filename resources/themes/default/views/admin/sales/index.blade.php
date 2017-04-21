@@ -28,7 +28,7 @@
                     </a>
                 </div>
                 <div class="box-body">
-                    <div class="table-responsive">
+                    <div class="table-responsive" id="content">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -54,7 +54,7 @@
                                     <th>{{ trans('admin/sales/general.columns.actions') }}</th>
                                 </tr>
                             </tfoot>
-                            <tbody id="content">
+                            <tbody>
                                 @foreach($sales as $key => $sale)
                                 <tr>
                                     <td>{!! link_to_route('admin.sales.show', $sale->customer->name, $sale->id) !!}</td>
@@ -75,7 +75,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>

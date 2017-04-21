@@ -1,6 +1,7 @@
 @extends('layouts.store')
 
 @section('top_styles')
+	<style>
 	fieldset {
 	    border: thin solid #ccc; 
 	    border-radius: 4px;
@@ -21,6 +22,7 @@
 	    color:maroon;
 	    font-size: 112%;
 	}
+	</style>
 @endsection
 
 @section('content')

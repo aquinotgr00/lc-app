@@ -4,9 +4,14 @@
 <!-- datepicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
 
+<script type="text/javascript" src="{{ asset("/bower_components/moment/min/moment.min.js") }}"></script>
+<script type="text/javascript" src="{{ asset("/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js") }}"></script>
+
 <script type="text/javascript">
     // hide 'sec-address' because we want to give 'address' input for a new customers
+    // also hide date and time because it's only used for offline PO
     $('#sec-address').attr('style', 'display:none');
+    $('#type-po-div').attr('style', 'display:none');
 
     function myWeight() {
         var sum    = 0;
@@ -63,7 +68,7 @@
 
 	            // asigning input column from the data that we got above
 	            $('#customer_id').val(ui.item.id);
-	            $('.type').val(ui.item.type);
+	            $('#type').val(ui.item.type);
 	            $('.phone').val(ui.item.phone);
           	}
         });
@@ -76,6 +81,8 @@
             calendarWeeks: false,
             autoclose: true
         });
+
+        $('#dateNTime').datetimepicker();
 
         $('#bank').select2({});
 
@@ -143,6 +150,22 @@
             currentId = $(this).attr('id').replace('selectPrice', '');
             $('#price'+currentId).val($('#selectPrice'+currentId).val());
             $('#ket'+currentId).val($('#selectPrice'+currentId+'  option:selected').text());
+        });
+
+        $('#type-po').change(function () {
+            if ($('#type-po').val() == 2) {
+                $('#type-po-div').removeAttr('style');
+                $('#dateNTime').removeAttr('disabled');
+                $('#online').attr('style', 'display:none');
+                $('#offline').removeAttr('style');
+                $('#onlineTab').attr('style', 'display:none');
+            } else {
+                $('#dateNTime').attr('disabled', true);
+                $('#type-po-div').attr('style', 'display:none');
+                $('#offline').attr('style', 'display:none');
+                $('#online').removeAttr('style');
+                $('#onlineTab').removeAttr('style');
+            }
         });
 
         function productValidation(currentId) {

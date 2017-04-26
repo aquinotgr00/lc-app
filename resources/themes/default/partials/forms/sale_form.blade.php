@@ -299,6 +299,7 @@
                             <th>#</th>
                             <th>Nama Produk</th>
                             <th>Aroma</th>
+                            <th>Harga</th>
                             <th>Kemasan</th>
                             <th>QTY</th>
                         </tr>
@@ -316,6 +317,10 @@
                                 </td>
                                 <td>
                                     {!! Form::text('item['. $x .'][description]', '', ['placeholder' => 'aroma', 'class' => 'aroma form-control', 'id' => 'aroma'. $x .'']) !!}
+                                </td>
+                                <td>
+                                    {!! Form::hidden('item['. $x .'][price]', '', ['id' => 'price'. $x .'']) !!}
+                                    {!! Form::text('price', '', ['placeholder' => 'price', 'class' => 'form-control', 'id' => 'displayPrice'. $x .'', 'disabled']) !!}
                                 </td>
                                 <td>
                                     {!! Form::text('item['. $x .'][keterangan]', '', ['placeholder' => 'kemasan', 'class' => 'form-control']) !!}

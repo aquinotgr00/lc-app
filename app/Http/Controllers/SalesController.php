@@ -63,9 +63,10 @@ class SalesController extends Controller
             \Route::get(  '{sId}/excel',             'SalesController@excel')             ->name('admin.sales.excel');
             \Route::get(  '{sId}/print',             'SalesController@printTemp')         ->name('admin.sales.print');
             \Route::get(  '{sId}/print-offline',     'SalesController@printOffline')      ->name('admin.sales.print-offline');
+            \Route::get(  '{sId}/print-off-price',   'SalesController@printOffPrice')     ->name('admin.sales.print-off-price');
             \Route::get(  '{sId}/delete',            'SalesController@destroy')           ->name('admin.sales.delete');
             \Route::post( 'getReportData',           'SalesController@getReportData')     ->name('admin.sales.get-report-data');
-            \Route::post( 'getReportDataByShipDate', 'SalesController@getReportDataShip')->name('admin.sales.get-report-data-by-ship-date');
+            \Route::post( 'getReportDataByShipDate', 'SalesController@getReportDataShip') ->name('admin.sales.get-report-data-by-ship-date');
             \Route::post( 'select-by-status',        'SalesController@selectByStatus')    ->name('admin.sales.select-by-status');
             \Route::post( '{sId}/update-status',     'SalesController@updateStatus')      ->name('admin.sales.update-status');
             \Route::get(  '{sId}/confirm-delete',    'SalesController@getModalDelete')    ->name('admin.sales.confirm-delete');
@@ -370,6 +371,13 @@ class SalesController extends Controller
     }
 
     public function printOffline($id)
+    {
+        $sale = $this->sale->find($id);
+
+        return view('admin.sales.print-offline', compact('sale'));
+    }
+
+    public function printOffPrice($id)
     {
         $sale = $this->sale->find($id);
 

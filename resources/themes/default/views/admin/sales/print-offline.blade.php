@@ -59,6 +59,9 @@
             <th class="bodered" rowspan="2">No</th>
             <th class="bodered" rowspan="2">Nama Produk</th>
             <th class="bodered" rowspan="2">Aroma</th>
+            @if(Request::is('admin/sales/*/print-off-price'))
+            <th class="bodered" rowspan="2">Harga</th>
+            @endif
             <th class="bodered">Kemasan</th>
             <th class="bodered" rowspan="2">Qty Order</th>
             <th class="bodered" rowspan="2">QC</th>
@@ -82,6 +85,9 @@
                 <th class="bodered">{{ $no }}</th>
                 <td class="bodered">{{ $d->product->name }}</td>
                 <td class="bodered">{{ $d->description }}</td>
+                @if(Request::is('admin/sales/*/print-off-price'))
+                    <td class="bodered">{{ Helpers::reggo($d->price) }}</td>
+                @endif
                 <td class="bodered">{{ $d->keterangan }}</td>
                 <td class="bodered">{{ $d->quantity }}</td>
                 <td class="bodered"></td>
@@ -97,6 +103,9 @@
             <td></td>
             <td></td>
             <td></td>
+            @if(Request::is('admin/sales/*/print-off-price'))
+                <td></td>
+            @endif
             <td class="bodered">{{ $totj }}</td>
         </tr>
     </table>

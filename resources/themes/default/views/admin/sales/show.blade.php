@@ -159,6 +159,7 @@
                 <a href="{{ route('admin.sales.formula', $sale->id) }}" class="btn btn-default"> Cetak Purchasing Order</a>
             @else
                 <a href="{{ route('admin.sales.print-offline', $sale->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+                <a href="{{ route('admin.sales.print-off-price', $sale->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print dengan harga</a>
             @endif
 
             <a href="{{ route('admin.sales.excel', $sale->id) }}" class="btn btn-success pull-right"><i class="fa fa-download"></i> Download Excel</a>

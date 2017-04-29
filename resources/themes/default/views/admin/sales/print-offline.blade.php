@@ -59,11 +59,12 @@
             <th class="bodered" rowspan="2">No</th>
             <th class="bodered" rowspan="2">Nama Produk</th>
             <th class="bodered" rowspan="2">Aroma</th>
+            <th class="bodered" rowspan="2">Qty</th>
             @if(Request::is('admin/sales/*/print-off-price'))
             <th class="bodered" rowspan="2">Harga</th>
+            <th class="bodered" rowspan="2">Total</th>
             @endif
             <th class="bodered">Kemasan</th>
-            <th class="bodered" rowspan="2">Qty Order</th>
             <th class="bodered" rowspan="2">QC</th>
             <th class="bodered" rowspan="2">Packing</th>
         </tr>
@@ -85,17 +86,24 @@
                 <th class="bodered">{{ $no }}</th>
                 <td class="bodered">{{ $d->product->name }}</td>
                 <td class="bodered">{{ $d->description }}</td>
+                <td class="bodered">{{ $d->quantity }}</td>
                 @if(Request::is('admin/sales/*/print-off-price'))
                     <td class="bodered">{{ Helpers::reggo($d->price) }}</td>
+                    <td class="bodered">{{ Helpers::reggo($d->total) }}</td>
                 @endif
                 <td class="bodered">{{ $d->keterangan }}</td>
-                <td class="bodered">{{ $d->quantity }}</td>
                 <td class="bodered"></td>
                 <td class="bodered"></td>
                 <td >{{ $jer = $d->quantity / 5 }}</td>
             </tr>
             <?php $totj = $totj + $jer;  $no++; ?>
         @endforeach
+        @if(Request::is('admin/sales/*/print-off-price'))
+        <tr>
+            <th class="bodered" colspan="5">Jumlah</th>
+            <th class="bodered">{{ Helpers::reggo($sale->nominal) }}</th>
+        </tr>
+        @endif
         <tr>
             <td></td>
             <td></td>
@@ -103,7 +111,9 @@
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
             @if(Request::is('admin/sales/*/print-off-price'))
+                <td></td>
                 <td></td>
             @endif
             <td class="bodered">{{ $totj }}</td>

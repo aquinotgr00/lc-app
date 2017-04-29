@@ -320,13 +320,14 @@
                                 </td>
                                 <td>
                                     {!! Form::hidden('item['. $x .'][price]', '', ['id' => 'price'. $x .'']) !!}
+                                    {!! Form::hidden('item['. $x .'][total]', '', ['id' => 'total'. $x .'']) !!}
                                     {!! Form::text('price', '', ['placeholder' => 'price', 'class' => 'form-control', 'id' => 'displayPrice'. $x .'', 'disabled']) !!}
                                 </td>
                                 <td>
                                     {!! Form::text('item['. $x .'][keterangan]', '', ['placeholder' => 'kemasan', 'class' => 'form-control']) !!}
                                 </td>
                                 <td>
-                                    {!! Form::text('item['. $x .'][quantity]', '', ['placeholder' => 'jumlah', 'class' => 'form-control']) !!}
+                                    {!! Form::text('item['. $x .'][quantity]', '', ['placeholder' => 'jumlah', 'class' => 'form-control Qty', 'id' => 'Qty'. $x .'']) !!}
                                 </td>
                             </tr>
                         @endfor

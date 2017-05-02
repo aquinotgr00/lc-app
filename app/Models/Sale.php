@@ -65,6 +65,12 @@ class Sale extends Model
             return "Ship";
         } elseif ( $this->status == 9 ) {
             return "Finish";
+        } elseif ( $this->status == 10 ) {
+            return "Antar";
+        } elseif ( $this->status == 11 ) {
+            return "Ambil";
+        } elseif ( $this->status == 12 ) {
+            return "Tunggu";
         }
     }
 

@@ -34,14 +34,24 @@
                 <td>{{ $sale->customer->laundry_name or '' }} {{ $sale->address }}</td>
             </tr>
             <tr>
-                <th>Tanggal Antar / Ambil / Tunggu</th>
+                <th>Status</th>
+                <th>:</th>
+                <td>{{ $sale->getStatusDisplayName() }}</td>
+            </tr>
+            <tr>
+                <th>Tanggal Pesan</th>
+                <th>:</th>
+                <td>{{ Helpers::date($sale->order_date) }}</td>
+            </tr>
+            <tr>
+                <th>Tanggal {{ $sale->getStatusDisplayName() }}</th>
                 <td>:</td>
                 <td>
-                    {{ substr($sale->offline_date,0, 10) }}
+                    {{ Helpers::date(substr($sale->offline_date,0, 10)) }}
                 </td>
             </tr>
             <tr>
-                <th>Jam Antar / Ambil / Tunggu</th>
+                <th>Jam {{ $sale->getStatusDisplayName() }}</th>
                 <td>:</td>
                 <td>
                     {{ substr($sale->offline_date,10, 16) }}

@@ -25,7 +25,7 @@
             <div class="form-group">
                 {!! Form::label('type', trans('admin/customers/general.columns.type')) !!}
                 @if( isset($sale) )
-                    {!! Form::select('cust_type', config('constant.customer-types'), $sale->customer->type, ['class' => 'form-control type', 'disabled']) !!}
+                    {!! Form::select('cust_type', config('constant.customer-types'), $sale->customer->type, ['class' => 'form-control type', 'disabled', 'id' => 'type']) !!}
                 @else
                     {!! Form::select('cust_type', config('constant.customer-types'), null, ['class' => 'form-control type', 'id' => 'type']) !!}
                 @endif

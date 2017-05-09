@@ -31,11 +31,11 @@ class CustomerFollowupsController extends Controller
 
     static function routes() {
         \Route::group(['prefix' => 'customer-followups'], function () {
-            \Route::get(  '/',                       'CustomerFollowupsController@index')           ->name('admin.customer-followups.index');
-            \Route::post( '/',                       'CustomerFollowupsController@store')           ->name('admin.customer-followups.store');
-            \Route::get(  '/{ccfId}/delete',         'CustomerFollowupsController@destroy')         ->name('admin.customer-followups.delete');
-            \Route::post( '/select-by-type',         'CustomerFollowupsController@selectByType')    ->name('admin.customer-followups.select-by-type');
-            \Route::get(  '/{ccfId}/confirm-delete', 'CustomerFollowupsController@getModalDelete')  ->name('admin.customer-followups.confirm-delete');
+            \Route::get(  '/',                     'CustomerFollowupsController@index')           ->name('admin.customer-followups.index');
+            \Route::post( '/',                     'CustomerFollowupsController@store')           ->name('admin.customer-followups.store');
+            \Route::get(  '{ccfId}/delete',        'CustomerFollowupsController@destroy')         ->name('admin.customer-followups.delete');
+            \Route::post( 'select-by-type',        'CustomerFollowupsController@selectByType')    ->name('admin.customer-followups.select-by-type');
+            \Route::get(  '{ccfId}/confirm-delete','CustomerFollowupsController@getModalDelete')  ->name('admin.customer-followups.confirm-delete');
         });
     }
 

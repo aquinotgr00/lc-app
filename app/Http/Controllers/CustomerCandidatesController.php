@@ -112,7 +112,9 @@ class CustomerCandidatesController extends Controller
         $page_title       = trans('admin/customer-candidates/general.page.create.title');
         $page_description = trans('admin/customer-candidates/general.page.create.description');
 
-        return view('admin.customer-candidates.create', compact('page_title', 'page_description'));
+        $prov = \App\Models\Provinsi::lists('nama', 'id');
+        
+        return view('admin.customer-candidates.create', compact('page_title', 'page_description', 'prov'));
     }
 
     /**

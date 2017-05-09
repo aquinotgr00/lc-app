@@ -47,6 +47,15 @@
 </div>
 
 <div class="form-group">
+    {!! Form::label('prov', 'Provinsi', ['class' => 'col-md-4 control-label']) !!}
+    {!! Form::select('prov', $prov, 'default', ['id' => 'prov', 'class' => 'form-control', 'placeholder' => 'pilih prov']) !!}
+</div>
+<div class="form-group">
+    {!! Form::label('kokab', 'Kota Kabupaten', ['class' => 'col-md-4 control-label']) !!}
+    {!! Form::select('master_kokab_id', ['default' => 'kota'], 'default', ['id' => 'kokab', 'class' => 'form-control']) !!}
+</div>
+
+<div class="form-group">
     {!! Form::label('send_address', trans('admin/customers/general.columns.send_address')) !!}
     {!! Form::textarea('send_address', null, ['class' => 'form-control', 'rows' => 3]) !!}
 </div>

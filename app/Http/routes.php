@@ -18,6 +18,10 @@ Route::post('password/reset',         ['as' => 'reset_passwordPost',   'uses' =>
 Route::get( '/',       ['as' => 'backslash',   'uses' => 'HomeController@index']);
 Route::get( 'home',    ['as' => 'home',        'uses' => 'HomeController@index']);
 
+Route::get('testing', function () {
+    
+});
+
 // Store
 \App\Http\Controllers\StoreController::routes();
 // Affiliate Controller
@@ -38,8 +42,12 @@ Route::group(['middleware' => 'authorize'], function () {
         \App\Http\Controllers\TrainingsController::routes();
         // Affiliate
         \App\Http\Controllers\AffController::routes();
+        // Affiliate Settings
+        \App\Http\Controllers\AffiliateSettingsController::routes();
         // Store Orders 
         \App\Http\Controllers\StoreOrdersController::routes();
+        // Store Customers
+        \App\Http\Controllers\StoreCustomersController::routes();
         // Expedition routes
         \App\Http\Controllers\ExpeditionsController::routes();
         // Product routes

@@ -11,7 +11,12 @@
 				<div class="box-body">
 					{!! Form::open(['route' => 'admin.affiliate.store']) !!}
 
-					<div class="form-group"> 	 
+					<div class="form-group">
+		            	<label for="type"><span class="req">* </span> Type: </label>
+					    {!! Form::select('type', config('constant.affiliator-types'), null, ['class' => 'form-control type',  'style' => "width: 100%"]) !!}
+					</div>
+
+					<div class="form-group">
 		                <label for="firstname"><span class="req">* </span> First name: </label>
 	                    <input class="form-control" type="text" name="firstname" required /> 
                         <div id="errFirst"></div>    

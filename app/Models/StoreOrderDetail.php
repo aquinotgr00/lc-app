@@ -6,11 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class StoreOrderDetail extends Model
 {
-    protected $fillable = ['order_id', 'product_id', 'price', 'description'];
+    protected $fillable = ['order_id', 'product_id', 'price', 'quantity', 'total', 'description'];
 
     public $timestamps = false;
 
     public function storeOrder() {
     	return $this->belongsTo('App\Models\StoreOrder');
+    }
+
+    public function product() {
+        return $this->belongsTo('App\Models\Product');
     }
 }

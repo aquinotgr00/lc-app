@@ -20,19 +20,23 @@ class AffController extends Controller
     static function routes() {
         \Route::get('/aff/{link}',     'AffController@affClicked');
         \Route::group(['prefix' => 'affiliate'], function () {
-            \Route::get(  '/',          'AffController@dashboard')->name('admin.affiliate.dashboard');
-            \Route::get(  '/create',    'AffController@create')   ->name('admin.affiliate.create');
-            \Route::get(  '/{id}',      'AffController@show')     ->name('admin.affiliate.show');
-            \Route::post( '/',          'AffController@store')    ->name('admin.affiliate.store');
+            \Route::get( '/',                   'AffController@dashboard')     ->name('admin.affiliate.dashboard');
+            \Route::post('/',                   'AffController@store')         ->name('admin.affiliate.store');
+            \Route::get( 'create',              'AffController@create')        ->name('admin.affiliate.create');
+            \Route::get( '{id}',                'AffController@show')          ->name('admin.affiliate.show');
+            \Route::get( '{id}/delete',         'AffController@destroy')       ->name('admin.affiliate.delete');
+            \Route::get( '{id}/confirm-delete', 'AffController@getModalDelete')->name('admin.affiliate.confirm-delete');
         });
     }
 
     public function dashboard() {
+        $page_title       = 'Affiliator';
+        $page_description = 'Affiliator Laundry Cleanique';
         // get all the affiliator users
         // $affiliators = Role::with('users')->where('name', 'affiliator')->get();
         // $affiliators = Role::where('name', 'affiliator')->first()->users()->get();
         $affiliators = Affiliate::with('user')->get();
-        return view('admin.affiliates.dashboard', compact('affiliators'));
+        return view('admin.affiliates.dashboard', compact('page_title', 'page_description', 'affiliators'));
     }
 
     public function affClicked(Request $request, $link) {
@@ -89,5 +93,25 @@ class AffController extends Controller
         ]);
 
         return redirect('admin/affiliate');
+    }
+
+    public function destroy($id) {
+        $aff = Affiliate::find($id);
+        $aff->delete();
+        return redirect( route('admin.affiliate.index') );
+    }
+
+    public function getModalDelete($id)
+    {
+        $error       = null;
+        
+        $aff         = Affiliate::find($id);
+        
+        $modal_title = 'Hapus affiliator';
+        $modal_route = route('admin.affiliate.delete', array('id' => $aff->id));
+        $modal_body  = 'Apakah kamu yakin ingin menghapus affiliator ID: '. $aff->id .' dengan nama: '. $aff->user->getFullNameAttribute() .' ? Proses ini tidak bisa dibatalkan.';
+
+        return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
+
     }
 }

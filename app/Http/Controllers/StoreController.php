@@ -11,6 +11,7 @@ use App\Models\StoreOrder;
 use App\Models\StoreOrderDetail;
 use App\Models\Affiliate;
 use App\Models\StorePartnerProduct;
+use App\Models\AffiliateSetting;
 use App\User;
 use Cart;
 use Auth;
@@ -31,6 +32,7 @@ class StoreController extends Controller
         \Route::get(  'api/get-kokab/{id}',         'StoreController@getKokab')      ->name('store.get-kokab');
         \Route::post( 'add-store-customer-address', 'StoreController@addAddress')    ->name('store.add-customer-address');
         \Route::get(  'confirmation-order',         'StoreController@confirmOrder')  ->name('store.confirm-order')      ->middleware('authorize');
+        \Route::get(  'succeed',                    'StoreController@orderSucceed')  ->name('store.order-succeed')      ->middleware('authorize');
         \Route::post( 'storeOrder',                 'StoreController@storeOrder')    ->name('store.store-order')        ->middleware('authorize');
         \Route::get(  'member/{id}',                'StoreController@profile')       ->name('store.profile')            ->middleware('authorize');
         \Route::get(  'member/{id}/{tab}',          'StoreController@profileTab')    ->name('store.profile.tab')        ->middleware('authorize');
@@ -162,6 +164,7 @@ class StoreController extends Controller
             $cust->update(['aff_id' => $aff->id]); // update the store customer 'aff_id' column
         }
         
+        session()->forget('aff_link');
         return redirect('store');
     }
 
@@ -240,6 +243,10 @@ class StoreController extends Controller
         return view('front.member.confirm-order', compact('cart', 'user'));
     }
 
+    public function orderSucceed() {
+        return view('front.member.order-succeed');
+    }
+
     public function storeOrder() {
         try {
             $total      = Cart::getTotal();
@@ -266,12 +273,19 @@ class StoreController extends Controller
             }
 
             if (Auth::user()->storeCustomer->aff_id != null) {
-                $aff = Affiliate::find(Auth::user()->storeCustomer->aff_id);
-                $aff->increment('temp_balance', 10/100*$total);
+                $aff     = Affiliate::find(Auth::user()->storeCustomer->aff_id);
+                $regular = AffiliateSetting::where('name', 'affiliate_regular_bonus')->first()->value_int;
+                $super   = AffiliateSetting::where('name', 'affiliate_super_bonus')->first()->value_int;
+                if ($aff->type == 1) {
+                    $tott = $regular / 100 * $total;
+                    $aff->increment('temp_balance', $tott);
+                } elseif ($aff->type == 2) {
+                    $tott = $super / 100 * $total;
+                    $aff->increment('temp_balance', $tott);
+                }
             }
             Cart::clear();
-            session()->flush();
-            return redirect('store');
+            return redirect('succeed');
         } catch (Exception $e) {
             return redirect('store');
         }

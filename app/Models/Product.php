@@ -59,6 +59,10 @@ class Product extends Model
         return $this->hasMany('App\Models\StorePartnerProduct');
     }
 
+    public function storeOrderDetails() {
+        return $this->hasMany('App\Models\StoreOrderDetail');
+    }
+
     public function seed() {
         return $this->hasOne('App\Models\Seed');
     }

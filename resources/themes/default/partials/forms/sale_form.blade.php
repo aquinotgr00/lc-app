@@ -158,7 +158,7 @@
                                         {!! Form::text('item['. $key .'][description]', $d->description, ['placeholder' => 'description', 'class' => 'aroma form-control', 'id' => 'aroma'. $key .'']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::hidden('item['. $key .'][price]', $d->price, ['id' => 'price'. $key .'']) !!}
+                                        {!! Form::hidden('item['. $key .'][price]', $d->price, ['id' => 'price'. $no .'']) !!}
                                         @if($d->product->category_id == 10 && $d->product->seed)
                                             {!! Form::select('selectPrice',
                                                 [   // if there's 2 same value. the last is the one that will be used, since the value must be unique.
@@ -166,25 +166,25 @@
                                                     $d->product->seed->price_1 => '500 ml',
                                                     $d->product->seed->price_2 => '250 ml',
                                                     $d->product->seed->price_3 => '100 ml'
-                                                ], $d->price, ['id' => 'selectPrice'.$key.'', 'class' => 'form-control selectt'])
+                                                ], $d->price, ['id' => 'selectPrice'.$no.'', 'class' => 'form-control selectt'])
                                             !!}
                                         @else
                                             {!! Form::text('price', $d->price, ['placeholder' => 'price', 'class' => 'form-control', 'id' => 'displayPrice'. $no .'', 'disabled']) !!}
                                         @endif
                                     </td>
                                     <td>
-                                        {!! Form::text('item['. $key .'][quantity]', $d->quantity, ['placeholder' => 'quantity', 'class' => 'form-control Qty','id' => 'Qty'. $key .'']) !!}
+                                        {!! Form::text('item['. $key .'][quantity]', $d->quantity, ['placeholder' => 'quantity', 'class' => 'form-control Qty','id' => 'Qty'. $no .'']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::hidden('item['. $key .'][total]', $d->total, ['id' => 'total'. $key .'']) !!}
-                                        {!! Form::text('total', $d->total, ['placeholder' => 'total', 'class' => 'form-control', 'id' => 'displayTotal'. $key .'', 'disabled']) !!}
+                                        {!! Form::hidden('item['. $key .'][total]', $d->total, ['id' => 'total'. $no .'']) !!}
+                                        {!! Form::text('total', $d->total, ['placeholder' => 'total', 'class' => 'form-control', 'id' => 'displayTotal'. $no .'', 'disabled']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::hidden('item['. $key .'][weight]', $d->weight, ['id' => 'weight'. $key .'']) !!}
-                                        {!! Form::text('weight', $d->weight, ['placeholder' => 'weight', 'class' => 'form-control sumWeight', 'id' => 'displayWeight'. $key .'', 'disabled']) !!}
+                                        {!! Form::hidden('item['. $key .'][weight]', $d->weight, ['id' => 'weight'. $no .'']) !!}
+                                        {!! Form::text('weight', $d->weight, ['placeholder' => 'weight', 'class' => 'form-control sumWeight', 'id' => 'displayWeight'. $no .'', 'disabled']) !!}
                                     </td>
                 				    <td>
-                					{!! Form::text('item['. $key .'][keterangan]', $d->keterangan, ['class' => 'form-control', 'id' => 'ket'.$key.'']) !!}
+                					{!! Form::text('item['. $key .'][keterangan]', $d->keterangan, ['class' => 'form-control', 'id' => 'ket'.$no.'']) !!}
                 				    </td>
                                     <td id='jer{{$key}}' class='qtyJer' value=''>
                                         0

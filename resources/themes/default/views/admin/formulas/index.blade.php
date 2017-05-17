@@ -61,9 +61,10 @@
 
     <script>
         $(document).ready(function() {
-            var table = $('#example2').DataTable();
-            table
-                .order( [1, 'ASC'] );
+            $('#example2').DataTable({
+                "order": [ 0, "asc" ],
+                "ordering": false
+            });
         });
     </script>
 @endsection

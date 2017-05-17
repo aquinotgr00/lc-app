@@ -23,7 +23,7 @@
 
         <!-- Main style sheet -->
         {{-- <link href="css/style.css" rel="stylesheet"> --}}
-        <link rel="stylesheet" href="/css/store.css">
+        <link rel="stylesheet" href="/css/d-shop/all.css">
         {{-- <link rel="stylesheet" href="{{ elixir('css/style.css') }}"> --}}
 
         <!-- Google Font -->
@@ -37,9 +37,7 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <style>
-            @yield('top_styles')
-        </style>
+        @yield('top_styles')
       
     </head>
     <body> 

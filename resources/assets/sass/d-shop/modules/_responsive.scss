@@ -269,7 +269,10 @@
 	  text-align: center;	  
 	}
 
-
+	#quick-view-modal .modal-content .aa-product-view-content {
+	  padding-right: 0;
+	  padding-bottom: 0;
+	}
 
 }
 
@@ -349,6 +352,11 @@
 	#aa-slider .aa-slider-area .seq-title .aa-shop-now-btn {
 	  font-size: 14px;
 	  margin-top: 10px;
+	}
+
+	#quick-view-modal .modal-content .aa-product-view-content {
+	  padding-right: 0;
+	  padding-bottom: 0;
 	}
 
 }	
@@ -519,7 +527,10 @@
 	  width: 100%;
 	}
 
-
+	#quick-view-modal .modal-content .aa-product-view-content {
+	  padding-right: 0;
+	  padding-bottom: 0;
+	}
 
 }
 

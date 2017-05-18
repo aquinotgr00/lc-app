@@ -14,7 +14,7 @@
                 <span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Customer Baru Bulan Ini</span>
-                    <span class="info-box-number">{{ $newCustomersCount }}</span>
+                    <span class="info-box-number">{{ $newCustomersCount }} - <a href="/new-cust">Detail</a></span>
                 </div>
             </div>
         </div>

@@ -28,6 +28,8 @@ Route::group(['middleware' => 'authorize'], function () {
     // Application routes...
     Route::get( 'dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
     Route::get( 'search',    ['as' => 'search',    'uses' => 'DashboardController@search']);
+    //Route::get( 'new-customer-this-month', ['as' => 'new-cust-this-month', 'uses' => 'DashboardController@newCustomer']);
+    Route::get('new-cust', ['as' => 'new-cust', 'uses' => 'DashboardController@newCustomer']);
 
     // Member routes
     Route::get( 'checkout',        'StoreController@checkout')->name('store.member.checkout');

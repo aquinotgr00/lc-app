@@ -31,6 +31,11 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
 
+    public function newCustomer() { 
+	$customers = Customer::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->get();
+	return view('new_cust', compact('customers')); 
+    }
+
     public function index() {
         $page_title       = "Dashboard";
         $page_description = "Sepintas Informasi Bulan Ini";

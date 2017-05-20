@@ -44,6 +44,11 @@ class DashboardController extends Controller
             ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
             ->count();
 
+	$newBoCount = Customer::where(DB::raw('YEAR(created_at)'), Carbon::now()->year)
+            ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+            ->where('type', [1,6])
+            ->count();
+
         $salesThisMonthCount = Sale::whereBetween('order_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
             ->count();
 
@@ -153,7 +158,8 @@ class DashboardController extends Controller
             'saleDetailsLastMonth',
             'latestSales',
             'latestFollowups',
-            'final'
+            'final',
+	    'newBoCount'
         ));
     }
 

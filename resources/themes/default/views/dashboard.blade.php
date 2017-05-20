@@ -42,7 +42,7 @@
                 <span class="info-box-icon bg-red"><i class="fa fa-smile-o"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">BO Goal</span>
-                    <span class="info-box-number">2</span>
+                    <span class="info-box-number">{{ $newBoCount }}/2</span>
                 </div>
             </div>
         </div>

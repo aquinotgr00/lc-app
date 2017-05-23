@@ -5,6 +5,9 @@
 .env~
 storage/
 
+# visual code #
+.vs
+
 # Package development #
 #######################
 /app/Modules/

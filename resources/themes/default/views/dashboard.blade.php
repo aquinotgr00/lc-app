@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
 @section('head_extra')
+    <!-- datepicker css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker3.min.css">
     <!-- jVectorMap 1.2.2 -->
     <link href="{{ asset("/bower_components/admin-lte/plugins/jvectormap/jquery-jvectormap-1.2.2.css") }}" rel="stylesheet" type="text/css" />
     <!-- autocomplete ui css -->
@@ -109,6 +111,16 @@
         </div>
         <div class="col-md-4">
             <div class="box box-default">
+                <div class="box-body">
+                    {!! Form::open( ['route' => 'admin.sales.kebutuhan', 'METHOD' => 'POST'] ) !!}
+                    <div class="col-xs-4">
+                        {!! Form::text('print_date', null, ['class' => 'form-control date', 'placeholder' => 'pilih tanggal']) !!}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Print Kebutuhan</button>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+            <div class="box box-default">
                 <div class="box-header with-border">
                     <h3 class="box-title">PO Terakhir</h3>
                     <div class="box-tools pull-right">
@@ -216,6 +228,9 @@
     <!-- autocomplete UI -->
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
+    <!-- datepicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('#customer-name').autocomplete({
@@ -227,6 +242,15 @@
                     $('#customer-id').val(ui.item.id);
                 }
             });
+        });
+
+        $('.date').datepicker({
+            format: "yyyy-mm-dd",
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true
         });
     </script>
 

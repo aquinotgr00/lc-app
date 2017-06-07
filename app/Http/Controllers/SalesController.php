@@ -22,6 +22,7 @@ use App\Repositories\Criteria\Sale\SalesOnline;
 use Carbon\Carbon;
 
 use App\Models\Product;
+use App\Models\Sale as AppSale;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -65,6 +66,7 @@ class SalesController extends Controller
             \Route::get(  '{sId}/print-offline',     'SalesController@printOffline')      ->name('admin.sales.print-offline');
             \Route::get(  '{sId}/print-off-price',   'SalesController@printOffPrice')     ->name('admin.sales.print-off-price');
             \Route::get(  '{sId}/delete',            'SalesController@destroy')           ->name('admin.sales.delete');
+            \Route::post( 'kebutuhan',               'SalesController@kebutuhan')         ->name('admin.sales.kebutuhan');
             \Route::post( 'getReportData',           'SalesController@getReportData')     ->name('admin.sales.get-report-data');
             \Route::post( 'getReportDataByShipDate', 'SalesController@getReportDataShip') ->name('admin.sales.get-report-data-by-ship-date');
             \Route::post( 'select-by-status',        'SalesController@selectByStatus')    ->name('admin.sales.select-by-status');
@@ -584,5 +586,47 @@ class SalesController extends Controller
             'x',
             'sale'
         ));
+    }
+
+    public function kebutuhan(Request $request) {
+        $sales          = AppSale::where('status', 2)
+                            ->whereBetween('transfer_date', [$request->print_date, Carbon::now()->format('Y-m-d')])
+                            ->orderBy('estimation_date', 'ASC')
+                            ->get();
+        $page_title     = 'SPK dan Bahan Baku Kebutuhan';
+        $data           = [];
+        $totalSeed      = [];
+        $total          = [];
+        $perDate        = [];
+        $x              = 1;
+        
+        foreach ($sales as $key => $value) {
+            foreach ($value->saleDetails as $key => $d) {
+                $data[$value->estimation_date][$d->product->name .' '. $d->description]['quantity']    = $d->quantity;
+                $data[$value->estimation_date][$d->product->name .' '. $d->description]['estimation']  = $value->estimation_date;
+                $data[$value->estimation_date][$d->product->name .' '. $d->description]['description'] = $d->description;
+                $formula = $this->formula->findBy('product_id', $d->product_id);
+                if ($formula) {
+                    $data[$value->estimation_date][$d->product->name .' '. $d->description]['materials'] = $formula->formulaDetails;
+                    if ($d->product->category_id == 8) {
+                        $material = $this->material->findBy('name', $d->description);
+                        if ($material) {
+                            if (str_contains($d->product->name, 'titanium') || str_contains($d->product->name, 'Prime Plus')) {
+                                $data[$value->estimation_date][$d->product->name .' '. $d->description]['seed'] = $material->seedMaterial->prime_plus;
+                            } elseif (str_contains($d->product->name, 'platinum') || str_contains($d->product->name, 'Prime Standard')) {
+                                $data[$value->estimation_date][$d->product->name .' '. $d->description]['seed'] = $material->seedMaterial->prime_standart;
+                            } elseif (str_contains($d->product->name, 'gold') || str_contains($d->product->name, 'Superior A')) {
+                                $data[$value->estimation_date][$d->product->name .' '. $d->description]['seed'] = $material->seedMaterial->superior_a;
+                            } elseif (str_contains($d->product->name, 'silver') || str_contains($d->product->name, 'Superior B')) {
+                                $data[$value->estimation_date][$d->product->name .' '. $d->description]['seed'] = $material->seedMaterial->superior_b;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return view('admin.sales.kebutuhan', compact('page_title', 'data', 'total', 'totalSeed', 'x', 'totalSeed', 'perDate'))    ;
+
     }
 }

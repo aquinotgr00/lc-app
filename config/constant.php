@@ -76,7 +76,8 @@ return [
   'sale-status-offline' => [
     '10' => 'Antar',
     '11' => 'Ambil',
-    '12' => 'Tunggu'
+    '12' => 'Tunggu',
+    '13' => 'Selesai'
   ],
 
   'supplier-categories' => [

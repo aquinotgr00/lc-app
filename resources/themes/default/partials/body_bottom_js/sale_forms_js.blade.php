@@ -82,7 +82,7 @@
             autoclose: true
         });
 
-        $('#dateNTime').datetimepicker();
+        $('.dateNTime').datetimepicker();
 
         $('#bank').select2({});
 
@@ -152,6 +152,15 @@
             $('#ket'+currentId).val($('#selectPrice'+currentId+'  option:selected').text());
         });
 
+        if ( $('#type-po').val() == 2 ) {
+            $('#type-po-div').removeAttr('style');
+            $('#dateNTime').removeAttr('disabled');
+            $('#online').fadeOut();
+            $('#offline').removeAttr('style');
+            $('#onlineTab').attr('style', 'display:none');
+            $('.onlineRow').remove();
+        }
+
         $('#type-po').change(function () {
             if ($('#type-po').val() == 2) {
                 $('#type-po-div').removeAttr('style');
@@ -193,6 +202,7 @@
 
             var price       = $('#price'+currentId).val();
             var baseWeight  = $('#baseWeight'+currentId).val();
+            console.log(price);
             // var weight      = $('#weight'+currentId).val();
             var weightTotal = qty*baseWeight;
 

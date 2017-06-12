@@ -9,7 +9,7 @@
         <div class="tab-pane active" id="tab_details">
             <div class="form-group">
                 {!! Form::label('typee', 'Tipe PO') !!}
-                {!! Form::select('type', [1 => 'online', 2 => 'offline'], 1, ['class' => 'form-control', 'id' => 'type-po']) !!}
+                {!! Form::select('type', [1 => 'online', 2 => 'offline'], null, ['class' => 'form-control', 'id' => 'type-po']) !!}
             </div>
 
             <div class="form-group">
@@ -59,7 +59,7 @@
 
             <div class="form-group" id="type-po-div">
                 {!! Form::label('offline_date', 'Tanggal dan Jam Tunggu') !!}
-                {!! Form::text('offline_date', null, ['class' => 'form-control', 'id' => 'dateNTime', 'disabled']) !!}
+                {!! Form::text('offline_date', null, ['class' => isset($sale) ? 'form-control' : 'form-control dateNTime', 'id' => 'dateNTime', 'disabled']) !!}
             </div>
             
             <div id="onlineTab">
@@ -143,7 +143,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if( isset($sale) )
+                        @if( isset($sale) && $sale->type == 1 )
                             <?php $no = 1; ?>
                             @foreach( $sale->saleDetails as $key => $d )
                                 <tr id="row{{ $d->id }}">
@@ -242,7 +242,7 @@
                             @endfor
                         @else
                             @for($x = 1; $x <=100; $x++)
-                                <tr>
+                                <tr class="onlineRow">
                                     <td>
                                         {!! $x !!}
                                         {!! Form::hidden('item['. $x .'][product_id]', '', ['id' => 'productName'. $x .'']) !!}
@@ -305,32 +305,89 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for($x = 101; $x <=125; $x++)
-                            <tr>
-                                <td>
-                                    {!! $x !!}
-                                </td>
-                                <td>
-                                    {!! Form::hidden('baseWeight', '', ['id' => 'baseWeight'.$x.'']) !!}
-                                    {!! Form::hidden('item['. $x .'][product_id]', '', ['id' => 'productName'. $x .'']) !!}
-                                    {!! Form::text('productName', '', ['placeholder' => 'nama', 'class' => 'form-control product', 'id' => 'product'. $x .'']) !!}
-                                </td>
-                                <td>
-                                    {!! Form::text('item['. $x .'][description]', '', ['placeholder' => 'aroma', 'class' => 'aroma form-control', 'id' => 'aroma'. $x .'']) !!}
-                                </td>
-                                <td>
-                                    {!! Form::hidden('item['. $x .'][price]', '', ['id' => 'price'. $x .'']) !!}
-                                    {!! Form::hidden('item['. $x .'][total]', '', ['id' => 'total'. $x .'']) !!}
-                                    {!! Form::text('price', '', ['placeholder' => 'price', 'class' => 'form-control', 'id' => 'displayPrice'. $x .'', 'disabled']) !!}
-                                </td>
-                                <td>
-                                    {!! Form::text('item['. $x .'][keterangan]', '', ['placeholder' => 'kemasan', 'class' => 'form-control']) !!}
-                                </td>
-                                <td>
-                                    {!! Form::text('item['. $x .'][quantity]', '', ['placeholder' => 'jumlah', 'class' => 'form-control Qty', 'id' => 'Qty'. $x .'']) !!}
-                                </td>
-                            </tr>
-                        @endfor
+                        @if( isset($sale) && $sale->type == 2 )
+                            <?php $no = 1; ?>
+                            @foreach($sale->saleDetails as $key => $value)
+                                <tr>
+                                    <td>
+                                        {!! $no !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::hidden('baseWeight', $value->product->weight, ['id' => 'baseWeight'. $no .'']) !!}
+                                        {!! Form::hidden('item['. $no .'][product_id]', $value->product_id, ['id' => 'productName'. $no .'']) !!}
+                                        {!! Form::text('productName', $value->product->name, ['class' => 'form-control product', 'id' => 'product'. $no .'']) !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::text('item['. $no .'][description]', $value->description, ['class' => 'form-control aroma', 'id' => 'aroma'. $no .'']) !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::hidden('item['. $no .'][price]', $value->price, ['id' => 'price'. $no .'']) !!}
+                                        {!! Form::hidden('item['. $no .'][total]', $value->total, ['id' => 'total'. $no .'']) !!}
+                                        {!! Form::text('price', $value->price, ['class' => 'form-control', 'id' => 'displayPrice'. $no .'', 'disabled']) !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::text('item['. $no .'][keterangan]', $value->keterangan, ['class' => 'form-control']) !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::text('item['. $no .'][quantity]', $value->quantity, ['class' => 'form-control Qty', 'id' => 'Qty'. $no .'']) !!}
+                                    </td>
+                                </tr>
+                                <?php $no++; ?>
+                            @endforeach
+                            @for($x = $no; $x < 50; $x++)
+                                <tr>
+                                    <td>
+                                        {!! $x !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::hidden('baseWeight', '', ['id' => 'baseWeight'. $x .'']) !!}
+                                        {!! Form::hidden('item['. $x .'][product_id]', '', ['id' => 'productName'. $x .'']) !!}
+                                        {!! Form::text('productName', '', ['placeholder' => 'nama', 'class' => 'form-control product', 'id' => 'product'. $x .'']) !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::text('item['. $x .'][description]', '', ['placeholder' => 'aroma', 'class' => 'aroma form-control', 'id' => 'aroma'. $x .'']) !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::hidden('item['. $x .'][price]', '', ['id' => 'price'. $x .'']) !!}
+                                        {!! Form::hidden('item['. $x .'][total]', '', ['id' => 'total'. $x .'']) !!}
+                                        {!! Form::text('price', '', ['placeholder' => 'price', 'class' => 'form-control', 'id' => 'displayPrice'. $x .'', 'disabled']) !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::text('item['. $x .'][keterangan]', '', ['placeholder' => 'kemasan', 'class' => 'form-control']) !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::text('item['. $x .'][quantity]', '', ['placeholder' => 'jumlah', 'class' => 'form-control Qty', 'id' => 'Qty'. $x .'']) !!}
+                                    </td>
+                                </tr>
+                            @endfor
+                        @else
+                            @for($x = 101; $x <=125; $x++)
+                                <tr>
+                                    <td>
+                                        {!! $x !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::hidden('baseWeight', '', ['id' => 'baseWeight'.$x.'']) !!}
+                                        {!! Form::hidden('item['. $x .'][product_id]', '', ['id' => 'productName'. $x .'']) !!}
+                                        {!! Form::text('productName', '', ['placeholder' => 'nama', 'class' => 'form-control product', 'id' => 'product'. $x .'']) !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::text('item['. $x .'][description]', '', ['placeholder' => 'aroma', 'class' => 'aroma form-control', 'id' => 'aroma'. $x .'']) !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::hidden('item['. $x .'][price]', '', ['id' => 'price'. $x .'']) !!}
+                                        {!! Form::hidden('item['. $x .'][total]', '', ['id' => 'total'. $x .'']) !!}
+                                        {!! Form::text('price', '', ['placeholder' => 'price', 'class' => 'form-control', 'id' => 'displayPrice'. $x .'', 'disabled']) !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::text('item['. $x .'][keterangan]', '', ['placeholder' => 'kemasan', 'class' => 'form-control']) !!}
+                                    </td>
+                                    <td>
+                                        {!! Form::text('item['. $x .'][quantity]', '', ['placeholder' => 'jumlah', 'class' => 'form-control Qty', 'id' => 'Qty'. $x .'']) !!}
+                                    </td>
+                                </tr>
+                            @endfor
+                        @endif
                     </tbody>
                 </table>
             </div>

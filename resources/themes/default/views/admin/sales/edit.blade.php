@@ -23,7 +23,7 @@
                     @include('partials.forms.sale_form')
 
                     <div class="form-group">
-                        {!! Form::submit( trans('general.button.edit'), ['class' => 'btn btn-primary'] ) !!}
+                        {!! Form::submit( trans('general.button.update'), ['class' => 'btn btn-primary'] ) !!}
                         <a href="{!! route('admin.sales.index') !!}" title="{{ trans('general.button.cancel') }}" class='btn btn-default'>{{ trans('general.button.cancel') }}</a>
                     </div>
 

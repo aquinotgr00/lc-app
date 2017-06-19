@@ -148,6 +148,8 @@ class SalesController extends Controller
         // if the id is null then it must be a new customer
         if ( $data['customer_id'] == null ) {
             $newCustomer = $this->customer->create($data);
+            $newCustomer->type = $data['cust_type'];
+            $newCustomer->save();
             // get the id from the brand new customer
             $data['customer_id'] = $newCustomer->id;
         }

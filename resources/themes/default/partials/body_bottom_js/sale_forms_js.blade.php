@@ -168,6 +168,7 @@
                 $('#online').attr('style', 'display:none');
                 $('#offline').removeAttr('style');
                 $('#onlineTab').attr('style', 'display:none');
+                $('.onlineRow').remove();
             } else {
                 $('#dateNTime').attr('disabled', true);
                 $('#type-po-div').attr('style', 'display:none');

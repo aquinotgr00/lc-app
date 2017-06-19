@@ -9,7 +9,7 @@
         <div class="tab-pane active" id="tab_details">
             <div class="form-group">
                 {!! Form::label('typee', 'Tipe PO') !!}
-                {!! Form::select('type', [1 => 'online', 2 => 'offline'], null, ['class' => 'form-control', 'id' => 'type-po']) !!}
+                {!! Form::select('type', [1 => 'online', 2 => 'offline'], null, ['class' => 'form-control', 'id' => 'type-po', isset($sale) ? 'disabled':'']) !!}
             </div>
 
             <div class="form-group">
@@ -23,7 +23,7 @@
             </div>
 
             <div class="form-group">
-                {!! Form::label('type', trans('admin/customers/general.columns.type')) !!}
+                {!! Form::label('type', 'Customer Type') !!}
                 @if( isset($sale) )
                     {!! Form::select('cust_type', config('constant.customer-types'), $sale->customer->type, ['class' => 'form-control type', 'disabled', 'id' => 'type']) !!}
                 @else
@@ -324,9 +324,10 @@
                                         {!! Form::hidden('item['. $no .'][price]', $value->price, ['id' => 'price'. $no .'']) !!}
                                         {!! Form::hidden('item['. $no .'][total]', $value->total, ['id' => 'total'. $no .'']) !!}
                                         {!! Form::text('price', $value->price, ['class' => 'form-control', 'id' => 'displayPrice'. $no .'', 'disabled']) !!}
+                                        {!! Form::select('selectPrice', [], '', ['id' => 'selectPrice'.$no.'', 'class' => 'form-control selectt', 'style' => 'display:none;']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::text('item['. $no .'][keterangan]', $value->keterangan, ['class' => 'form-control']) !!}
+                                        {!! Form::text('item['. $no .'][keterangan]', $value->keterangan, ['class' => 'form-control', 'id' => 'ket'.$no.'']) !!}
                                     </td>
                                     <td>
                                         {!! Form::text('item['. $no .'][quantity]', $value->quantity, ['class' => 'form-control Qty', 'id' => 'Qty'. $no .'']) !!}
@@ -351,9 +352,10 @@
                                         {!! Form::hidden('item['. $x .'][price]', '', ['id' => 'price'. $x .'']) !!}
                                         {!! Form::hidden('item['. $x .'][total]', '', ['id' => 'total'. $x .'']) !!}
                                         {!! Form::text('price', '', ['placeholder' => 'price', 'class' => 'form-control', 'id' => 'displayPrice'. $x .'', 'disabled']) !!}
+                                        {!! Form::select('selectPrice', [], '', ['id' => 'selectPrice'.$x.'', 'class' => 'form-control selectt', 'style' => 'display:none;']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::text('item['. $x .'][keterangan]', '', ['placeholder' => 'kemasan', 'class' => 'form-control']) !!}
+                                        {!! Form::text('item['. $x .'][keterangan]', '', ['placeholder' => 'kemasan', 'class' => 'form-control', 'id' => 'ket'.$x.'']) !!}
                                     </td>
                                     <td>
                                         {!! Form::text('item['. $x .'][quantity]', '', ['placeholder' => 'jumlah', 'class' => 'form-control Qty', 'id' => 'Qty'. $x .'']) !!}
@@ -361,7 +363,7 @@
                                 </tr>
                             @endfor
                         @else
-                            @for($x = 101; $x <=125; $x++)
+                            @for($x = 1; $x <=100; $x++)
                                 <tr>
                                     <td>
                                         {!! $x !!}
@@ -378,9 +380,10 @@
                                         {!! Form::hidden('item['. $x .'][price]', '', ['id' => 'price'. $x .'']) !!}
                                         {!! Form::hidden('item['. $x .'][total]', '', ['id' => 'total'. $x .'']) !!}
                                         {!! Form::text('price', '', ['placeholder' => 'price', 'class' => 'form-control', 'id' => 'displayPrice'. $x .'', 'disabled']) !!}
+                                        {!! Form::select('selectPrice', [], '', ['id' => 'selectPrice'.$x.'', 'class' => 'form-control selectt', 'style' => 'display:none;']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::text('item['. $x .'][keterangan]', '', ['placeholder' => 'kemasan', 'class' => 'form-control']) !!}
+                                        {!! Form::text('item['. $x .'][keterangan]', '', ['placeholder' => 'kemasan', 'class' => 'form-control', 'id' => 'ket'.$x.'']) !!}
                                     </td>
                                     <td>
                                         {!! Form::text('item['. $x .'][quantity]', '', ['placeholder' => 'jumlah', 'class' => 'form-control Qty', 'id' => 'Qty'. $x .'']) !!}

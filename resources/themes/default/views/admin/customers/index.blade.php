@@ -12,7 +12,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">{{ trans('admin/customers/general.page.index.table-title') }}</h3>
                     &nbsp;
-                    <a class="btn btn-default btn-sm" href="{!! route('admin.customer-candidates.create') !!}" title="{{ trans('admin/customers/general.button.create') }}">
+                    <a class="btn btn-default btn-sm" href="{!! route('admin.customer.create') !!}" title="{{ trans('admin/customers/general.button.create') }}">
                         <i class="fa fa-plus-square"></i>
                     </a>
 		            <a class="btn btn-default btn-sm" href="{!! route('admin.customers.export', $tipe) !!}" title="{{ trans('admin/customers/general.button.export') }}">

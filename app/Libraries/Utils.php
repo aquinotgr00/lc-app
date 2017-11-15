@@ -64,21 +64,11 @@ class Utils {
 
     public static function getCustomerTypeDisplayName($type) {
         if ( $type == 1 ) {
-            return 'Licensed BO Partner';
+            return 'Agen';
         } elseif ( $type == 2 ) {
-            return 'Official Agent';
+            return 'Reseller';
         } elseif ( $type == 3 ) {
-            return 'Free Agent';
-        } elseif ( $type == 4 ) {
-            return 'Regular Customer';
-        } elseif ( $type == 5 ) {
-            return 'Distributor';
-        } elseif ( $type == 6 ) {
-            return 'Genuine BO Partner';
-        } elseif ( $type == 7 ) {
-            return 'Investor';
-        } elseif ( $type == 8 ) {
-            return 'Trainee';
+            return 'Customer';
         } else {
             return 'unknown';
         }

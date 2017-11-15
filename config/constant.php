@@ -2,14 +2,9 @@
 return [
 
   'customer-types' => [
-    '1' => 'Licensed BO Partner',
-    '2' => 'Official Agent',
-    '3' => 'Free Agent',
-    '4' => 'Regular Customer',
-    '5' => 'Distributor',
-    '6' => 'Genuine BO Partner',
-    '7' => 'Investor',
-    '8' => 'Trainee'
+    '1' => 'Agen',
+    '2' => 'Reseller',
+    '3' => 'Customer'
   ],
 
   'affiliator-types' => [
@@ -32,16 +27,13 @@ return [
   ],
 
   'product-categories' => [
-    '2'  => 'Barang Setengah Jadi',
     '5'  => 'Chemical Otomotif',
-    '6'  => 'Chemical Rumahan',
+    '9'  => 'Chemical Laundry',
+    '6'  => 'Chemical Rumah',
     '7'  => 'Deterjen',
     '8'  => 'Parfum',
-    '9'  => 'Chemical Laundry',
     '10' => 'Bibit Parfum',
-    '11' => 'Bahan Mentah',
-    '12' => 'Peralatan',
-    '13' => 'Perlengkapan'
+    '11' => 'Bahan Mentah'
   ],
 
   'material-categories' => [

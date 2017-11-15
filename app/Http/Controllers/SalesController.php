@@ -291,6 +291,8 @@ class SalesController extends Controller
         if ($sale->status == 3) {
             foreach ($sale->saleDetails as $key => $d) {
                 $quantity = $d->quantity;
+                $d->product->odr += $quantity;
+                $d->product->save();
                 if($d->product->formula) {
                     foreach ($d->product->formula->formulaDetails as $key => $value) {
                         $totalNeeded = $value->quantity*$quantity;

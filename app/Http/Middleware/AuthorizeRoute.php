@@ -138,7 +138,7 @@ class AuthorizeRoute
                 Log::error("User [" . $user->username . "] disabled, forcing logout.");
                 return redirect( route('logout') );
             } elseif ( 403 == $errorCode ) {
-                return redirect( route('store.front') );
+                return redirect( route('login') );
             }
             else {
                 abort($errorCode);

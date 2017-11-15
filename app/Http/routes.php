@@ -1,5 +1,4 @@
 <?php
-
 // Authentication routes...
 Route::get( 'auth/login',             ['as' => 'login',                'uses' => 'Auth\AuthController@getLogin']);
 Route::post('auth/login',             ['as' => 'loginPost',            'uses' => 'Auth\AuthController@postLogin']);
@@ -18,10 +17,11 @@ Route::post('password/reset',         ['as' => 'reset_passwordPost',   'uses' =>
 Route::get( '/',       ['as' => 'backslash',   'uses' => 'HomeController@index']);
 Route::get( 'home',    ['as' => 'home',        'uses' => 'HomeController@index']);
 
+// TODO: delete all useless routes --------------------------------
 // Store
-\App\Http\Controllers\StoreController::routes();
+// \App\Http\Controllers\StoreController::routes();
 // Affiliate Controller
-\App\Http\Controllers\AffController::routes();
+// \App\Http\Controllers\AffController::routes();
 
 // Routes in this group must be authorized.
 Route::group(['middleware' => 'authorize'], function () {
@@ -32,16 +32,16 @@ Route::group(['middleware' => 'authorize'], function () {
     Route::get('new-cust', ['as' => 'new-cust', 'uses' => 'DashboardController@newCustomer']);
 
     // Member routes
-    Route::get( 'checkout',        'StoreController@checkout')->name('store.member.checkout');
+    // Route::get( 'checkout',        'StoreController@checkout')->name('store.member.checkout');
 
     // Site administration section
     Route::group(['prefix' => 'admin'], function () {
         // Training
-        \App\Http\Controllers\TrainingsController::routes();
+        // \App\Http\Controllers\TrainingsController::routes();
         // Affiliate
-        \App\Http\Controllers\AffController::routes();
+        // \App\Http\Controllers\AffController::routes();
         // Store Orders 
-        \App\Http\Controllers\StoreOrdersController::routes();
+        // \App\Http\Controllers\StoreOrdersController::routes();
         // Expedition routes
         \App\Http\Controllers\ExpeditionsController::routes();
         // Product routes
@@ -51,11 +51,11 @@ Route::group(['middleware' => 'authorize'], function () {
         // Customer routes
         \App\Http\Controllers\CustomersController::routes();
         // Customer Candidate routes
-        \App\Http\Controllers\CustomerCandidatesController::routes();
+        // \App\Http\Controllers\CustomerCandidatesController::routes();
         // Customer Followup routes
-        \App\Http\Controllers\CustomerFollowupsController::routes();
+        // \App\Http\Controllers\CustomerFollowupsController::routes();
         // Customer Candidate Followup routes
-        \App\Http\Controllers\CandidateFollowupsController::routes();
+        // \App\Http\Controllers\CandidateFollowupsController::routes();
         // Sale routes
         \App\Http\Controllers\SalesController::routes();
         // Seed routes
@@ -65,7 +65,7 @@ Route::group(['middleware' => 'authorize'], function () {
         // Purchase Order routes
         \App\Http\Controllers\PurchaseOrdersController::routes();
         // Outlet routes
-        \App\Http\Controllers\OutletsController::routes();
+        // \App\Http\Controllers\OutletsController::routes();
         // Formula routes
         \App\Http\Controllers\FormulasController::routes();
         // Formula Detail routes
@@ -86,25 +86,25 @@ Route::group(['middleware' => 'authorize'], function () {
         \App\Http\Controllers\AuditsController::routes();
         // Settings routes
         // TODO: Implements settings
-        Route::get('settings', ['as' => 'admin.settings.index', 'uses' => 'TestController@test_flash_warning']);
+        // Route::get('settings', ['as' => 'admin.settings.index', 'uses' => 'TestController@test_flash_warning']);
     }); // End of ADMIN group
 
     // Outlet Owner section
-    Route::group(['prefix' => 'outlet'], function () {
-        Route::get( '/',                               ['as' => 'outlet.dasboard',                 'uses' => 'OutletsController@operatorIndex']);
-        // Outlet sale routes
-        Route::get( 'sales',                           ['as' => 'outlet.sales.index',              'uses' => 'OutletSaleDailiesController@index']);
-        Route::post('sales',                           ['as' => 'outlet.sales.store',              'uses' => 'OutletSaleDailiesController@store']);
-        Route::get( 'sales/{ocId}',                    ['as' => 'outlet.sales.show',               'uses' => 'OutletSaleDailiesController@show']);
-        Route::get( 'sales/{ocId}/delete',             ['as' => 'outlet.sales.delete',             'uses' => 'OutletSaleDailiesController@destroy']);
-        Route::get( 'sales/{ocId}/confirm-delete',     ['as' => 'outlet.sales.confirm-delete',     'uses' => 'OutletSaleDailiesController@getModalDelete']);
-        // Outlet customer routes
-        Route::get( 'customers',                       ['as' => 'outlet.customers.index',          'uses' => 'OutletCustomersController@index']);
-        Route::post('customers',                       ['as' => 'outlet.customers.store',          'uses' => 'OutletCustomersController@store']);
-        Route::get( 'customers/{ocId}',                ['as' => 'outlet.customers.show',           'uses' => 'OutletCustomersController@show']);
-        Route::get( 'customers/{ocId}/delete',         ['as' => 'outlet.customers.delete',         'uses' => 'OutletCustomersController@destroy']);
-        Route::get( 'customers/{ocId}/confirm-delete', ['as' => 'outlet.customers.confirm-delete', 'uses' => 'OutletCustomersController@getModalDelete']);
-    });
+    // Route::group(['prefix' => 'outlet'], function () {
+    //     Route::get( '/',                               ['as' => 'outlet.dasboard',                 'uses' => 'OutletsController@operatorIndex']);
+    //     // Outlet sale routes
+    //     Route::get( 'sales',                           ['as' => 'outlet.sales.index',              'uses' => 'OutletSaleDailiesController@index']);
+    //     Route::post('sales',                           ['as' => 'outlet.sales.store',              'uses' => 'OutletSaleDailiesController@store']);
+    //     Route::get( 'sales/{ocId}',                    ['as' => 'outlet.sales.show',               'uses' => 'OutletSaleDailiesController@show']);
+    //     Route::get( 'sales/{ocId}/delete',             ['as' => 'outlet.sales.delete',             'uses' => 'OutletSaleDailiesController@destroy']);
+    //     Route::get( 'sales/{ocId}/confirm-delete',     ['as' => 'outlet.sales.confirm-delete',     'uses' => 'OutletSaleDailiesController@getModalDelete']);
+    //     // Outlet customer routes
+    //     Route::get( 'customers',                       ['as' => 'outlet.customers.index',          'uses' => 'OutletCustomersController@index']);
+    //     Route::post('customers',                       ['as' => 'outlet.customers.store',          'uses' => 'OutletCustomersController@store']);
+    //     Route::get( 'customers/{ocId}',                ['as' => 'outlet.customers.show',           'uses' => 'OutletCustomersController@show']);
+    //     Route::get( 'customers/{ocId}/delete',         ['as' => 'outlet.customers.delete',         'uses' => 'OutletCustomersController@destroy']);
+    //     Route::get( 'customers/{ocId}/confirm-delete', ['as' => 'outlet.customers.confirm-delete', 'uses' => 'OutletCustomersController@getModalDelete']);
+    // });
 
     require __DIR__.'/rapyd.php';
 }); // end of AUTHORIZE middleware group

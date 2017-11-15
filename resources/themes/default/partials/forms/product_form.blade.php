@@ -19,6 +19,11 @@
 </div>
 
 <div class="form-group">
+    {!! Form::label('min_stock', 'Minimal Stock') !!}
+    {!! Form::text('min_stock', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group">
     {!! Form::label('weight', trans('admin/products/general.columns.weight')) !!}
     {!! Form::text('weight', null, ['class' => 'form-control']) !!}
 </div>

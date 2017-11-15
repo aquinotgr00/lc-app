@@ -32,7 +32,8 @@ class CustomersController extends Controller
 
     static function routes() {
         \Route::group(['prefix' => 'customers'], function () {
-            \Route::post( '/',                     'CustomersController@store')         ->name('admin.customers.store');
+            \Route::post( '/',                    'CustomersController@store')         ->name('admin.customers.store');
+            \Route::get(  '/create',              'CustomersController@create')        ->name('admin.customer.create');
             \Route::get(  'search',               'CustomersController@search')        ->name('admin.customers.search');
             \Route::get(  '{ccId}',               'CustomersController@show')          ->name('admin.customers.show');
             \Route::patch('{ccId}',               'CustomersController@update')        ->name('admin.customers.update');
@@ -96,7 +97,11 @@ class CustomersController extends Controller
      */
     public function create()
     {
-        //
+        $page_title       = trans('admin/customer-candidates/general.page.create.title');
+        $page_description = trans('admin/customer-candidates/general.page.create.description');
+
+        return view('admin.customers.create', compact('page_title', 'page_description'));
+
     }
 
     /**
